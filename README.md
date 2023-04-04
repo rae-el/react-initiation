@@ -1,13 +1,18 @@
 # React 
 ## Reqirements
-- well structured code
-- use a ui libary to build render
-- List Tasks
-- Filter tasks by name, user, is completed
-- Add Task
-- Edit Task
-- Delete Task
+- Well structured code
+- Use a ui libary to build render
 - Global State (React Hooks and Context Providers)
+- API functionality
+  - List Tasks
+  - Filter tasks
+    - name
+    - user
+    - is completed
+  - Add Task
+  - Edit Task
+  - Delete Task
+
 
 
 ## API's Already Implemented
