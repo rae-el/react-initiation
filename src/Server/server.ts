@@ -17,17 +17,17 @@ import { faker } from '@faker-js/faker'
 export function makeServer () {
     const server = new Server({
         serializers: {
-            // application: JSONAPISerializer.extend({
-            //     alwaysIncludeLinkageData: false
-            // }),
+            application: JSONAPISerializer.extend({
+                alwaysIncludeLinkageData: false
+            }),
             todo: RestSerializer.extend({
                 serializeIds:"always",
                 
-            })
-            // users: RestSerializer.extend({
-            //     include:["todo"],
-            //     embed: true
-            // })
+            }),
+             users: RestSerializer.extend({
+                 include:["todo"],
+                 embed: true,
+             }),
         },
         models:{
             todo:Model.extend({
@@ -64,6 +64,8 @@ export function makeServer () {
            
         },
         routes() {
+            // todo apis
+            // already implemented
             this.namespace = "api"
             this.get("/users", (schema: any) => {
                 return schema.users.all()
@@ -75,9 +77,6 @@ export function makeServer () {
                     todos: todos
                 }
             })
-
-
-            // todo apis
             this.get("/todos", (schema: any, request) => {
                 const active = request.params.active
                 console.log(active)
@@ -99,6 +98,32 @@ export function makeServer () {
             this.post("/todo/create", (schema:any,request)=>{
                 let attrs = JSON.parse(request.requestBody)
                 return schema.todos.create(attrs)
+            })
+            // to implement
+            // get todo by name
+            // string
+            this.get("/todo/:name", (schema:any, request)=>{
+                const todoName = request.params.todoName
+                const todo = schema.todos.find(todoName)
+                return {
+                    todo:todo
+                }
+            })
+            // get todo by completion status
+            // bool
+            this.get("/todo/:isComplete", (schema:any, request)=>{
+                const todoCompleted = request.params.todoCompleted
+                const todos = schema.todos.where('isComplete',todoCompleted)
+                return {
+                    todos:todos
+                }
+            })
+            // edit todo
+            this.put("/todo/:id/update", (schema:any, request)=> {
+                const todoId = request.params.id
+                let attrs = JSON.parse(request.requestBody)
+                schema.todos.find(todoId).update(attrs)
+                return {success:true}
             })
 
 
