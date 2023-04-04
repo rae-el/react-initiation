@@ -12,9 +12,9 @@
 
 ## API's Already Implemented
 
-GET api/todos
-GET api/todo/:id
-DELETE api/todo/:id/delete
-POST api/todo/create
-GET api/users
-GET api/user/id/todos
+- GET api/todos
+- GET api/todo/:id
+- DELETE api/todo/:id/delete
+- POST api/todo/create
+- GET api/users
+- GET api/user/id/todos
