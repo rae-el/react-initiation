@@ -4,19 +4,18 @@
 - Use a ui libary to build render
 - Global State (React Hooks and Context Providers)
 - API functionality
-  - List Tasks
+  - Edit Task
   - Filter tasks
     - name
-    - user
     - is completed
-  - Add Task
-  - Edit Task
-  - Delete Task
+    - user *pre-implemented
+  - List Tasks *pre-implemented
+  - Add Task *pre-implemented
+  - Delete Task *pre-implemented
 
 
 
 ## API's Already Implemented
-
 - GET api/todos
 - GET api/todo/:id
 - DELETE api/todo/:id/delete
