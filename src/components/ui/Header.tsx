@@ -1,0 +1,27 @@
+import Box from '@mui/material/Box'
+import Typography from '@mui/material/Typography'
+import theme from '../../theme'
+import { ThemeProvider } from '@mui/material/styles'
+
+
+function Header() {
+
+  return (
+    <ThemeProvider theme={theme}>
+      <Box 
+      sx={{
+        backgroundColor:theme.palette.primary.light,
+        color:theme.palette.primary.contrastText,
+        position:'fixed',
+        top:0,
+        width:'100%',
+      }}>
+        <Typography variant='h1'>
+          ToDo
+        </Typography>
+      </Box>
+    </ThemeProvider>
+  )
+}
+
+export default Header

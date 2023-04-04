@@ -1,5 +1,3 @@
-import './Add.css'
-
 function Add() {
 
   return (

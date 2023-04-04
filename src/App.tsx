@@ -1,18 +1,16 @@
-import Header from './Header'
-import './App.css'
-import Todos from './Todos'
+import { ThemeProvider } from '@mui/material/styles'
+import Header from './components/ui/Header'
+import TodosForm from './pages/home/TodosForm'
+import theme from './theme'
 
 function App() {
 
+
   return (
-    <div className="App">
-      <div className="headerSection">
+    <ThemeProvider theme={theme}>
         <Header/>
-      </div>
-      <div className="todosSection">
-        <Todos/>
-      </div>
-    </div>
+        <TodosForm/>
+    </ThemeProvider>
   )
 }
 
