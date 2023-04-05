@@ -13,21 +13,21 @@ import DeleteOutline from '@mui/icons-material/DeleteOutline'
 import Edit from '@mui/icons-material/Edit'
 import theme from '../../theme';
 import Button from '@mui/material/Button';
+import { TodoService } from '../../Server/services/ToDos/TodoService';
+import { TodoObject } from '../../Server/server';
 
-function getTodos(
-  name: string,
-  user: string,
-  completed: boolean,
-) {
-  return { name, user, completed };
-}
 
-const rows = [
-  getTodos('Task 1','Rachel',true,),
-  getTodos('Task 2','Ron',false,),
-];
+
 
 export default function TodosTable() {
+  const todoService = new TodoService();
+  const [todoList, setTodoList] = React.useState<Array<TodoObject>>([]);
+
+  React.useEffect(() => {
+    todoService.getTodos().then((value) => setTodoList(value))
+    //todoService.fetchTodos()
+  })
+
   return (
     <ThemeProvider theme={theme}>
     <TableContainer 
@@ -37,7 +37,7 @@ export default function TodosTable() {
       <Table aria-label="todos table" className='todos-table'>
         <TableHead className='todos-table-header'
         sx={{backgroundColor:theme.palette.primary.main,
-        fontVariant:'small-caps'}}>
+        fontVariant:'small-caps',width:'100%'}}>
           <TableRow>
             <TableCell>Name</TableCell>
             <TableCell>User</TableCell>
@@ -46,18 +46,19 @@ export default function TodosTable() {
           </TableRow>
         </TableHead>
         <TableBody>
-          {rows.map((row) => (
+          {todoList.map((todo) => (
             <TableRow
-              key={row.name}
+              key={todo.name}
               sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
             >
-              <TableCell>{row.name}</TableCell>
-              <TableCell>{row.user}</TableCell>
-              <TableCell>{row.completed ? <TaskAlt/> : <RadioButtonUnchecked/>}</TableCell>
+              <TableCell>{todo.name}</TableCell>
+              <TableCell>{todo.user}</TableCell>
+              <TableCell>{todo.isComplete ? <TaskAlt/> : <RadioButtonUnchecked/>}</TableCell>
               <TableCell>
                 <Button sx={{color:theme.palette.primary.contrastText}}><DeleteOutline/></Button>
                 <Button sx={{color:theme.palette.primary.contrastText}}><Edit/></Button>
               </TableCell>
+              <TableCell></TableCell>
             </TableRow>
           ))}
         </TableBody>

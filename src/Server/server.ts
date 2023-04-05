@@ -8,11 +8,21 @@ import {
     JSONAPISerializer,
     Serializer,
 } from "miragejs"
-import { faker } from '@faker-js/faker'
+import { StringColorFormat, faker } from '@faker-js/faker'
 //import { serialize } from "node:v8";
 
+export interface TodoObject{
+    id: number,
+    name: string,
+    isComplete: boolean,
+    user: number,
+}
 
-
+export interface UserObject{
+    type: string,
+    id: number,
+    attributes: Map<string, string>
+}
 
 export function makeServer () {
     const server = new Server({
@@ -66,8 +76,9 @@ export function makeServer () {
         routes() {
             // todo apis
             // already implemented
-            this.namespace = "api"
+            //this.namespace = "api"
             this.get("/users", (schema: any) => {
+                console.log(schema.users.all())
                 return schema.users.all()
             })
             this.get("/user/:id/todos", (schema:any, request)=> {

@@ -1,9 +1,20 @@
 import { Box, Button, FormControl, FormControlLabel, MenuItem, Select, Switch, TextField, ThemeProvider } from '@mui/material'
 import TodosTable from './TodosTable'
 import theme from '../../theme'
+import { UserService } from '../../Server/services/Users/UserService';
+import React from 'react';
+import { UserObject } from '../../Server/server';
+
 
 
 function TodosForm() {
+  const userService = new UserService();
+  const [userList, setUserList] = React.useState<Array<UserObject>>([]);
+
+  React.useEffect(() => {
+    userService.getUsers().then((value) => setUserList(value))
+  })
+
 
   return (
     <ThemeProvider theme={theme}>
@@ -34,9 +45,7 @@ function TodosForm() {
             <FormControlLabel
                 control={
                     <Select label='User' sx={{marginLeft:8, marginBottom:1, marginTop:1, minWidth:20}}>
-                        <MenuItem>User 1</MenuItem>
-                        <MenuItem>User 2</MenuItem>
-                        <MenuItem>User 3</MenuItem>
+                      {userList.map((user) => (<MenuItem>{user.id}</MenuItem>))}
                     </Select>
                 }
                 label="User"
