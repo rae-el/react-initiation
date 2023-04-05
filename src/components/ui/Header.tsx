@@ -16,7 +16,7 @@ function Header() {
         top:0,
         width:'100%',
       }}>
-        <Typography variant='h1'>
+        <Typography variant='h1'sx={{paddingLeft:2}}>
           ToDo
         </Typography>
       </Box>

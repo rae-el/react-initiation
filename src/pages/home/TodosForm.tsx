@@ -22,7 +22,7 @@ function TodosForm() {
               }}>
             <FormControlLabel
                 control={
-                    <TextField label='Project' inputMode='text' variant='filled' disabled sx={{width:'20', margin:'0.5em'}}/>
+                    <TextField label='Project' inputMode='text' variant='filled' disabled sx={{width:'20', marginLeft:6, marginBottom:1, marginTop:1}}/>
                     }
                 label="Project"
                 labelPlacement='start'
@@ -31,9 +31,9 @@ function TodosForm() {
             sx={{
                 width:'100%',
               }}>
-            <FormControlLabel 
+            <FormControlLabel
                 control={
-                    <Select label='User' sx={{width:'20', margin:'0.5em'}}>
+                    <Select label='User' sx={{marginLeft:8, marginBottom:1, marginTop:1, minWidth:20}}>
                         <MenuItem>User 1</MenuItem>
                         <MenuItem>User 2</MenuItem>
                         <MenuItem>User 3</MenuItem>
@@ -48,14 +48,14 @@ function TodosForm() {
             <FormControlLabel
                 control={
                     <Switch 
-                        checked = {false}
-                        color='success'
+                        //checked = {true}
+                        sx={{marginLeft:1, marginBottom:1, marginTop:1}}
                     />
                 }
                 label="Completed"
                 labelPlacement='start' /></Box>
             <TodosTable/>
-            <Button variant='contained' sx={{color:theme.palette.primary.contrastText}}>Add Task</Button>
+            <Button variant='contained' sx={{color:theme.palette.primary.light}}>Add Task</Button>
         </FormControl></Box>
     </ThemeProvider>
   )
