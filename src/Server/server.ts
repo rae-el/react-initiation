@@ -113,7 +113,7 @@ export function makeServer () {
             // to implement
             // get todo by name
             // string
-            this.get("/todo/:name", (schema:any, request)=>{
+            this.get("/todo/name/:name", (schema:any, request)=>{
                 const todoName = request.params.todoName
                 const todo = schema.todos.find(todoName)
                 return {
@@ -122,7 +122,7 @@ export function makeServer () {
             })
             // get todo by completion status
             // bool
-            this.get("/todo/:isComplete", (schema:any, request)=>{
+            this.get("/todo/complete", (schema:any, request)=>{
                 const todoCompleted = request.params.todoCompleted
                 const todos = schema.todos.where('isComplete',todoCompleted)
                 return {
