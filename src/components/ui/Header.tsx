@@ -10,8 +10,8 @@ function Header() {
     <ThemeProvider theme={theme}>
       <Box 
       sx={{
-        backgroundColor:theme.palette.primary.light,
-        color:theme.palette.primary.contrastText,
+        backgroundColor:theme.palette.primary.main,
+        color:theme.palette.primary.light,
         position:'fixed',
         top:0,
         width:'100%',

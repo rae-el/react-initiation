@@ -55,7 +55,7 @@ function TodosForm() {
                 label="Completed"
                 labelPlacement='start' /></Box>
             <TodosTable/>
-            <Button variant={'outlined'}>Add Task</Button>
+            <Button variant='contained' sx={{color:theme.palette.primary.contrastText}}>Add Task</Button>
         </FormControl></Box>
     </ThemeProvider>
   )

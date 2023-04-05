@@ -36,7 +36,7 @@ export default function TodosTable() {
     >
       <Table aria-label="todos table" className='todos-table'>
         <TableHead className='todos-table-header'
-        sx={{backgroundColor:theme.palette.primary.light,
+        sx={{backgroundColor:theme.palette.primary.main,
         fontVariant:'small-caps'}}>
           <TableRow>
             <TableCell>Name</TableCell>
@@ -55,8 +55,8 @@ export default function TodosTable() {
               <TableCell>{row.user}</TableCell>
               <TableCell>{row.completed ? <TaskAlt/> : <RadioButtonUnchecked/>}</TableCell>
               <TableCell>
-                <Button><DeleteOutline/></Button>
-                <Button><Edit/></Button>
+                <Button sx={{color:theme.palette.primary.contrastText, borderColor:theme.palette.primary.main}}><DeleteOutline/></Button>
+                <Button sx={{color:theme.palette.primary.contrastText, border:'none'}}><Edit/></Button>
               </TableCell>
             </TableRow>
           ))}
