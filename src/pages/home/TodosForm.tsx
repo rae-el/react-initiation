@@ -1,4 +1,4 @@
-import { Box, FormControl, FormControlLabel, MenuItem, Select, Switch, TextField } from '@mui/material'
+import { Box, FormControl, FormControlLabel, MenuItem, Select, SelectChangeEvent, Switch, TextField } from '@mui/material'
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
 import TableCell from '@mui/material/TableCell';
@@ -28,9 +28,12 @@ function TodosForm() {
   const [userList, setUserList] = useState<Array<UserObject>>([])
   const [todoList, setTodoList] = useState<Array<TodoObject>>([])
   const [todoListCompleted, setTodoListCompleted] = useState<Array<TodoObject>>([])
-  //const [completedTodos, setTodosCompletedState] = useState(false)
-  //const changeCompletedState = () => setTodosCompletedState(!completedTodos)
-  //const [showTodos, setShowTodos] = useState<Array<TodoObject>>([])
+  const [completedTodos, setTodosCompletedState] = useState(false)
+  const changeCompletedState = () => setTodosCompletedState(!completedTodos)
+  const [showTodos, setShowTodos] = useState<Array<TodoObject>>([])
+  const [selectedUser, setSelectedUser] = useState('')
+  const handleSelectUser = (event: SelectChangeEvent<string>, child:React.ReactNode) => {setSelectedUser(event.target.value)}
+  
 
 
 
@@ -38,11 +41,13 @@ function TodosForm() {
     userService.getUsers().then((value) => setUserList(value))
     todoService.getTodos().then((value) => setTodoList(value))
     todoService.getTodosByComplete().then((value) => setTodoListCompleted(value))
-    /*if (completedTodos){
+    if (completedTodos){
+      //throwing because todoListCompleted is null
+      //how to check and handle empty array
       setShowTodos(todoListCompleted)
     }else{-
       setShowTodos(todoList)
-    }*/
+    }
   })
 
   function getUserName(id: number){
@@ -85,7 +90,11 @@ function TodosForm() {
               }}>
             <FormControlLabel
                 control={
-                    <Select label='User' sx={{marginLeft:8, marginBottom:1, marginTop:1, minWidth:20}}>
+                    <Select label='User'
+                            value= {selectedUser}
+                            onChange={handleSelectUser}
+                            renderValue={(value) => value ? value : <em>select user</em>}
+                            sx={{marginLeft:8, marginBottom:1, marginTop:1, minWidth:'220px !important'}}>
                       {/**user.attributes.get("first-name") solves implicit get error but does not function on web? */}
                       {userList.map((user) => (<MenuItem key={user.id}>{user.attributes["first-name"] +" "+ user.attributes["last-name"]}</MenuItem>))}
                     </Select>
@@ -100,7 +109,7 @@ function TodosForm() {
                 control={
                     <Switch 
                         //checked = {true}
-                        //onChange={changeCompletedState}
+                        onChange={changeCompletedState}
                         sx={{marginLeft:1, marginBottom:1, marginTop:1}}
                     />
                 }
@@ -124,7 +133,7 @@ function TodosForm() {
                   </TableRow>
                 </TableHead>
                 <TableBody overflow-y="scroll" sx={{height:'max-content'}}>
-                  {todoList.map((todo) => (
+                  { todoList.map((todo) => (
                     <TableRow
                       key={todo.id}
                       //sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
