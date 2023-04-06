@@ -18,6 +18,7 @@ import { TodoObject, UserAttributes } from '../../Server/server';
 import { UserService } from '../../Server/services/Users/UserService';
 import React, { useEffect, useState } from 'react';
 import { UserObject } from '../../Server/server';
+import { KeyObject } from 'crypto';
 
 
 
@@ -26,7 +27,7 @@ function TodosForm() {
   const todoService = new TodoService()
   const [userList, setUserList] = useState<Array<UserObject>>([])
   const [todoList, setTodoList] = useState<Array<TodoObject>>([])
-  //const [todoListCompleted, setTodoListCompleted] = useState<Array<TodoObject>>([])
+  const [todoListCompleted, setTodoListCompleted] = useState<Array<TodoObject>>([])
   //const [completedTodos, setTodosCompletedState] = useState(false)
   //const changeCompletedState = () => setTodosCompletedState(!completedTodos)
   //const [showTodos, setShowTodos] = useState<Array<TodoObject>>([])
@@ -36,15 +37,13 @@ function TodosForm() {
   useEffect(() => {
     userService.getUsers().then((value) => setUserList(value))
     todoService.getTodos().then((value) => setTodoList(value))
-    //todoService.getTodosByComplete().then((value) => setTodoListCompleted(value))
+    todoService.getTodosByComplete().then((value) => setTodoListCompleted(value))
     /*if (completedTodos){
       setShowTodos(todoListCompleted)
     }else{-
       setShowTodos(todoList)
     }*/
   })
-
-  
 
   function getUserName(id: number){
     let username = ''
@@ -55,6 +54,7 @@ function TodosForm() {
       }
     }
   }
+
 
 
   return (
@@ -116,10 +116,11 @@ function TodosForm() {
                 sx={{backgroundColor:theme.palette.primary.main,
                 fontVariant:'small-caps',width:"150%",position:'sticky',top:0, zIndex:1}}>
                   <TableRow>
-                    <TableCell>Name</TableCell>
+                    <TableCell>Task</TableCell>
                     <TableCell>User</TableCell>
                     <TableCell>Completed</TableCell>
-                    <TableCell>Actions</TableCell>
+                    <TableCell>Edit</TableCell>
+                    <TableCell>Delete</TableCell>
                   </TableRow>
                 </TableHead>
                 <TableBody overflow-y="scroll" sx={{height:'max-content'}}>
@@ -130,12 +131,9 @@ function TodosForm() {
                     >
                       <TableCell>{todo.name}</TableCell>
                       <TableCell>{getUserName(todo.user)}</TableCell>
-                      <TableCell><Button sx={{color:theme.palette.primary.contrastText}}>{todo.isComplete ? <TaskAlt/> : <RadioButtonUnchecked/>}</Button></TableCell>
-                      <TableCell>
-                        <Button sx={{color:theme.palette.primary.contrastText}}><DeleteOutline/></Button>
-                        <Button sx={{color:theme.palette.primary.contrastText}}><Edit/></Button>
-                      </TableCell>
-                      <TableCell></TableCell>
+                      <TableCell><Button key={todo.id} sx={{color:theme.palette.primary.contrastText}}>{todo.isComplete ? <TaskAlt/> : <RadioButtonUnchecked/>}</Button></TableCell>
+                      <TableCell><Button key={todo.id} sx={{color:theme.palette.primary.contrastText}}><Edit/></Button></TableCell>
+                      <TableCell><Button key={todo.id} sx={{color:theme.palette.primary.contrastText}}><DeleteOutline/></Button></TableCell>
                     </TableRow>
                   ))}
                 </TableBody>

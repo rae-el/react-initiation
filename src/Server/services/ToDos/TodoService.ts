@@ -4,7 +4,7 @@ export class TodoService{
     //gets
     async getTodos(){
         try{
-            const response = await axios.get("/todos");
+            const response = await axios.get("api/todos");
             console.log(response)
             return response.data.todos
         }catch (e){
@@ -13,7 +13,8 @@ export class TodoService{
     }
     async getTodosByComplete(){
         try{
-            const response = await axios.get("/todos/compelete")
+            const response = await axios.get("api/todos/completed");
+            console.log(response)
             return response.data.todos
         }catch (e){
             console.error(e)
@@ -21,7 +22,7 @@ export class TodoService{
     }
     async getTodosByUser(request: string){
         try{
-            const response = await axios.get("/user/"+{request}+"/todos")
+            const response = await axios.get("api/user/"+{request}+"/todos")
         }catch (e){
             console.error(e)
         }
@@ -29,7 +30,7 @@ export class TodoService{
 
     async getTodosById(request: string){
         try{
-            const response = await axios.get("/todo/"+{request})
+            const response = await axios.get("api/todo/"+{request})
         }catch (e){
             console.error(e)
         }
@@ -37,7 +38,7 @@ export class TodoService{
 
     async getTodosByName(request: string){
         try{
-            const response = await axios.get("/todo/name/"+{request})
+            const response = await axios.get("api/todo/name/"+{request})
         }catch (e){
             console.error(e)
         }
@@ -46,7 +47,7 @@ export class TodoService{
     //post
     async createTodo(request: string){
     try{
-        const response = await axios.post("/todos/create", {request:request})
+        const response = await axios.post("api/todos/create", {request:request})
     }catch (e){
         console.error(e)
     }
@@ -54,7 +55,7 @@ export class TodoService{
     //put
     async updateTodo(request: string){
         try{
-            const response = await axios.post("/todo/"+{request:request}+"/update")
+            const response = await axios.post("api/todo/"+{request:request}+"/update")
         }catch (e){
             console.error(e)
         }
@@ -62,7 +63,7 @@ export class TodoService{
     //delete
     async deleteTodo(request: string){
         try{
-            const response = await axios.post("/todo/"+{request:request}+"/delete")
+            const response = await axios.post("api/todo/"+{request:request}+"/delete")
         }catch (e){
             console.error(e)
         }

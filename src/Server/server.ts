@@ -82,7 +82,7 @@ export function makeServer () {
         routes() {
             // todo apis
             // already implemented
-            //this.namespace = "api"
+            this.namespace = "api"
             this.get("/users", (schema: any) => {
                 console.log(schema.users.all())
                 return schema.users.all()
@@ -128,9 +128,8 @@ export function makeServer () {
             })
             // get todo by completion status
             // bool
-            this.get("/todo/complete", (schema:any, request)=>{
-                const todoCompleted = request.params.todoCompleted
-                const todos = schema.todos.where('isComplete',todoCompleted)
+            this.get("/todos/completed", (schema:any)=>{
+                const todos = schema.todos.where({isComplete:true})
                 return {
                     todos:todos
                 }

@@ -5,7 +5,7 @@ export class UserService{
 
     async getUsers(){
         try{
-            const response = await axios.get("/users");
+            const response = await axios.get("api/users");
             console.log(response)
             const data = response.data.data
             return response.data.data
