@@ -22,6 +22,12 @@ export interface UserObject{
     type: string,
     id: number,
     attributes: Map<string, string>
+    //attributes: UserAttributes
+}
+
+export interface UserAttributes{
+    firstName: string,
+    lastName: string
 }
 
 export function makeServer () {

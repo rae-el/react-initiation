@@ -14,7 +14,7 @@ import Edit from '@mui/icons-material/Edit'
 import theme from '../../theme';
 import Button from '@mui/material/Button';
 import { TodoService } from '../../Server/services/ToDos/TodoService';
-import { TodoObject } from '../../Server/server';
+import { TodoObject, UserAttributes } from '../../Server/server';
 import { UserService } from '../../Server/services/Users/UserService';
 import React, { useEffect, useState } from 'react';
 import { UserObject } from '../../Server/server';
@@ -26,22 +26,22 @@ function TodosForm() {
   const todoService = new TodoService()
   const [userList, setUserList] = useState<Array<UserObject>>([])
   const [todoList, setTodoList] = useState<Array<TodoObject>>([])
-  const [todoListCompleted, setTodoListCompleted] = useState<Array<TodoObject>>([])
-  const [completedTodos, setTodosCompletedState] = useState(false)
-  const changeCompletedState = () => setTodosCompletedState(!completedTodos)
-  const [showTodos, setShowTodos] = useState<Array<TodoObject>>([])
+  //const [todoListCompleted, setTodoListCompleted] = useState<Array<TodoObject>>([])
+  //const [completedTodos, setTodosCompletedState] = useState(false)
+  //const changeCompletedState = () => setTodosCompletedState(!completedTodos)
+  //const [showTodos, setShowTodos] = useState<Array<TodoObject>>([])
 
 
 
   useEffect(() => {
     userService.getUsers().then((value) => setUserList(value))
     todoService.getTodos().then((value) => setTodoList(value))
-    todoService.getTodosByComplete().then((value) => setTodoListCompleted(value))
-    if (completedTodos){
+    //todoService.getTodosByComplete().then((value) => setTodoListCompleted(value))
+    /*if (completedTodos){
       setShowTodos(todoListCompleted)
     }else{
       setShowTodos(todoList)
-    }
+    }*/
   })
 
 
@@ -74,7 +74,8 @@ function TodosForm() {
             <FormControlLabel
                 control={
                     <Select label='User' sx={{marginLeft:8, marginBottom:1, marginTop:1, minWidth:20}}>
-                      {userList.map((user) => (<MenuItem>{user.id}</MenuItem>))}
+                      {/**user.attributes.get("first-name") solves implicit get error but does not function on web? */}
+                      {userList.map((user) => (<MenuItem key={user.id}>{user.attributes["first-name"] +" "+ user.attributes["last-name"]}</MenuItem>))}
                     </Select>
                 }
                 label="User"
@@ -87,7 +88,7 @@ function TodosForm() {
                 control={
                     <Switch 
                         //checked = {true}
-                        onChange={changeCompletedState}
+                        //onChange={changeCompletedState}
                         sx={{marginLeft:1, marginBottom:1, marginTop:1}}
                     />
                 }
@@ -110,14 +111,14 @@ function TodosForm() {
                   </TableRow>
                 </TableHead>
                 <TableBody overflow-y="scroll" sx={{height:'max-content'}}>
-                  {showTodos.map((todo) => (
+                  {todoList.map((todo) => (
                     <TableRow
                       key={todo.id}
-                      sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
+                      //sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
                     >
                       <TableCell>{todo.name}</TableCell>
                       <TableCell>{todo.user}</TableCell>
-                      <TableCell>{todo.isComplete ? <TaskAlt/> : <RadioButtonUnchecked/>}</TableCell>
+                      <TableCell><Button sx={{color:theme.palette.primary.contrastText}}>{todo.isComplete ? <TaskAlt/> : <RadioButtonUnchecked/>}</Button></TableCell>
                       <TableCell>
                         <Button sx={{color:theme.palette.primary.contrastText}}><DeleteOutline/></Button>
                         <Button sx={{color:theme.palette.primary.contrastText}}><Edit/></Button>
