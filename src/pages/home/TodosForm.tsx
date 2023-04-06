@@ -39,10 +39,22 @@ function TodosForm() {
     //todoService.getTodosByComplete().then((value) => setTodoListCompleted(value))
     /*if (completedTodos){
       setShowTodos(todoListCompleted)
-    }else{
+    }else{-
       setShowTodos(todoList)
     }*/
   })
+
+  
+
+  function getUserName(id: number){
+    let username = ''
+    for(let i=0; i<userList.length; i++){
+      if(userList[i].id == id){
+        username = userList[i].attributes["first-name"] + " " + userList[i].attributes["last-name"]
+       return username
+      }
+    }
+  }
 
 
   return (
@@ -117,7 +129,7 @@ function TodosForm() {
                       //sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
                     >
                       <TableCell>{todo.name}</TableCell>
-                      <TableCell>{todo.user}</TableCell>
+                      <TableCell>{getUserName(todo.user)}</TableCell>
                       <TableCell><Button sx={{color:theme.palette.primary.contrastText}}>{todo.isComplete ? <TaskAlt/> : <RadioButtonUnchecked/>}</Button></TableCell>
                       <TableCell>
                         <Button sx={{color:theme.palette.primary.contrastText}}><DeleteOutline/></Button>
