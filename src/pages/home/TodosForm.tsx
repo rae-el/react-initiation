@@ -16,9 +16,8 @@ import Button from '@mui/material/Button';
 import { TodoService } from '../../Server/services/ToDos/TodoService';
 import { TodoObject, UserAttributes } from '../../Server/server';
 import { UserService } from '../../Server/services/Users/UserService';
-import React, { useEffect, useState } from 'react';
+import React, { SetStateAction, useEffect, useRef, useState } from 'react';
 import { UserObject } from '../../Server/server';
-import { KeyObject } from 'crypto';
 
 
 
@@ -32,7 +31,7 @@ function TodosForm() {
   const changeCompletedState = () => setTodosCompletedState(!completedTodos)
   const [showTodos, setShowTodos] = useState<Array<TodoObject>>([])
   const [selectedUser, setSelectedUser] = useState('')
-  const handleSelectUser = (event: SelectChangeEvent<string>, child:React.ReactNode) => {setSelectedUser(event.target.value)}
+  const inputComponent = useRef<HTMLInputElement>(null);
   
 
 
@@ -59,6 +58,12 @@ function TodosForm() {
       }
     }
   }
+
+    const handleSelectUser = (event: SelectChangeEvent<SetStateAction<string>>) => {
+      console.log('handle select user')
+      const {target:{value}, }= event; setSelectedUser(value)
+    }
+
 
 
 
@@ -93,6 +98,7 @@ function TodosForm() {
                     <Select label='User'
                             value= {selectedUser}
                             onChange={handleSelectUser}
+                            ref={inputComponent}
                             renderValue={(value) => value ? value : <em>select user</em>}
                             sx={{marginLeft:8, marginBottom:1, marginTop:1, minWidth:'220px !important'}}>
                       {/**user.attributes.get("first-name") solves implicit get error but does not function on web? */}
