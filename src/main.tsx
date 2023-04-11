@@ -5,9 +5,10 @@ import './index.css'
 import * as serviceWorker from './Server/services/serviceWorker'
 import { makeServer } from './Server/server'
 
-//serviceWorker.register();
 const server = makeServer()
 console.log(server)
+
+serviceWorker.register();
 
 
 ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(

@@ -1,9 +1,5 @@
-import { ThemeProvider } from '@mui/material/styles'
-import Header from './components/ui/Header'
-import Home from './pages/home/Home'
-import theme from './theme'
-import { useRef } from 'react';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
+import Home from './pages/home/Home'
 import Add from './pages/Add';
 import NotFound from './pages/NotFound';
 import Edit from './pages/Edit';

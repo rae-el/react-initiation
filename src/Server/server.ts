@@ -84,7 +84,7 @@ export function makeServer () {
             // already implemented
             this.namespace = "api"
             this.get("/users", (schema: any) => {
-                console.log(schema.users.all())
+                //console.log(schema.users.all())
                 return schema.users.all()
             })
             this.get("/user/:id/todos", (schema:any, request)=> {
@@ -96,7 +96,7 @@ export function makeServer () {
             })
             this.get("/todos", (schema: any, request) => {
                 const active = request.params.active
-                console.log(active)
+                //console.log(active)
                 return schema.todos.all()
             })
             this.get("/todo/:id", (schema:any, request)=>{

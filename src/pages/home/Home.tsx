@@ -21,6 +21,7 @@ import { UserObject } from '../../Server/server';
 import Header from '../../components/ui/Header';
 import { Link, useNavigate } from 'react-router-dom';
 import DeleteAlert from '../../components/ui/DeleteAlert';
+import DeleteDialog from '../../components/ui/DeleteDialog';
 
 
 
@@ -30,25 +31,21 @@ function Home() {
   const [userList, setUserList] = useState<Array<UserObject>>([])
   const [todoList, setTodoList] = useState<Array<TodoObject>>([])
   const [todoListCompleted, setTodoListCompleted] = useState<Array<TodoObject>>([])
-  const [completedTodos, setTodosCompletedState] = useState(false)
-  const changeCompletedState = () => setTodosCompletedState(!completedTodos)
   const [showTodos, setShowTodos] = useState<Array<TodoObject>>([])
   const [selectedUser, setSelectedUser] = useState('')
   const inputComponent = useRef<HTMLInputElement>(null)
-  const navigate = useNavigate();
+  const navigate = useNavigate()
+  let [completedTodos, setCompletedTodos] = useState(false)
   
+
+
   useEffect(() => {
-    userService.getUsers().then((value) => setUserList(value))
-    todoService.getTodos().then((value) => setTodoList(value))
-    todoService.getTodosByComplete().then((value) => setTodoListCompleted(value))
-    if (completedTodos){
-      //throwing because todoListCompleted is null
-      //how to check and handle empty array
-      setShowTodos(todoListCompleted)
-    }else{-
-      setShowTodos(todoList)
-    }
-  })
+  userService.getUsers().then((value) => setUserList(value))
+  todoService.getTodos().then((value) => setTodoList(value))
+  todoService.getTodosByComplete().then((value) => setTodoListCompleted(value))
+  setShowTodos(todoList)
+
+  }, [])
 
   function getUserName(id: number){
     let username = ''
@@ -63,19 +60,26 @@ function Home() {
   const handleSelectUser = (event: SelectChangeEvent<SetStateAction<string>>) => {
     console.log('handle select user')
     const {target:{value}, }= event;setSelectedUser(value)
-    //console.log(key)
+    const stringValue = value as String
+    const userId = stringValue.charAt(0)
+    console.log(userId)
+    if (showTodos.length > 0){
+      showTodos.map((todo) => {if(todo.user.toString == userId){console.log(userId)}})
+      }
+  }
+
+  const handleCompletedState = () => {
+    completedTodos = !completedTodos
+    setCompletedTodos(completedTodos)
+    if(completedTodos){
+      setShowTodos(todoListCompleted)
+    }else{
+      setShowTodos(todoList)
+    }
   }
 
   const handleDelete = () => {
-    return (<DeleteAlert/>)
-  }
-
-  function filterForCompleted(id: number){
-    for (var todoItem of todoList){
-      if (todoItem.isComplete){
-        todoListCompleted.push(todoItem)
-      }
-    }
+    return (<DeleteDialog/>)
   }
 
   const navigateToAdd = () => {
@@ -100,6 +104,7 @@ function Home() {
             position: 'fixed',
             top: 100,
           }}>
+            
         <FormControl>
             <Box
             sx={{
@@ -123,7 +128,7 @@ function Home() {
                             renderValue={(value) => value ? value : <em>Select User</em>}
                             sx={{marginLeft:8, marginBottom:1, marginTop:1, minWidth:'220px !important'}}>
                       {/**user.attributes.get("first-name") solves implicit get error but does not function on web? */}
-                      {userList.map((user) => (<MenuItem key={user.id} value={user.attributes["first-name"] +" "+ user.attributes["last-name"]}>{user.attributes["first-name"] +" "+ user.attributes["last-name"]}</MenuItem>))}
+                      {userList.map((user) => (<MenuItem key={user.id} value={user.id+ ' - '+ user.attributes["first-name"] +" "+ user.attributes["last-name"]}>{user.id+ ' - '+ user.attributes["first-name"] +" "+ user.attributes["last-name"]}</MenuItem>))}
                     </Select>
                 }
                 label="User"
@@ -136,7 +141,7 @@ function Home() {
                 control={
                     <Switch 
                         //checked = {true}
-                        onChange={changeCompletedState}
+                        onChange={handleCompletedState}
                         sx={{marginLeft:1, marginBottom:1, marginTop:1}}/>}
                 label="Completed"
                 labelPlacement='start' /></Box>
@@ -158,7 +163,7 @@ function Home() {
                   </TableRow>
                 </TableHead>
                 <TableBody overflow-y="scroll" sx={{height:'max-content'}}>
-                  { todoList.map((todo) => (
+                  { showTodos.length > 0 ? showTodos.map((todo) => (
                     <TableRow
                       key={todo.id}
                       //sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
@@ -169,12 +174,14 @@ function Home() {
                       <TableCell><Button onClick={navigateToEdit} key={todo.id} sx={{color:theme.palette.primary.contrastText}}><Edit/></Button></TableCell>
                       <TableCell><Button onClick={handleDelete} key={todo.id} sx={{color:theme.palette.primary.contrastText}}><DeleteOutline/></Button></TableCell>
                     </TableRow>
-                  ))}
+                  )): <TableRow></TableRow>}
                 </TableBody>
               </Table>
             </TableContainer>
             <Button onClick={navigateToAdd} variant='contained' sx={{color:theme.palette.primary.light}}>Add Task</Button>
-        </FormControl></Box>
+        </FormControl>
+        <DeleteDialog></DeleteDialog>
+        </Box>
     </ThemeProvider>
   )
 }

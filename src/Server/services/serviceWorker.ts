@@ -26,23 +26,28 @@ const isLocalhost = Boolean(
   };
   
   export function register(config?: Config) {
-    if (process.env.NODE_ENV === 'production' && 'serviceWorker' in navigator) {
+    console.log('attempt to register')
+    if (import.meta.env.MODE === 'development' && 'serviceWorker' in navigator) {
       // The URL constructor is available in all browsers that support SW.
       const publicUrl = new URL(
-        process.env.PUBLIC_URL ?? '',
+        import.meta.env.MODE ?? '',
         window.location.href
       );
       if (publicUrl.origin !== window.location.origin) {
         // Our service worker won't work if PUBLIC_URL is on a different origin
         // from what our page is served on. This might happen if a CDN is used to
         // serve assets; see https://github.com/facebook/create-react-app/issues/2374
+        console.log('could not register service worker')
         return;
       }
   
       window.addEventListener('load', () => {
-        const swUrl = `${process.env.PUBLIC_URL}/service-worker.js`;
+        
+        console.log('window event load has occurred')
+        const swUrl = `/serviceWorker.ts`;
   
         if (isLocalhost) {
+          console.log('running on localhost')
           // This is running on localhost. Let's check if a service worker still exists or not.
           checkValidServiceWorker(swUrl, config);
   
@@ -108,6 +113,8 @@ const isLocalhost = Boolean(
   }
   
   function checkValidServiceWorker(swUrl: string, config?: Config) {
+    console.log(swUrl)
+    console.log('check valid service worker')
     // Check if the service worker can be found. If it can't reload the page.
     fetch(swUrl, {
       headers: { 'Service-Worker': 'script' }
@@ -131,6 +138,7 @@ const isLocalhost = Boolean(
         }
       })
       .catch(() => {
+        console.log('url not found')
         console.log(
           'No internet connection found. App is running in offline mode.'
         );

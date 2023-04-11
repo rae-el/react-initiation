@@ -1,20 +1,19 @@
 import Alert from "@mui/material/Alert"
-import Button from "@mui/material/Button"
 import Warning from '@mui/icons-material/Warning'
+import { useEffect, useState } from "react"
+import { Collapse } from "@mui/material"
 
-function DeleteAlert(){
+export default function DeleteAlert(){
+    const [open, setOpen] = useState(false)
+    
     return(
-        <Alert
+        <Collapse in={open}><Alert
         icon={<Warning sx={{ mx: 0.5 }} />}
         variant="outlined"
-        action={
-            <Button>
-              Undo
-            </Button>
-        }
-      >
+        color='warning'
+        sx={{marginTop:2, width:'85%'}}
+        onClose={() => setOpen(false)}>
           Task was successfully deleted
-      </Alert>
+      </Alert></Collapse>
     )
 }
-export default DeleteAlert

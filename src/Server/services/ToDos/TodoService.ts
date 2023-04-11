@@ -5,7 +5,6 @@ export class TodoService{
     async getTodos(){
         try{
             const response = await axios.get("api/todos");
-            console.log(response)
             return response.data.todos
         }catch (e){
             console.error(e)
@@ -14,7 +13,6 @@ export class TodoService{
     async getTodosByComplete(){
         try{
             const response = await axios.get("api/todos/completed");
-            console.log(response)
             return response.data.todos
         }catch (e){
             console.error(e)
