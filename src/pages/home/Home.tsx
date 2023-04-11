@@ -1,4 +1,4 @@
-import { Box, FormControl, FormControlLabel, MenuItem, Select, SelectChangeEvent, Switch, TextField } from '@mui/material'
+import { Box, FormControl, FormControlLabel, MenuItem, MenuItemClassKey, Select, SelectChangeEvent, Switch, TextField } from '@mui/material'
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
 import TableCell from '@mui/material/TableCell';
@@ -18,10 +18,13 @@ import { TodoObject, UserAttributes } from '../../Server/server';
 import { UserService } from '../../Server/services/Users/UserService';
 import React, { SetStateAction, useEffect, useRef, useState } from 'react';
 import { UserObject } from '../../Server/server';
+import Header from '../../components/ui/Header';
+import { Link, useNavigate } from 'react-router-dom';
+import DeleteAlert from '../../components/ui/DeleteAlert';
 
 
 
-function TodosForm() {
+function Home() {
   const userService = new UserService()
   const todoService = new TodoService()
   const [userList, setUserList] = useState<Array<UserObject>>([])
@@ -31,11 +34,9 @@ function TodosForm() {
   const changeCompletedState = () => setTodosCompletedState(!completedTodos)
   const [showTodos, setShowTodos] = useState<Array<TodoObject>>([])
   const [selectedUser, setSelectedUser] = useState('')
-  const inputComponent = useRef<HTMLInputElement>(null);
+  const inputComponent = useRef<HTMLInputElement>(null)
+  const navigate = useNavigate();
   
-
-
-
   useEffect(() => {
     userService.getUsers().then((value) => setUserList(value))
     todoService.getTodos().then((value) => setTodoList(value))
@@ -59,10 +60,31 @@ function TodosForm() {
     }
   }
 
-    const handleSelectUser = (event: SelectChangeEvent<SetStateAction<string>>) => {
-      console.log('handle select user')
-      const {target:{value}, }= event; setSelectedUser(value)
+  const handleSelectUser = (event: SelectChangeEvent<SetStateAction<string>>) => {
+    console.log('handle select user')
+    const {target:{value}, }= event;setSelectedUser(value)
+    //console.log(key)
+  }
+
+  const handleDelete = () => {
+    return (<DeleteAlert/>)
+  }
+
+  function filterForCompleted(id: number){
+    for (var todoItem of todoList){
+      if (todoItem.isComplete){
+        todoListCompleted.push(todoItem)
+      }
     }
+  }
+
+  const navigateToAdd = () => {
+    navigate('/add');
+  }
+
+  const navigateToEdit = () => {
+    navigate('/edit');
+  }
 
 
 
@@ -70,6 +92,7 @@ function TodosForm() {
   return (
     <ThemeProvider theme={theme}>
         {/* edit form values to reflect api */}
+        <Header/>
         <Box
         sx={{
             width:'90%',
@@ -83,9 +106,7 @@ function TodosForm() {
                 width:'100%',
               }}>
             <FormControlLabel
-                control={
-                    <TextField label='Test Project' inputMode='text' variant='filled' disabled sx={{width:'20', marginLeft:6, marginBottom:1, marginTop:1}}/>
-                    }
+                control={<TextField label='Test Project' inputMode='text' variant='filled' disabled sx={{width:'20', marginLeft:6, marginBottom:1, marginTop:1}}/>}
                 label="Project"
                 labelPlacement='start'
                 /></Box>
@@ -99,10 +120,10 @@ function TodosForm() {
                             value= {selectedUser}
                             onChange={handleSelectUser}
                             ref={inputComponent}
-                            renderValue={(value) => value ? value : <em>select user</em>}
+                            renderValue={(value) => value ? value : <em>Select User</em>}
                             sx={{marginLeft:8, marginBottom:1, marginTop:1, minWidth:'220px !important'}}>
                       {/**user.attributes.get("first-name") solves implicit get error but does not function on web? */}
-                      {userList.map((user) => (<MenuItem key={user.id}>{user.attributes["first-name"] +" "+ user.attributes["last-name"]}</MenuItem>))}
+                      {userList.map((user) => (<MenuItem key={user.id} value={user.attributes["first-name"] +" "+ user.attributes["last-name"]}>{user.attributes["first-name"] +" "+ user.attributes["last-name"]}</MenuItem>))}
                     </Select>
                 }
                 label="User"
@@ -116,9 +137,7 @@ function TodosForm() {
                     <Switch 
                         //checked = {true}
                         onChange={changeCompletedState}
-                        sx={{marginLeft:1, marginBottom:1, marginTop:1}}
-                    />
-                }
+                        sx={{marginLeft:1, marginBottom:1, marginTop:1}}/>}
                 label="Completed"
                 labelPlacement='start' /></Box>
             <TableContainer 
@@ -147,17 +166,17 @@ function TodosForm() {
                       <TableCell>{todo.name}</TableCell>
                       <TableCell>{getUserName(todo.user)}</TableCell>
                       <TableCell><Button key={todo.id} sx={{color:theme.palette.primary.contrastText}}>{todo.isComplete ? <TaskAlt/> : <RadioButtonUnchecked/>}</Button></TableCell>
-                      <TableCell><Button key={todo.id} sx={{color:theme.palette.primary.contrastText}}><Edit/></Button></TableCell>
-                      <TableCell><Button key={todo.id} sx={{color:theme.palette.primary.contrastText}}><DeleteOutline/></Button></TableCell>
+                      <TableCell><Button onClick={navigateToEdit} key={todo.id} sx={{color:theme.palette.primary.contrastText}}><Edit/></Button></TableCell>
+                      <TableCell><Button onClick={handleDelete} key={todo.id} sx={{color:theme.palette.primary.contrastText}}><DeleteOutline/></Button></TableCell>
                     </TableRow>
                   ))}
                 </TableBody>
               </Table>
             </TableContainer>
-            <Button variant='contained' sx={{color:theme.palette.primary.light}}>Add Task</Button>
+            <Button onClick={navigateToAdd} variant='contained' sx={{color:theme.palette.primary.light}}>Add Task</Button>
         </FormControl></Box>
     </ThemeProvider>
   )
 }
 
-export default TodosForm
+export default Home
