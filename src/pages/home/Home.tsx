@@ -59,20 +59,31 @@ function Home() {
     // get target
     const {target:{value}, }= event
     setSelectedUser(value)
-    const stringValue = value as String
-    const userIdString = stringValue.charAt(0)
-    const userId = userIdString as unknown as number
-    
+    if (value != ''){
+      const stringValue = value as String
+      const userIdString = stringValue.charAt(0)
+      const userId = userIdString as unknown as number
 
-    //filter list based on user & completed state
-    if (completedTodos){
-      let filteredArray = todoList.filter(todo => todo.user == userId && todo.isComplete == true)
-      setShowList(filteredArray)
+      //filter list based on user & completed state
+      if (completedTodos){
+        let filteredArray = todoList.filter(todo => todo.user == userId && todo.isComplete == true)
+        setShowList(filteredArray)
+      }else{
+        let filteredArray = todoList.filter(todo => todo.user == userId)
+        setShowList(filteredArray)
+      }
     }else{
-      let filteredArray = todoList.filter(todo => todo.user == userId)
-      setShowList(filteredArray)
+      //filter list based on user & completed state
+      if (completedTodos){
+        let filteredArray = todoList.filter(todo => todo.isComplete == true)
+        setShowList(filteredArray)
+      }else{
+        setShowList(todoList)
+      }
     }
     
+    
+
     
   }
 
@@ -151,6 +162,7 @@ function Home() {
                             ref={inputComponent}
                             renderValue={(value) => value ? value : <em>Select User</em>}
                             sx={{marginLeft:8, marginBottom:1, marginTop:1, minWidth:'220px !important'}}>
+                              <MenuItem value=''> Allow for all users </MenuItem>
                       {/**user.attributes.get("first-name") solves implicit get error but does not function on web? */}
                       {userList.map((user) => (<MenuItem key={user.id} value={user.id+ ' - '+ user.attributes["first-name"] +" "+ user.attributes["last-name"]}>{user.id+ ' - '+ user.attributes["first-name"] +" "+ user.attributes["last-name"]}</MenuItem>))}
                     </Select>
