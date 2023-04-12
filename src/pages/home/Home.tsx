@@ -14,13 +14,12 @@ import Edit from '@mui/icons-material/Edit'
 import theme from '../../theme';
 import Button from '@mui/material/Button';
 import { TodoService } from '../../Server/services/ToDos/TodoService';
-import { TodoObject, UserAttributes } from '../../Server/server';
+import { TodoObject } from '../../Server/server';
 import { UserService } from '../../Server/services/Users/UserService';
-import React, { SetStateAction, useEffect, useRef, useState } from 'react';
+import { SetStateAction, useEffect, useRef, useState } from 'react';
 import { UserObject } from '../../Server/server';
 import Header from '../../components/ui/Header';
-import { Link, useNavigate } from 'react-router-dom';
-import DeleteAlert from '../../components/ui/DeleteAlert';
+import { useNavigate } from 'react-router-dom';
 import DeleteDialog from '../../components/ui/DeleteDialog';
 
 
@@ -50,6 +49,7 @@ function Home() {
     for(let i=0; i<userList.length; i++){
       if(userList[i].id == id){
         username = userList[i].attributes["first-name"] + " " + userList[i].attributes["last-name"]
+        //username = userList[i].attributes.get('first-name') + " " + userList[i].attributes.get('last-name')
        return username
       }
     }
@@ -117,6 +117,12 @@ function Home() {
     return (<DeleteDialog/>)
   }
 
+  const handleEdit = (id: number) => {
+    const stringId = id as unknown as String
+    console.log(id)
+    navigate(`/edit/${stringId}`);
+  }
+
   const navigateToAdd = () => {
     navigate('/add');
   }
@@ -163,8 +169,8 @@ function Home() {
                             renderValue={(value) => value ? value : <em>Select User</em>}
                             sx={{marginLeft:8, marginBottom:1, marginTop:1, minWidth:'220px !important'}}>
                               <MenuItem value=''> Allow for all users </MenuItem>
-                      {/**user.attributes.get("first-name") solves implicit get error but does not function on web? */}
                       {userList.map((user) => (<MenuItem key={user.id} value={user.id+ ' - '+ user.attributes["first-name"] +" "+ user.attributes["last-name"]}>{user.id+ ' - '+ user.attributes["first-name"] +" "+ user.attributes["last-name"]}</MenuItem>))}
+                      {/*userList.map((user) => (<MenuItem key={user.id} value={user.id+ ' - '+ user.attributes.get('first-name') +" "+ user.attributes.get('last-name')}>{user.id+ ' - '+ user.attributes.get('first-name') +" "+ user.attributes.get('last-name')}</MenuItem>))*/}
                     </Select>
                 }
                 label="User"
@@ -207,14 +213,14 @@ function Home() {
                       <TableCell>{todo.name}</TableCell>
                       <TableCell>{getUserName(todo.user)}</TableCell>
                       <TableCell><Button key={todo.id} sx={{color:theme.palette.primary.contrastText}}>{todo.isComplete ? <TaskAlt/> : <RadioButtonUnchecked/>}</Button></TableCell>
-                      <TableCell><Button onClick={navigateToEdit} key={todo.id} sx={{color:theme.palette.primary.contrastText}}><Edit/></Button></TableCell>
+                      <TableCell><Button onClick={() => handleEdit(todo.id)} sx={{color:theme.palette.primary.contrastText}}><Edit/></Button></TableCell>
                       <TableCell><Button onClick={handleDelete} key={todo.id} sx={{color:theme.palette.primary.contrastText}}><DeleteOutline/></Button></TableCell>
                     </TableRow>
                   )): <TableRow></TableRow>}
                 </TableBody>
               </Table>
             </TableContainer>
-            <Button onClick={navigateToAdd} variant='contained' sx={{color:theme.palette.primary.light}}>Add Task</Button>
+            <Button onClick={navigateToAdd} variant='contained' sx={{color:theme.palette.primary.light, marginTop:0.5}}>Add Task</Button>
         </FormControl>
         <DeleteDialog></DeleteDialog>
         </Box>

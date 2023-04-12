@@ -91,7 +91,7 @@ function Add() {
                       <MenuItem value={'No'}>No</MenuItem>
                       <MenuItem value={'Yes'}>Yes</MenuItem>
                     </Select>}/></Box>
-            <Button variant='outlined'>Add</Button>
+            <Button variant='contained' sx={{color:theme.palette.primary.light}}>Add</Button>
             <Button onClick={navigateToHome}>Cancel</Button>
           </FormControl>
         </Box>
