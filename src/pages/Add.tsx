@@ -27,14 +27,13 @@ function Add() {
   const [taskError, setTaskError] = useState(false)
   const [user, setUser] = useState('')
   const [userError, setUserError] = useState(false)
-  const [isCompleted, setIsCompleted] = useState('')
+  const [isCompleted, setIsCompleted] = useState('No')
   const inputComponent = useRef<HTMLInputElement>(null)
   
   
   useEffect(() => {
     userService.getUsers().then((value) => setUserList(value))
-    //initialize based on passed task data
-    setIsCompleted('No')
+    
   },[])
 
   const handleSelectUser = (event: SelectChangeEvent<SetStateAction<string>>) => {
@@ -67,6 +66,9 @@ function Add() {
       const added = todoService.createTodo(addRequestBody)
       if (added != null){
         alert('Success')
+        setTask('')
+        setUser('')
+        setIsCompleted('No')
       }
     }
     
