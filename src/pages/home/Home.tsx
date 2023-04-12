@@ -56,20 +56,50 @@ function Home() {
   }
 
   const handleSelectUser = (event: SelectChangeEvent<SetStateAction<string>>) => {
-    console.log('handle select user')
-    const {target:{value}, }= event;setSelectedUser(value)
+    // get target
+    const {target:{value}, }= event
+    setSelectedUser(value)
     const stringValue = value as String
     const userIdString = stringValue.charAt(0)
     const userId = userIdString as unknown as number
-    let userArray = showList.filter(todo => todo.user == userId)
-    setShowList(userArray)
+    
+
+    //filter list based on user & completed state
+    if (completedTodos){
+      let filteredArray = todoList.filter(todo => todo.user == userId && todo.isComplete == true)
+      setShowList(filteredArray)
+    }else{
+      let filteredArray = todoList.filter(todo => todo.user == userId)
+      setShowList(filteredArray)
+    }
+    
+    
   }
 
   const handleCompletedState = () => {
+    //set completed state
     completedTodos = !completedTodos
     setCompletedTodos(completedTodos)
-    let completedArray =  showList.filter(todo => todo.isComplete == true)
-    if (completedTodos){setShowList(completedArray)}else{setShowList(todoList)}
+
+    if (completedTodos){
+    if (selectedUser == ''){
+      let filteredArray = todoList.filter(todo => todo.isComplete == true)
+      setShowList(filteredArray)
+    }else{
+      const userIdString = selectedUser.charAt(0)
+      const userId = userIdString as unknown as number
+      let filteredArray = todoList.filter(todo => todo.isComplete == true && todo.user == userId)
+      setShowList(filteredArray)
+    }}else{
+      if (selectedUser == ''){
+        setShowList(todoList)
+      }else{
+        const userIdString = selectedUser.charAt(0)
+        const userId = userIdString as unknown as number
+        let filteredArray = todoList.filter(todo => todo.user == userId)
+        setShowList(filteredArray)
+      }
+    }
   }
 
   const handleDelete = () => {
