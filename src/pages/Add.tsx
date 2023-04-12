@@ -12,33 +12,62 @@ import { UserService } from "../Server/services/Users/UserService"
 import { UserObject } from "../Server/server"
 import { useNavigate } from "react-router-dom"
 import FormControlLabel from "@mui/material/FormControlLabel"
+import { request } from "http"
+import { Http2ServerRequest } from "http2"
+import { TodoService } from "../Server/services/ToDos/TodoService"
 
 
 
 function Add() {
   const userService = new UserService()
+  const todoService = new TodoService()
+  const navigate = useNavigate()
   const [userList, setUserList] = useState<Array<UserObject>>([])
-  const [selectedUser, setSelectedUser] = useState('')
-  const [selectedCompletion, setSelectedCompletion] = useState('')
+  const [task, setTask] = useState('')
+  const [taskError, setTaskError] = useState(false)
+  const [user, setUser] = useState('')
+  const [userError, setUserError] = useState(false)
+  const [isCompleted, setIsCompleted] = useState('')
   const inputComponent = useRef<HTMLInputElement>(null)
-  const navigate = useNavigate();
+  
   
   useEffect(() => {
     userService.getUsers().then((value) => setUserList(value))
     //initialize based on passed task data
-    setSelectedCompletion('No')
+    setIsCompleted('No')
   },[])
 
   const handleSelectUser = (event: SelectChangeEvent<SetStateAction<string>>) => {
-    console.log('handle select user')
-    const {target:{value}, }= event;setSelectedUser(value)
+    const {target:{value}, }= event;setUser(value)
     //console.log(key)
   }
 
   const handleSelectCompletion = (event: SelectChangeEvent<SetStateAction<string>>) => {
-    console.log('handle select completion')
-    const {target:{value}, }= event;setSelectedCompletion(value)
+    const {target:{value}, }= event;setIsCompleted(value)
     //console.log(key)
+  }
+
+  const handleAddTask = (event: { preventDefault: () => void }) => {
+    event.preventDefault()
+    setTaskError(false)
+    setUserError(false)
+
+    if(task == ''){
+      setTaskError(true)
+    }
+    if(user == ''){
+      setUserError(true)
+    }
+    if(task != '' && user != ''){
+      //add task error catching
+      const addTask = task
+      const addUser = user.charAt(0) as unknown as number
+      const addIsCompleted = isCompleted ? true : false
+      const addRequestBody = {'id': 999, 'name':addTask, 'isComplete':addIsCompleted, 'user':addUser}
+      todoService.createTodo(addRequestBody)
+    }
+    
+    
   }
 
   const navigateToHome = () => {
@@ -60,40 +89,49 @@ function Add() {
           <Typography variant='h3'>
             Add Task
           </Typography>
+          <form autoComplete='off' onSubmit={handleAddTask}>
           <FormControl>
             <Box sx={{width:'100%'}}>
                 <FormControlLabel 
                 label='Task'
                 labelPlacement='start'
-                control={<TextField sx={{marginLeft:6.5, marginTop:1, marginBottom:1}}></TextField>}/></Box>
+                control={<FormControl>
+                  <TextField 
+                    onChange={e => setTask(e.target.value)} 
+                    value={task}
+                    error={taskError}
+                    sx={{marginLeft:6.5, marginTop:1, marginBottom:1}}>
+                  </TextField>
+                </FormControl>}/></Box>
             <Box sx={{width:'100%'}}>
                 <FormControlLabel 
                 label='User' 
                 labelPlacement='start'
-                control={<Select label='User'
-                            value= {selectedUser}
+                control={<FormControl><Select label='User'
+                            value= {user}
                             onChange={handleSelectUser}
                             ref={inputComponent}
                             renderValue={(value) => value ? value : <em>Select User</em>}
                             sx={{marginLeft:6.5, marginTop:1, marginBottom:1, minWidth:'220px !important'}}>
                       {/**user.attributes.get("first-name") solves implicit get error but does not function on web? */}
                       {userList.map((user) => (<MenuItem key={user.id} value={user.id+ ' - '+ user.attributes["first-name"] +" "+ user.attributes["last-name"]}>{user.id+ ' - '+ user.attributes["first-name"] +" "+ user.attributes["last-name"]}</MenuItem>))}
-                    </Select>}/></Box>
+                    </Select></FormControl>}/></Box>
             <Box sx={{width:'100%'}}>
                 <FormControlLabel 
                 label='Completed' 
                 labelPlacement='start'
-                control={<Select label='Completed'
-                    value={selectedCompletion}
+                control={<FormControl><Select label='Completed'
+                    value={isCompleted}
                     onChange={handleSelectCompletion}
                     sx={{marginLeft:1, marginTop:1, marginBottom:1, minWidth:'220px !important'}}
                             >
                       <MenuItem value={'No'}>No</MenuItem>
                       <MenuItem value={'Yes'}>Yes</MenuItem>
-                    </Select>}/></Box>
-            <Button variant='contained' sx={{color:theme.palette.primary.light}}>Add</Button>
+                    </Select></FormControl>}/></Box>
+            <Button variant='contained' type='submit' sx={{color:theme.palette.primary.light}}>Add</Button>
             <Button onClick={navigateToHome}>Cancel</Button>
           </FormControl>
+          </form>
         </Box>
     </ThemeProvider>
   )

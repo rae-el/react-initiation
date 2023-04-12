@@ -1,4 +1,5 @@
 import axios, { AxiosRequestConfig } from "axios";
+import { TodoObject } from "../../server";
 
 export class TodoService{
     //gets
@@ -10,58 +11,37 @@ export class TodoService{
             console.error(e)
         }
     }
-    async getTodosByComplete(){
+    async getTodoById(id: string){
         try{
-            const response = await axios.get("api/todos/completed");
-            return response.data.todos
-        }catch (e){
-            console.error(e)
+            const response = await axios.get(`/api/todo/${id}`)
+            return response.data.todo
         }
-    }
-    async getTodosByUser(request: string){
-        try{
-            const response = await axios.get("api/user/"+{request}+"/todos")
-        }catch (e){
-            console.error(e)
-        }
-    }
-
-    async getTodosById(request: string){
-        try{
-            const response = await axios.get("api/todo/"+{request})
-        }catch (e){
-            console.error(e)
-        }
-    }
-
-    async getTodosByName(request: string){
-        try{
-            const response = await axios.get("api/todo/name/"+{request})
-        }catch (e){
+        catch(e){
             console.error(e)
         }
     }
     
     //post
-    async createTodo(request: string){
+    async createTodo(newTodo: TodoObject){
     try{
-        const response = await axios.post("api/todos/create", {request:request})
+        await axios.post("api/todo/create", {method: 'POST', body: JSON.stringify(newTodo)})
     }catch (e){
         console.error(e)
     }
     }
     //put
-    async updateTodo(request: string){
+    async updateTodo(request: Request){
         try{
-            const response = await axios.post("api/todo/"+{request:request}+"/update")
+            await axios.post("api/todo/"+{request:request}+"/update")
         }catch (e){
             console.error(e)
         }
         }
     //delete
-    async deleteTodo(request: string){
+    async deleteTodo(request: Request){
+        //const todoId = request.params.id
         try{
-            const response = await axios.post("api/todo/"+{request:request}+"/delete")
+            await axios.post("api/todo/"+{request:request}+"/delete")
         }catch (e){
             console.error(e)
         }

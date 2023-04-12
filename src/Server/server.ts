@@ -135,7 +135,7 @@ export function makeServer () {
                 }
             })
             // edit todo
-            this.put("/todo/:id/update", (schema:any, request)=> {
+            this.patch("/todo/:id/update", (schema:any, request)=> {
                 const todoId = request.params.id
                 let attrs = JSON.parse(request.requestBody)
                 schema.todos.find(todoId).update(attrs)

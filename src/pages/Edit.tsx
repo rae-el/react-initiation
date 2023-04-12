@@ -23,41 +23,25 @@ function Edit() {
   const [todoList, setTodoList] = useState<Array<TodoObject>>([])
   const [editingTodo, setEditingTodo] = useState<TodoObject>()
   const [selectedUser, setSelectedUser] = useState('')
+  const [taskName, setTaskName] = useState('')
   const [selectedCompletion, setSelectedCompletion] = useState('')
   const inputComponent = useRef<HTMLInputElement>(null)
   const navigate = useNavigate();
   const params = useParams();
   
   useEffect(() => {
-    console.log(params.id)
-    //userService.getUsers().then((value) => setUserList(value))
-    //todoService.getTodos().then((value) => setTodoList(value))
+    const todoId = params.id as unknown as string
+    todoService.getTodoById(todoId).then((value) => setEditingTodo(value))
+    if (editingTodo != null){
+      setTaskName(editingTodo.name)
+      setSelectedCompletion(editingTodo.isComplete ? 'Yes' : 'No')
+    }
     //const filterForTodo = todoList.filter(todo => todo.id as unknown as String == params.id)
     //console.log(filterForTodo)
     //setEditingTodo(filterForTodo[0])
   },[])
 
-  const setData = () =>{
-    const filterForTodo = todoList.filter(todo => todo.id as unknown as String == params.id)
-    setEditingTodo(filterForTodo[0])
-    if (editingTodo?.isComplete){
-      setSelectedCompletion('No')
-    }else{
-      setSelectedCompletion('Yes')
-    }
-
-    
-    let username = ''
-    for(let i=0; i<userList.length; i++){
-      if(userList[i].id == editingTodo?.user){
-        username = userList[i].attributes["first-name"] + " " + userList[i].attributes["last-name"]
-        //username = userList[i].attributes.get('first-name') + " " + userList[i].attributes.get('last-name')
-        setSelectedUser(username)
-      }
-    }
-    
-  }
-
+  
   const handleSelectUser = (event: SelectChangeEvent<SetStateAction<string>>) => {
     console.log('handle select user')
     const {target:{value}, }= event;setSelectedUser(value)
@@ -89,42 +73,40 @@ function Edit() {
           <Typography variant='h3'>
             Edit Todo
           </Typography>
-          {/*** 
+          
           <FormControl>
             <Box sx={{width:'100%'}}>
                 <FormControlLabel 
                 label='Task'
                 labelPlacement='start'
-                control={<TextField sx={{marginLeft:6.5, marginTop:1, marginBottom:1}}></TextField>}/></Box>
+                control={<FormControl><TextField value={taskName} sx={{marginLeft:6.5, marginTop:1, marginBottom:1}}></TextField></FormControl>}/></Box>
             <Box sx={{width:'100%'}}>
                 <FormControlLabel 
                 label='User' 
                 labelPlacement='start'
-                control={<Select label='User'
+                control={<FormControl><Select label='User'
                             value= {selectedUser}
                             onChange={handleSelectUser}
                             ref={inputComponent}
                             renderValue={(value) => value ? value : <em>Select User</em>}
                             sx={{marginLeft:6.5, marginTop:1, marginBottom:1, minWidth:'220px !important'}}>
-                
                       {userList.map((user) => (<MenuItem key={user.id} value={user.id+ ' - '+ user.attributes["first-name"] +" "+ user.attributes["last-name"]}>{user.id+ ' - '+ user.attributes["first-name"] +" "+ user.attributes["last-name"]}</MenuItem>))}
-                    </Select>}/></Box>
+                    </Select></FormControl>}/></Box>
             <Box sx={{width:'100%'}}>
                 <FormControlLabel 
                 label='Completed' 
                 labelPlacement='start'
-                control={<Select label='Completed'
+                control={<FormControl><Select label='Completed'
                     value={selectedCompletion}
                     onChange={handleSelectCompletion}
-                    sx={{marginLeft:1, marginTop:1, marginBottom:1, minWidth:'220px !important'}}
-                            >
+                    sx={{marginLeft:1, marginTop:1, marginBottom:1, minWidth:'220px !important'}}>
                       <MenuItem value={'No'}>No</MenuItem>
                       <MenuItem value={'Yes'}>Yes</MenuItem>
-                    </Select>}/></Box>
+                    </Select></FormControl>}/></Box>
             <Button variant='contained' sx={{color:theme.palette.primary.light}}>Save</Button>
             <Button onClick={navigateToHome}>Cancel</Button>
           </FormControl>
-        ***/}
+        
         </Box>
     </ThemeProvider>
   )
