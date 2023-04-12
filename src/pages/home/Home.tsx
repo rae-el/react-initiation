@@ -113,8 +113,9 @@ function Home() {
     }
   }
 
-  const handleDelete = () => {
-    return (<DeleteDialog/>)
+  const handleDelete = async (id: number) => {
+    const response = await todoService.deleteTodo(id)
+    console.log(response)
   }
 
   const handleEdit = (id: number) => {
@@ -214,7 +215,7 @@ function Home() {
                       <TableCell>{getUserName(todo.user)}</TableCell>
                       <TableCell><Button key={todo.id} sx={{color:theme.palette.primary.contrastText}}>{todo.isComplete ? <TaskAlt/> : <RadioButtonUnchecked/>}</Button></TableCell>
                       <TableCell><Button onClick={() => handleEdit(todo.id)} sx={{color:theme.palette.primary.contrastText}}><Edit/></Button></TableCell>
-                      <TableCell><Button onClick={handleDelete} key={todo.id} sx={{color:theme.palette.primary.contrastText}}><DeleteOutline/></Button></TableCell>
+                      <TableCell><Button onClick={() => handleDelete(todo.id)} sx={{color:theme.palette.primary.contrastText}}><DeleteOutline/></Button></TableCell>
                     </TableRow>
                   )): <TableRow></TableRow>}
                 </TableBody>

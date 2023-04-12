@@ -4,6 +4,7 @@ import { TodoObject } from "../../server";
 export class TodoService{
     //gets
     async getTodos(){
+        //working
         try{
             const response = await axios.get("api/todos");
             return response.data.todos
@@ -12,6 +13,7 @@ export class TodoService{
         }
     }
     async getTodoById(id: string){
+        //working
         try{
             const response = await axios.get(`/api/todo/${id}`)
             return response.data.todo
@@ -23,6 +25,7 @@ export class TodoService{
     
     //post
     async createTodo(newTodo: TodoObject){
+        //working
     try{
         const response = await axios.post("api/todo/create", {method: 'POST', body: JSON.stringify(newTodo)})
         return response.data.todo
@@ -39,10 +42,11 @@ export class TodoService{
         }
         }
     //delete
-    async deleteTodo(request: Request){
+    async deleteTodo(id: number){
         //const todoId = request.params.id
         try{
-            await axios.post("api/todo/"+{request:request}+"/delete")
+            const response = await axios.delete(`api/todo/${id}/delete`)
+            return response.data
         }catch (e){
             console.error(e)
         }

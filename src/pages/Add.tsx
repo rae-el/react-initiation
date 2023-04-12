@@ -15,6 +15,7 @@ import FormControlLabel from "@mui/material/FormControlLabel"
 import { request } from "http"
 import { Http2ServerRequest } from "http2"
 import { TodoService } from "../Server/services/ToDos/TodoService"
+import { faker } from "@faker-js/faker"
 
 
 
@@ -62,7 +63,8 @@ function Add() {
       const addTask = task
       const addUser = user.charAt(0) as unknown as number
       const addIsCompleted = isCompleted ? true : false
-      const addRequestBody = {'id': 999, 'name':addTask, 'isComplete':addIsCompleted, 'user':addUser}
+      const id = faker.datatype.number({ min: 15, max: 1000, precision: 1 })
+      const addRequestBody = {'id': id, 'name':addTask, 'isComplete':addIsCompleted, 'user':addUser}
       const added = todoService.createTodo(addRequestBody)
       if (added != null){
         alert('Success')
