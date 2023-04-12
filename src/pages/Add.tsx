@@ -64,7 +64,10 @@ function Add() {
       const addUser = user.charAt(0) as unknown as number
       const addIsCompleted = isCompleted ? true : false
       const addRequestBody = {'id': 999, 'name':addTask, 'isComplete':addIsCompleted, 'user':addUser}
-      todoService.createTodo(addRequestBody)
+      const added = todoService.createTodo(addRequestBody)
+      if (added != null){
+        alert('Success')
+      }
     }
     
     

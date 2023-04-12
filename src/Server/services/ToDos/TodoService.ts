@@ -24,7 +24,8 @@ export class TodoService{
     //post
     async createTodo(newTodo: TodoObject){
     try{
-        await axios.post("api/todo/create", {method: 'POST', body: JSON.stringify(newTodo)})
+        const response = await axios.post("api/todo/create", {method: 'POST', body: JSON.stringify(newTodo)})
+        return response.data.todo
     }catch (e){
         console.error(e)
     }
