@@ -30,21 +30,19 @@ function Home() {
   const todoService = new TodoService()
   const [userList, setUserList] = useState<Array<UserObject>>([])
   const [todoList, setTodoList] = useState<Array<TodoObject>>([])
-  const [todoListCompleted, setTodoListCompleted] = useState<Array<TodoObject>>([])
-  const [showTodos, setShowTodos] = useState<Array<TodoObject>>([])
+  const [showList, setShowList] = useState<Array<TodoObject>>([])
   const [selectedUser, setSelectedUser] = useState('')
   const inputComponent = useRef<HTMLInputElement>(null)
   const navigate = useNavigate()
-  let [completedTodos, setCompletedTodos] = useState(false)
+  var [completedTodos, setCompletedTodos] = useState(false)
+  
   
 
 
   useEffect(() => {
   userService.getUsers().then((value) => setUserList(value))
   todoService.getTodos().then((value) => setTodoList(value))
-  todoService.getTodosByComplete().then((value) => setTodoListCompleted(value))
-  setShowTodos(todoList)
-
+  todoService.getTodos().then((value) => setShowList(value))
   }, [])
 
   function getUserName(id: number){
@@ -61,21 +59,17 @@ function Home() {
     console.log('handle select user')
     const {target:{value}, }= event;setSelectedUser(value)
     const stringValue = value as String
-    const userId = stringValue.charAt(0)
-    console.log(userId)
-    if (showTodos.length > 0){
-      showTodos.map((todo) => {if(todo.user.toString == userId){console.log(userId)}})
-      }
+    const userIdString = stringValue.charAt(0)
+    const userId = userIdString as unknown as number
+    let userArray = showList.filter(todo => todo.user == userId)
+    setShowList(userArray)
   }
 
   const handleCompletedState = () => {
     completedTodos = !completedTodos
     setCompletedTodos(completedTodos)
-    if(completedTodos){
-      setShowTodos(todoListCompleted)
-    }else{
-      setShowTodos(todoList)
-    }
+    let completedArray =  showList.filter(todo => todo.isComplete == true)
+    if (completedTodos){setShowList(completedArray)}else{setShowList(todoList)}
   }
 
   const handleDelete = () => {
@@ -163,7 +157,7 @@ function Home() {
                   </TableRow>
                 </TableHead>
                 <TableBody overflow-y="scroll" sx={{height:'max-content'}}>
-                  { showTodos.length > 0 ? showTodos.map((todo) => (
+                  { showList.length > 0 ? showList.map((todo) => (
                     <TableRow
                       key={todo.id}
                       //sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
