@@ -34,21 +34,23 @@ export class TodoService{
         }
         }
     //post
-    async createTodo(id: number, name: string, isComplete: boolean, user: UserObject){
+    async createTodo(todo: TodoObject){
         //not working
+        const json = JSON.stringify(todo)
         
     try{
-        const response = await axios.post("api/todo/create", {id,name,isComplete,user})
+        const response = await axios.post("api/todo/create", todo)
         return response.data.todo
     }catch (e){
         console.error(e)
     }
     }
     //put
-    async updateTodo(request: Request){
+    async updateTodo(todo: TodoObject){
         //not working
         try{
-            await axios.post("api/todo/"+{request:request}+"/update")
+            const response = await axios.post(`api/todo/${todo}+/update`)
+            return response.data.todo
         }catch (e){
             console.error(e)
         }

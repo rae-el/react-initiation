@@ -9,7 +9,7 @@ import Button from "@mui/material/Button"
 import Select, { SelectChangeEvent } from "@mui/material/Select"
 import MenuItem from "@mui/material/MenuItem"
 import { UserService } from "../Server/services/Users/UserService"
-import { UserObject } from "../Server/server"
+import { TodoObject, UserObject } from "../Server/server"
 import { useNavigate } from "react-router-dom"
 import FormControlLabel from "@mui/material/FormControlLabel"
 import { request } from "http"
@@ -67,7 +67,9 @@ function Add() {
       const addIsCompleted = isCompleted ? true : false
       const id = faker.datatype.number({ min: 15, max: 1000, precision: 1 })
       if (userObj){
-        const added = todoService.createTodo(id,addTask,addIsCompleted,userObj)
+        const newTodo : TodoObject = {id:id, isComplete : addIsCompleted, name : addTask, user: addUser}
+        //const added = todoService.createTodo(addIsCompleted,addTask,id,userObj)
+        const added = todoService.createTodo(newTodo)
         if (added != null){
         alert('Success')
         setTask('')
