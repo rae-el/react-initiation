@@ -62,16 +62,21 @@ function Add() {
       //add task error catching
       const addTask = task
       const addUser = user.charAt(0) as unknown as number
+      let userObj : UserObject | undefined = undefined;
+      userList.map((user) => user.id == addUser ? userObj = user : console.log('skip'))
       const addIsCompleted = isCompleted ? true : false
       const id = faker.datatype.number({ min: 15, max: 1000, precision: 1 })
-      const addRequestBody = {'id': id, 'name':addTask, 'isComplete':addIsCompleted, 'user':addUser}
-      const added = todoService.createTodo(addRequestBody)
-      if (added != null){
+      if (userObj){
+        const added = todoService.createTodo(id,addTask,addIsCompleted,userObj)
+        if (added != null){
         alert('Success')
         setTask('')
         setUser('')
         setIsCompleted('No')
       }
+      }
+      
+      
     }
     
     

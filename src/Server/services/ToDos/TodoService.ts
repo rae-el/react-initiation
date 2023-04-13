@@ -1,5 +1,6 @@
 import axios, { AxiosRequestConfig } from "axios";
-import { TodoObject } from "../../server";
+import { TodoObject, UserObject } from "../../server";
+import { ModelInstance } from "miragejs";
 
 export class TodoService{
     //gets
@@ -22,28 +23,9 @@ export class TodoService{
             console.error(e)
         }
     }
-    
-    //post
-    async createTodo(newTodo: TodoObject){
-        //working
-    try{
-        const response = await axios.post("api/todo/create", {method: 'POST', body: JSON.stringify(newTodo)})
-        return response.data.todo
-    }catch (e){
-        console.error(e)
-    }
-    }
-    //put
-    async updateTodo(request: Request){
-        try{
-            await axios.post("api/todo/"+{request:request}+"/update")
-        }catch (e){
-            console.error(e)
-        }
-        }
     //delete
     async deleteTodo(id: number){
-        //const todoId = request.params.id
+        //working
         try{
             const response = await axios.delete(`api/todo/${id}/delete`)
             return response.data
@@ -51,6 +33,27 @@ export class TodoService{
             console.error(e)
         }
         }
+    //post
+    async createTodo(id: number, name: string, isComplete: boolean, user: UserObject){
+        //not working
+        
+    try{
+        const response = await axios.post("api/todo/create", {id,name,isComplete,user})
+        return response.data.todo
+    }catch (e){
+        console.error(e)
+    }
+    }
+    //put
+    async updateTodo(request: Request){
+        //not working
+        try{
+            await axios.post("api/todo/"+{request:request}+"/update")
+        }catch (e){
+            console.error(e)
+        }
+        }
+    
 
     
 

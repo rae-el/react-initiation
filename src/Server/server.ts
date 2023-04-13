@@ -21,13 +21,13 @@ export interface TodoObject{
 export interface UserObject{
     type: string,
     id: number,
-    attributes: Map<string, string>
-    //attributes: UserAttributes
+    //attributes: Map<string, string>
+    attributes: UserAttributes
 }
 
 export interface UserAttributes{
-    firstName: string,
-    lastName: string
+    'first-name': string,
+    'last-name': string
 }
 
 export function makeServer () {

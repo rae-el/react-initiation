@@ -22,27 +22,26 @@ import Header from '../../components/ui/Header';
 import { useNavigate } from 'react-router-dom';
 import DeleteDialog from '../../components/ui/DeleteDialog';
 
-
-
 function Home() {
   const userService = new UserService()
   const todoService = new TodoService()
-  const [userList, setUserList] = useState<Array<UserObject>>([])
-  const [todoList, setTodoList] = useState<Array<TodoObject>>([])
-  const [showList, setShowList] = useState<Array<TodoObject>>([])
+  const [userList, setUserList] = useState<UserObject[]>([])
+  const [todoList, setTodoList] = useState<TodoObject[]>([])
+  const [showList, setShowList] = useState<TodoObject[]>([])
   const [selectedUser, setSelectedUser] = useState('')
   const inputComponent = useRef<HTMLInputElement>(null)
   const navigate = useNavigate()
   var [completedTodos, setCompletedTodos] = useState(false)
+  const [deleteDialogOpen, setDeleteDialogOpen] = useState(true)
+  const [deleteId, setDeleteId] = useState(0)
   
-  
-
 
   useEffect(() => {
   userService.getUsers().then((value) => setUserList(value))
   todoService.getTodos().then((value) => setTodoList(value))
   todoService.getTodos().then((value) => setShowList(value))
   }, [])
+
 
   function getUserName(id: number){
     let username = ''
@@ -81,10 +80,14 @@ function Home() {
         setShowList(todoList)
       }
     }
-    
-    
+  }
 
-    
+  const handleDelete = (id: number) => {
+    console.log(`handleDelete of ${id}`)
+    console.log('Dialog open '+deleteDialogOpen)
+    setDeleteId(id)
+    setDeleteDialogOpen(true)
+    console.log('Dialog open '+deleteDialogOpen)
   }
 
   const handleCompletedState = () => {
@@ -113,10 +116,6 @@ function Home() {
     }
   }
 
-  const handleDelete = async (id: number) => {
-    const response = await todoService.deleteTodo(id)
-    console.log(response)
-  }
 
   const handleEdit = (id: number) => {
     const stringId = id as unknown as String
@@ -127,12 +126,6 @@ function Home() {
   const navigateToAdd = () => {
     navigate('/add');
   }
-
-  const navigateToEdit = () => {
-    navigate('/edit');
-  }
-
-
 
 
   return (
@@ -223,7 +216,7 @@ function Home() {
             </TableContainer>
             <Button onClick={navigateToAdd} variant='contained' sx={{color:theme.palette.primary.light, marginTop:0.5}}>Add Task</Button>
         </FormControl>
-        <DeleteDialog></DeleteDialog>
+        <DeleteDialog open={deleteDialogOpen} id={deleteId}></DeleteDialog>
         </Box>
     </ThemeProvider>
   )
