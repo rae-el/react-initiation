@@ -1,5 +1,5 @@
 import ThemeProvider from "@mui/material/styles/ThemeProvider"
-import { FC, SetStateAction, useEffect, useRef, useState } from "react"
+import { FC, SetStateAction, useContext, useEffect, useRef, useState } from "react"
 import theme from "../theme"
 import Box from "@mui/material/Box"
 import FormControl from "@mui/material/FormControl"
@@ -13,14 +13,16 @@ import { TodoObject, UserObject } from "../Server/server"
 import { useNavigate, useParams } from "react-router-dom"
 import FormControlLabel from "@mui/material/FormControlLabel"
 import { TodoService } from "../Server/services/ToDos/TodoService"
+import { TodoContextType } from "../@types/Todo"
+import { TodoContext } from "../context/todoContext"
 
 type Props ={
-    userList: UserObject[]
-    todo: TodoObject | null
+    todoId: number | null
 }
 
 
-const UpdateTodo: FC<Props> = ({userList, todo}) => {
+const UpdateTodo: FC<Props> = ({todoId}) => {
+  const {userList, todo} = useContext(TodoContext) as TodoContextType
   const [selectedUser, setSelectedUser] = useState('')
   const [taskName, setTaskName] = useState('')
   const [selectedCompletion, setSelectedCompletion] = useState('')
@@ -28,11 +30,13 @@ const UpdateTodo: FC<Props> = ({userList, todo}) => {
   const navigate = useNavigate();
   
   useEffect(() => {
-    if (todo){
+    if (todo != null){
     setTaskName(todo.name)
     setSelectedCompletion(todo.isComplete ? 'Yes' : 'No')
+    const currentUser = userList.filter(user => user.id == todo.user)
+
     }
-  },[])
+})
 
   
   const handleSelectUser = (event: SelectChangeEvent<SetStateAction<string>>) => {
@@ -64,7 +68,7 @@ const UpdateTodo: FC<Props> = ({userList, todo}) => {
             top: 100,
           }}>
           <Typography variant='h3'>
-            Edit Todo
+            Edit Todo {todoId}
           </Typography>
           
           <FormControl>

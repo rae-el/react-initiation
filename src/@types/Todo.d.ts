@@ -10,7 +10,7 @@ export interface TodoObject{
 export type TodoContextType = {
     todoList: TodoObject[];
     todo: TodoObject | null;
-    getThisTodo: (id: string) => void;
+    getThisTodo: (id: number) => void;
     deleteThisTodo: (id: number) => void;
     updateThisTodo: (todo: TodoObject) => void;
     createThisTodo: (todo: TodoObject) => void;

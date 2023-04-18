@@ -1,6 +1,6 @@
 import axios, { AxiosRequestConfig } from "axios";
-import { TodoObject, UserObject } from "../../server";
 import { ModelInstance } from "miragejs";
+import { TodoObject } from "../../../@types/Todo";
 
 export class TodoService{
     //gets
@@ -13,7 +13,7 @@ export class TodoService{
             console.error(e)
         }
     }
-    async getTodoById(id: string){
+    async getTodoById(id: number){
         //working
         try{
             const response = await axios.get(`/api/todo/${id}`)
@@ -28,7 +28,7 @@ export class TodoService{
         //working
         try{
             const response = await axios.delete(`api/todo/${id}/delete`)
-            return response.data
+            return response
         }catch (e){
             console.error(e)
         }

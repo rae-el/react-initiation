@@ -27,7 +27,7 @@ const TodoProvider: FC<Props> = ({children}) => {
         }, [])
 
     //todo methods
-    const getThisTodo = (id: string) => {
+    const getThisTodo = (id: number) => {
         todoService.getTodoById(id).then((value) => setTodo(value))
     }
     const deleteThisTodo = (id: number) => {

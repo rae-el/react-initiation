@@ -9,13 +9,14 @@ import Button from "@mui/material/Button"
 import Select, { SelectChangeEvent } from "@mui/material/Select"
 import MenuItem from "@mui/material/MenuItem"
 import { UserService } from "../Server/services/Users/UserService"
-import { TodoObject, UserObject } from "../Server/server"
+import { UserObject } from "../Server/server"
 import { useNavigate } from "react-router-dom"
 import FormControlLabel from "@mui/material/FormControlLabel"
 import { request } from "http"
 import { Http2ServerRequest } from "http2"
 import { TodoService } from "../Server/services/ToDos/TodoService"
 import { faker } from "@faker-js/faker"
+import { TodoObject } from "../@types/Todo"
 
 
 

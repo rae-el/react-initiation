@@ -66,8 +66,6 @@ const CreateTodo = () => {
         setUser('')
         setIsCompleted('No')
       }
-      
-      
     }
        
     };
