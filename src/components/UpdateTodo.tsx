@@ -9,7 +9,6 @@ import Button from "@mui/material/Button"
 import Select, { SelectChangeEvent } from "@mui/material/Select"
 import MenuItem from "@mui/material/MenuItem"
 import { UserService } from "../Server/services/Users/UserService"
-import { TodoObject, UserObject } from "../Server/server"
 import { useNavigate, useParams } from "react-router-dom"
 import FormControlLabel from "@mui/material/FormControlLabel"
 import { TodoService } from "../Server/services/ToDos/TodoService"
@@ -41,8 +40,8 @@ const UpdateTodo: FC<Props> = ({todoId}) => {
     if (todo != null){
     setTaskName(todo.name)
     setSelectedCompletion(todo.isComplete ? 'Yes' : 'No')
-    let userItem = showUsers.filter(user => user.id == todo.user)
-    //setSelectedUser(userItem[0].details)
+    let potentialSelectedUser = showUsers?.filter(i => i.id == todo.userId)
+    setSelectedUser(potentialSelectedUser[0].details)
     }
 })
 

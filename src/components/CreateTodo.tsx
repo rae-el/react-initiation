@@ -59,7 +59,7 @@ const CreateTodo = () => {
       const addIsCompleted = isCompleted ? true : false
       const id = faker.datatype.number({ min: 15, max: 1000, precision: 1 }) as unknown as string
       if (userObj){
-        const newTodo : TodoObject = {id:id, isComplete : addIsCompleted, name : addTask, user : userObj}
+        const newTodo : TodoObject = {id:id, isComplete : addIsCompleted, name : addTask, user : userObj, userId : null}
         createThisTodo(newTodo);
         alert('Success')
         setTask('')

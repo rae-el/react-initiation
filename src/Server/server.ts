@@ -11,24 +11,6 @@ import {
 import { StringColorFormat, faker } from '@faker-js/faker'
 //import { serialize } from "node:v8";
 
-export interface TodoObject{
-    id: number,
-    name: string,
-    isComplete: boolean,
-    user: number,
-}
-
-export interface UserObject{
-    type: string,
-    id: number,
-    //attributes: Map<string, string>
-    attributes: UserAttributes
-}
-
-export interface UserAttributes{
-    'first-name': string,
-    'last-name': string
-}
 
 export function makeServer () {
     const server = new Server({

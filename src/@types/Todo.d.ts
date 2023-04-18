@@ -4,7 +4,8 @@ export interface TodoObject{
     id: string,
     name: string,
     isComplete: boolean,
-    user: string,
+    user: string | null,
+    userId: string | null,
 }
 
 export type TodoContextType = {
