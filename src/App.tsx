@@ -4,6 +4,8 @@ import Add from './pages/Add';
 import NotFound from './pages/NotFound';
 import Edit from './pages/Edit';
 import TodoProvider from './context/todoContext';
+import CreateTodo from './components/CreateTodo';
+import UpdateTodo from './components/UpdateTodo';
 
 function App() {
   
@@ -12,9 +14,9 @@ function App() {
   
     <BrowserRouter>
       <Routes>
-        <Route index element={<TodoProvider><Home/></TodoProvider>}></Route>
-        <Route path="add" element={<TodoProvider><Add/></TodoProvider>}></Route>
-        <Route path="edit/:id" element={<TodoProvider><Edit/></TodoProvider>}></Route>
+        <Route index element={<TodoProvider><Home userList={[]} todoList={[]}/></TodoProvider>}></Route>
+        <Route path="create" element={<TodoProvider><CreateTodo userList={[]}/></TodoProvider>}></Route>
+        <Route path="update/:id" element={<TodoProvider><UpdateTodo userList={[]} todo={null}/></TodoProvider>}></Route>
         <Route path="*" element={<NotFound/>}></Route>
       </Routes>
     </BrowserRouter>

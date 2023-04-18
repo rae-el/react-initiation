@@ -12,4 +12,5 @@ export type TodoContextType = {
     deleteThisTodo: (id: number) => void;
     updateThisTodo: (todo: TodoObject) => void;
     createThisTodo: (todo: TodoObject) => void;
+    userList: UserObject[];
 };

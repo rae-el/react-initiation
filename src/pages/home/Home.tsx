@@ -16,17 +16,18 @@ import Button from '@mui/material/Button';
 import { TodoService } from '../../Server/services/ToDos/TodoService';
 import { TodoObject } from '../../Server/server';
 import { UserService } from '../../Server/services/Users/UserService';
-import { SetStateAction, useEffect, useRef, useState } from 'react';
+import { FC, SetStateAction, useEffect, useRef, useState } from 'react';
 import { UserObject } from '../../Server/server';
 import Header from '../../components/ui/Header';
 import { useNavigate } from 'react-router-dom';
 import DeleteDialog from '../../components/ui/DeleteDialog';
 
-function Home() {
-  const userService = new UserService()
-  const todoService = new TodoService()
-  const [userList, setUserList] = useState<UserObject[]>([])
-  const [todoList, setTodoList] = useState<TodoObject[]>([])
+type Props = {
+  userList: UserObject[]
+  todoList: TodoObject[]
+}
+
+const Home: FC<Props> = ({userList, todoList}) => {
   const [showList, setShowList] = useState<TodoObject[]>([])
   const [selectedUser, setSelectedUser] = useState('')
   const inputComponent = useRef<HTMLInputElement>(null)
@@ -37,9 +38,7 @@ function Home() {
   
 
   useEffect(() => {
-  userService.getUsers().then((value) => setUserList(value))
-  todoService.getTodos().then((value) => setTodoList(value))
-  todoService.getTodos().then((value) => setShowList(value))
+  setShowList(todoList)
   }, [])
 
 
@@ -117,14 +116,13 @@ function Home() {
   }
 
 
-  const handleEdit = (id: number) => {
-    const stringId = id as unknown as String
-    console.log(id)
-    navigate(`/edit/${stringId}`);
+  const handleEdit = (todo: TodoObject) => {
+    console.log(todo.id)
+    navigate(`/update/${todo.id}`);
   }
 
   const navigateToAdd = () => {
-    navigate('/add');
+    navigate('/create');
   }
 
 
@@ -207,7 +205,7 @@ function Home() {
                       <TableCell>{todo.name}</TableCell>
                       <TableCell>{getUserName(todo.user)}</TableCell>
                       <TableCell><Button key={todo.id} sx={{color:theme.palette.primary.contrastText}}>{todo.isComplete ? <TaskAlt/> : <RadioButtonUnchecked/>}</Button></TableCell>
-                      <TableCell><Button onClick={() => handleEdit(todo.id)} sx={{color:theme.palette.primary.contrastText}}><Edit/></Button></TableCell>
+                      <TableCell><Button onClick={() => handleEdit(todo)} sx={{color:theme.palette.primary.contrastText}}><Edit/></Button></TableCell>
                       <TableCell><Button onClick={() => handleDelete(todo.id)} sx={{color:theme.palette.primary.contrastText}}><DeleteOutline/></Button></TableCell>
                     </TableRow>
                   )): <TableRow></TableRow>}
