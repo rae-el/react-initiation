@@ -16,18 +16,17 @@ import Button from '@mui/material/Button';
 import { TodoService } from '../../Server/services/ToDos/TodoService';
 import { TodoObject } from '../../Server/server';
 import { UserService } from '../../Server/services/Users/UserService';
-import { FC, SetStateAction, useEffect, useRef, useState } from 'react';
+import { FC, SetStateAction, useContext, useEffect, useRef, useState } from 'react';
 import { UserObject } from '../../Server/server';
 import Header from '../../components/ui/Header';
 import { useNavigate } from 'react-router-dom';
 import DeleteDialog from '../../components/ui/DeleteDialog';
+import { TodoContext } from '../../context/todoContext';
+import { TodoContextType } from '../../@types/Todo';
 
-type Props = {
-  userList: UserObject[]
-  todoList: TodoObject[]
-}
 
-const Home: FC<Props> = ({userList, todoList}) => {
+const Home = () => {
+  const {userList, todoList} = useContext(TodoContext) as TodoContextType
   const [showList, setShowList] = useState<TodoObject[]>([])
   const [selectedUser, setSelectedUser] = useState('')
   const inputComponent = useRef<HTMLInputElement>(null)

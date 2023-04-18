@@ -14,13 +14,10 @@ import MenuItem from "@mui/material/MenuItem"
 import Button from "@mui/material/Button"
 import { useNavigate } from "react-router-dom"
 
-type Props = {
-    userList: UserObject[]
-}
 
-const CreateTodo: FC<Props> = ({userList}) => {
+const CreateTodo = () => {
+  const {userList, createThisTodo} = useContext(TodoContext) as TodoContextType
     const navigate = useNavigate()
-    const { createThisTodo } = useContext(TodoContext) as TodoContextType
     const [formData, setFormData] = useState<TodoObject | {}>()
     const [user, setUser] = useState('')
     const [isCompleted, setIsCompleted] = useState('No')

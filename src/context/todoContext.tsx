@@ -1,6 +1,6 @@
 import { TodoContextType, TodoObject } from "../@types/Todo";
 import {UserObject} from "../@types/User";
-import { FC, ReactNode, useState, createContext } from "react";
+import { FC, ReactNode, useState, createContext, useEffect } from "react";
 import { TodoService } from "../Server/services/ToDos/TodoService";
 import { UserService } from "../Server/services/Users/UserService";
 
@@ -14,10 +14,14 @@ const TodoProvider: FC<Props> = ({children}) => {
     const [todoList, setTodoList] = useState<TodoObject[]>([])
     const [userList, setUserList] = useState<UserObject[]>([])
     const [todo, setTodo] = useState<TodoObject | null>(null)
-    todoService.getTodos().then((value) => setTodoList(value))
-    //users
+     //users
     const userService = new UserService()
-    userService.getUsers().then((value) => setUserList(value))
+
+    //run the api query
+    useEffect(() => {
+        todoService.getTodos().then((value) => setTodoList(value))
+        userService.getUsers().then((value) => setUserList(value))
+        }, [])
 
     //todo methods
     const getThisTodo = (id: string) => {
@@ -33,7 +37,7 @@ const TodoProvider: FC<Props> = ({children}) => {
         todoService.createTodo(todo).then((value) => console.log(`Create" ${value}`))
     }
 
-    
+
     
 
     return <TodoContext.Provider value={{todoList, todo, getThisTodo, deleteThisTodo, updateThisTodo, createThisTodo, userList}}>
