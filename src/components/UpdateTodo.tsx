@@ -14,6 +14,7 @@ import { useNavigate, useParams } from "react-router-dom"
 import FormControlLabel from "@mui/material/FormControlLabel"
 import { TodoService } from "../Server/services/ToDos/TodoService"
 import { TodoContextType } from "../@types/Todo"
+import { UserItem } from "../@types/User"
 import { TodoContext } from "../context/todoContext"
 
 type Props ={
@@ -23,18 +24,25 @@ type Props ={
 
 const UpdateTodo: FC<Props> = ({todoId}) => {
   const {userList, todo} = useContext(TodoContext) as TodoContextType
+  const [showUsers, setShowUsers] = useState<UserItem[]>([])
   const [selectedUser, setSelectedUser] = useState('')
   const [taskName, setTaskName] = useState('')
   const [selectedCompletion, setSelectedCompletion] = useState('')
   const inputComponent = useRef<HTMLInputElement>(null)
   const navigate = useNavigate();
+
+  let userItems : UserItem[] = [{id: '0', details: 'No assigned user'}]
+
   
   useEffect(() => {
+    userList?.map((user) => (userItems?.push({id:user.id, details: `${user.id} - ${user.attributes["first-name"]} ${user.attributes["last-name"]}`})))
+    setShowUsers(userItems)
+    
     if (todo != null){
     setTaskName(todo.name)
     setSelectedCompletion(todo.isComplete ? 'Yes' : 'No')
-    const currentUser = userList.filter(user => user.id == todo.user)
-
+    let userItem = showUsers.filter(user => user.id == todo.user)
+    //setSelectedUser(userItem[0].details)
     }
 })
 
@@ -87,7 +95,7 @@ const UpdateTodo: FC<Props> = ({todoId}) => {
                             ref={inputComponent}
                             renderValue={(value) => value ? value : <em>Select User</em>}
                             sx={{marginLeft:6.5, marginTop:1, marginBottom:1, minWidth:'220px !important'}}>
-                      {userList.map((user) => (<MenuItem key={user.id} value={user.id+ ' - '+ user.attributes["first-name"] +" "+ user.attributes["last-name"]}>{user.id+ ' - '+ user.attributes["first-name"] +" "+ user.attributes["last-name"]}</MenuItem>))}
+                      {showUsers?.map((user) => (<MenuItem key={user.id} value={user.details}>{user.details}</MenuItem>))}
                     </Select></FormControl>}/></Box>
             <Box sx={{width:'100%'}}>
                 <FormControlLabel 

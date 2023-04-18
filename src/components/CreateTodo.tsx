@@ -53,11 +53,11 @@ const CreateTodo = () => {
     if(task != '' && user != ''){
       //add task error catching
       const addTask = task
-      const addUser = user.charAt(0) as unknown as number
+      const addUser = user.charAt(0)
       let userObj : UserObject | undefined = undefined;
       userList.map((user) => user.id == addUser ? userObj = user : console.log('skip'))
       const addIsCompleted = isCompleted ? true : false
-      const id = faker.datatype.number({ min: 15, max: 1000, precision: 1 })
+      const id = faker.datatype.number({ min: 15, max: 1000, precision: 1 }) as unknown as string
       if (userObj){
         const newTodo : TodoObject = {id:id, isComplete : addIsCompleted, name : addTask, user : userObj}
         createThisTodo(newTodo);

@@ -31,15 +31,15 @@ const Home = () => {
   const inputComponent = useRef<HTMLInputElement>(null)
   const navigate = useNavigate()
   var [completedTodos, setCompletedTodos] = useState(false)
-  const [deleteId, setDeleteId] = useState(0)
+  const [deleteId, setDeleteId] = useState('')
   
 
   useEffect(() => {
   setShowList(todoList)
-  }, [])
+  })
 
 
-  function getUserName(id: number){
+  function getUserName(id: string){
     let username = ''
     for(let i=0; i<userList.length; i++){
       if(userList[i].id == id){
@@ -56,8 +56,7 @@ const Home = () => {
     setSelectedUser(value)
     if (value != ''){
       const stringValue = value as String
-      const userIdString = stringValue.charAt(0)
-      const userId = userIdString as unknown as number
+      const userId = stringValue.charAt(0)
 
       //filter list based on user & completed state
       if (completedTodos){
@@ -78,7 +77,7 @@ const Home = () => {
     }
   }
 
-  const handleDelete = (id: number) => {
+  const handleDelete = (id: string) => {
     console.log(`handleDelete of ${id}`)
     console.log('Dialog open '+deleteDialogOpen)
     setDeleteId(id)
@@ -96,16 +95,14 @@ const Home = () => {
       let filteredArray = todoList.filter(todo => todo.isComplete == true)
       setShowList(filteredArray)
     }else{
-      const userIdString = selectedUser.charAt(0)
-      const userId = userIdString as unknown as number
+      const userId = selectedUser.charAt(0)
       let filteredArray = todoList.filter(todo => todo.isComplete == true && todo.user == userId)
       setShowList(filteredArray)
     }}else{
       if (selectedUser == ''){
         setShowList(todoList)
       }else{
-        const userIdString = selectedUser.charAt(0)
-        const userId = userIdString as unknown as number
+        const userId = selectedUser.charAt(0)
         let filteredArray = todoList.filter(todo => todo.user == userId)
         setShowList(filteredArray)
       }

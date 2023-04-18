@@ -13,7 +13,7 @@ type Props = {
 
 }
 
-export default function DeleteDialog({id}:{ id: number}) {
+export default function DeleteDialog({id}:{ id: string}) {
   const {deleteThisTodo, handleDeleteDialog, deleteDialogOpen} = useContext(TodoContext) as TodoContextType
 
   function handleYes(){
@@ -22,7 +22,7 @@ export default function DeleteDialog({id}:{ id: number}) {
   }
 
     
-  const handleDelete = async (id: number) => {
+  const handleDelete = async (id: string) => {
     deleteThisTodo(id)
   }
     

@@ -27,10 +27,10 @@ const TodoProvider: FC<Props> = ({children}) => {
         }, [])
 
     //todo methods
-    const getThisTodo = (id: number) => {
+    const getThisTodo = (id: string) => {
         todoService.getTodoById(id).then((value) => setTodo(value))
     }
-    const deleteThisTodo = (id: number) => {
+    const deleteThisTodo = (id: string) => {
         todoService.deleteTodo(id).then((value) => console.log(`Delete" ${value}`))
         setDeleteDialogOpen(false)
     }

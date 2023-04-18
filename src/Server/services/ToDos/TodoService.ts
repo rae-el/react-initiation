@@ -13,7 +13,7 @@ export class TodoService{
             console.error(e)
         }
     }
-    async getTodoById(id: number){
+    async getTodoById(id: string){
         //working
         try{
             const response = await axios.get(`/api/todo/${id}`)
@@ -24,7 +24,7 @@ export class TodoService{
         }
     }
     //delete
-    async deleteTodo(id: number){
+    async deleteTodo(id: string){
         //working
         try{
             const response = await axios.delete(`api/todo/${id}/delete`)

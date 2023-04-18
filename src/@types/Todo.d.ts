@@ -1,17 +1,17 @@
 import { UserObject } from "./User";
 
 export interface TodoObject{
-    id: number,
+    id: string,
     name: string,
     isComplete: boolean,
-    user: number,
+    user: string,
 }
 
 export type TodoContextType = {
     todoList: TodoObject[];
     todo: TodoObject | null;
-    getThisTodo: (id: number) => void;
-    deleteThisTodo: (id: number) => void;
+    getThisTodo: (id: string) => void;
+    deleteThisTodo: (id: string) => void;
     updateThisTodo: (todo: TodoObject) => void;
     createThisTodo: (todo: TodoObject) => void;
     userList: UserObject[];
