@@ -26,13 +26,12 @@ import { TodoContextType } from '../../@types/Todo';
 
 
 const Home = () => {
-  const {userList, todoList} = useContext(TodoContext) as TodoContextType
+  const {userList, todoList, handleDeleteDialog, deleteDialogOpen} = useContext(TodoContext) as TodoContextType
   const [showList, setShowList] = useState<TodoObject[]>([])
   const [selectedUser, setSelectedUser] = useState('')
   const inputComponent = useRef<HTMLInputElement>(null)
   const navigate = useNavigate()
   var [completedTodos, setCompletedTodos] = useState(false)
-  const [deleteDialogOpen, setDeleteDialogOpen] = useState(true)
   const [deleteId, setDeleteId] = useState(0)
   
 
@@ -84,7 +83,7 @@ const Home = () => {
     console.log(`handleDelete of ${id}`)
     console.log('Dialog open '+deleteDialogOpen)
     setDeleteId(id)
-    setDeleteDialogOpen(true)
+    handleDeleteDialog()
     console.log('Dialog open '+deleteDialogOpen)
   }
 
@@ -213,7 +212,7 @@ const Home = () => {
             </TableContainer>
             <Button onClick={navigateToAdd} variant='contained' sx={{color:theme.palette.primary.light, marginTop:0.5}}>Add Task</Button>
         </FormControl>
-        <DeleteDialog open={deleteDialogOpen} id={deleteId}></DeleteDialog>
+        <DeleteDialog id={deleteId}></DeleteDialog>
         </Box>
     </ThemeProvider>
   )

@@ -1,7 +1,6 @@
 import { FC, FormEvent, SetStateAction, useContext, useRef, useState } from "react"
 import { TodoContext } from "../context/todoContext"
-import { TodoContextType } from "../@types/Todo"
-import { TodoObject, UserObject } from "../Server/server"
+import { TodoContextType, TodoObject } from "../@types/Todo"
 import theme from "../theme"
 import ThemeProvider from "@mui/material/styles/ThemeProvider"
 import Box from "@mui/material/Box"
@@ -13,6 +12,8 @@ import Select, { SelectChangeEvent } from "@mui/material/Select"
 import MenuItem from "@mui/material/MenuItem"
 import Button from "@mui/material/Button"
 import { useNavigate } from "react-router-dom"
+import { faker } from "@faker-js/faker"
+import { UserObject } from "../@types/User"
 
 
 const CreateTodo = () => {
@@ -20,8 +21,11 @@ const CreateTodo = () => {
     const navigate = useNavigate()
     const [formData, setFormData] = useState<TodoObject | {}>()
     const [user, setUser] = useState('')
+    const [task, setTask] = useState('')
     const [isCompleted, setIsCompleted] = useState('No')
     const inputComponent = useRef<HTMLInputElement>(null)
+    const [taskError, setTaskError] = useState(false)
+    const [userError, setUserError] = useState(false)
     const handleForm = (e:FormEvent<HTMLInputElement>): void => {
         setFormData({...formData,
         [e.currentTarget.id]: e.currentTarget.value,
@@ -37,7 +41,35 @@ const CreateTodo = () => {
       };
     const handleCreateTodo = (e:FormEvent, formData: TodoObject | any) => {
         e.preventDefault();
-        createThisTodo(formData);
+        setTaskError(false)
+    setUserError(false)
+
+    if(task == ''){
+      setTaskError(true)
+    }
+    if(user == ''){
+      setUserError(true)
+    }
+    if(task != '' && user != ''){
+      //add task error catching
+      const addTask = task
+      const addUser = user.charAt(0) as unknown as number
+      let userObj : UserObject | undefined = undefined;
+      userList.map((user) => user.id == addUser ? userObj = user : console.log('skip'))
+      const addIsCompleted = isCompleted ? true : false
+      const id = faker.datatype.number({ min: 15, max: 1000, precision: 1 })
+      if (userObj){
+        const newTodo : TodoObject = {id:id, isComplete : addIsCompleted, name : addTask, user : userObj}
+        createThisTodo(newTodo);
+        alert('Success')
+        setTask('')
+        setUser('')
+        setIsCompleted('No')
+      }
+      
+      
+    }
+       
     };
     const navigateToHome = () => {
         navigate('/');
@@ -63,6 +95,9 @@ const CreateTodo = () => {
                     labelPlacement='start'
                     control={<FormControl>
                       <TextField
+                        onChange={e => setTask(e.target.value)} 
+                        value={task}
+                        error={taskError}
                         sx={{marginLeft:6.5, marginTop:1, marginBottom:1}}>
                       </TextField>
                     </FormControl>}/></Box>

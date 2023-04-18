@@ -1,3 +1,5 @@
+import { UserObject } from "./User";
+
 export interface TodoObject{
     id: number,
     name: string,
@@ -13,4 +15,6 @@ export type TodoContextType = {
     updateThisTodo: (todo: TodoObject) => void;
     createThisTodo: (todo: TodoObject) => void;
     userList: UserObject[];
+    deleteDialogOpen: boolean;
+    handleDeleteDialog: () => void;
 };

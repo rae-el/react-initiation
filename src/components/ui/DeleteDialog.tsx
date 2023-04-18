@@ -3,36 +3,34 @@ import Dialog from "@mui/material/Dialog";
 import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";
 import DialogContentText from "@mui/material/DialogContentText";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import DeleteAlert from "./DeleteAlert";
 import { TodoService } from "../../Server/services/ToDos/TodoService";
+import { TodoContext } from "../../context/todoContext";
+import { TodoContextType } from "../../@types/Todo";
 
-export default function DeleteDialog({open, id}:{ open: boolean; id: number}) {
-  const todoService = new TodoService()
-  const [dialogOpen, setDialogOpen] = useState(open)
+type Props = {
 
+}
 
-  useEffect(()=> {
-    setDialogOpen(open)
-  },[open])
-
+export default function DeleteDialog({id}:{ id: number}) {
+  const {deleteThisTodo, handleDeleteDialog, deleteDialogOpen} = useContext(TodoContext) as TodoContextType
 
   function handleYes(){
-    setDialogOpen(false)
+    handleDeleteDialog()
     handleDelete(id)
   }
 
     
   const handleDelete = async (id: number) => {
-    const response = await todoService.deleteTodo(id)
-    console.log(response)
+    deleteThisTodo(id)
   }
     
   
     return (
         <Dialog
-          open={dialogOpen}
-          onClose={()=>setDialogOpen(false)}
+          open={deleteDialogOpen}
+          onClose={()=>handleDeleteDialog()}
           aria-labelledby="alert-dialog-title"
           aria-describedby="alert-dialog-description"
         >
@@ -42,7 +40,7 @@ export default function DeleteDialog({open, id}:{ open: boolean; id: number}) {
             </DialogContentText>
           </DialogContent>
           <DialogActions>
-            <Button onClick={()=>setDialogOpen(false)}>No</Button>
+            <Button onClick={()=>handleDeleteDialog()}>No</Button>
             <Button onClick={handleYes} autoFocus>
               Yes
             </Button>
