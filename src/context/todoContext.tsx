@@ -1,4 +1,4 @@
-import { TodoContextType, TodoObject } from "../@types/Todo";
+import { ThisTodo, TodoContextType, TodoObject } from "../@types/Todo";
 import {UserObject} from "../@types/User";
 import { FC, ReactNode, useState, createContext, useEffect } from "react";
 import { TodoService } from "../Server/services/ToDos/TodoService";
@@ -13,7 +13,7 @@ const TodoProvider: FC<Props> = ({children}) => {
     const todoService = new TodoService()
     const [todoList, setTodoList] = useState<TodoObject[]>([])
     const [userList, setUserList] = useState<UserObject[]>([])
-    const [todo, setTodo] = useState<TodoObject | null>(null)
+    const [thisTodo, setThisTodo] = useState<ThisTodo | null>(null)
      //users
     const userService = new UserService()
     //dialogs
@@ -28,7 +28,7 @@ const TodoProvider: FC<Props> = ({children}) => {
 
     //todo methods
     const getThisTodo = (id: string) => {
-        todoService.getTodoById(id).then((value) => setTodo(value))
+        todoService.getTodoById(id).then((value) => setThisTodo(value))
     }
     const deleteThisTodo = (id: string) => {
         todoService.deleteTodo(id).then((value) => console.log(`Delete" ${value}`))
@@ -46,7 +46,7 @@ const TodoProvider: FC<Props> = ({children}) => {
     }
     
 
-    return <TodoContext.Provider value={{todoList, todo, getThisTodo, deleteThisTodo, updateThisTodo, createThisTodo, userList, deleteDialogOpen, handleDeleteDialog}}>
+    return <TodoContext.Provider value={{todoList, thisTodo, getThisTodo, deleteThisTodo, updateThisTodo, createThisTodo, userList, deleteDialogOpen, handleDeleteDialog}}>
         {children}
     </TodoContext.Provider>
 }

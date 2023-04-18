@@ -1,6 +1,6 @@
 import { FC, FormEvent, SetStateAction, useContext, useRef, useState } from "react"
 import { TodoContext } from "../context/todoContext"
-import { TodoContextType, TodoObject } from "../@types/Todo"
+import { ThisTodo, TodoContextType, TodoObject } from "../@types/Todo"
 import theme from "../theme"
 import ThemeProvider from "@mui/material/styles/ThemeProvider"
 import Box from "@mui/material/Box"
@@ -59,7 +59,7 @@ const CreateTodo = () => {
       const addIsCompleted = isCompleted ? true : false
       const id = faker.datatype.number({ min: 15, max: 1000, precision: 1 }) as unknown as string
       if (userObj){
-        const newTodo : TodoObject = {id:id, isComplete : addIsCompleted, name : addTask, user : userObj, userId : null}
+        const newTodo : TodoObject = {id:id, isComplete : addIsCompleted, name : addTask, user : addUser}
         createThisTodo(newTodo);
         alert('Success')
         setTask('')

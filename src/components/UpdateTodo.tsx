@@ -22,7 +22,7 @@ type Props ={
 
 
 const UpdateTodo: FC<Props> = ({todoId}) => {
-  const {userList, todo} = useContext(TodoContext) as TodoContextType
+  const {userList, thisTodo} = useContext(TodoContext) as TodoContextType
   const [showUsers, setShowUsers] = useState<UserItem[]>([])
   const [selectedUser, setSelectedUser] = useState('')
   const [taskName, setTaskName] = useState('')
@@ -37,10 +37,10 @@ const UpdateTodo: FC<Props> = ({todoId}) => {
     userList?.map((user) => (userItems?.push({id:user.id, details: `${user.id} - ${user.attributes["first-name"]} ${user.attributes["last-name"]}`})))
     setShowUsers(userItems)
     
-    if (todo != null){
-    setTaskName(todo.name)
-    setSelectedCompletion(todo.isComplete ? 'Yes' : 'No')
-    let potentialSelectedUser = showUsers?.filter(i => i.id == todo.userId)
+    if (thisTodo != null){
+    setTaskName(thisTodo.name)
+    setSelectedCompletion(thisTodo.isComplete ? 'Yes' : 'No')
+    let potentialSelectedUser = showUsers?.filter(i => i.id == thisTodo.userId)
     setSelectedUser(potentialSelectedUser[0].details)
     }
 })

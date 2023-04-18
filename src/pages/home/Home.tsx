@@ -13,15 +13,12 @@ import DeleteOutline from '@mui/icons-material/DeleteOutline'
 import Edit from '@mui/icons-material/Edit'
 import theme from '../../theme';
 import Button from '@mui/material/Button';
-import { TodoService } from '../../Server/services/ToDos/TodoService';
-import { UserService } from '../../Server/services/Users/UserService';
 import { FC, SetStateAction, useContext, useEffect, useRef, useState } from 'react';
 import Header from '../../components/ui/Header';
 import { useNavigate } from 'react-router-dom';
 import DeleteDialog from '../../components/ui/DeleteDialog';
 import { TodoContext } from '../../context/todoContext';
 import { TodoContextType, TodoObject } from '../../@types/Todo';
-import { UserObject } from '../../@types/User';
 
 
 const Home = () => {
@@ -184,9 +181,9 @@ const Home = () => {
                 sx={{backgroundColor:theme.palette.primary.main,
                 fontVariant:'small-caps',width:"150%",position:'sticky',top:0, zIndex:1}}>
                   <TableRow>
+                    <TableCell></TableCell>
                     <TableCell>Task</TableCell>
                     <TableCell>User</TableCell>
-                    <TableCell>Completed</TableCell>
                     <TableCell>Edit</TableCell>
                     <TableCell>Delete</TableCell>
                   </TableRow>
@@ -196,10 +193,9 @@ const Home = () => {
                     <TableRow
                       key={todo.id}
                       //sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
-                    >
+                    ><TableCell>{todo.isComplete ? <TaskAlt/> : <RadioButtonUnchecked/>}</TableCell>
                       <TableCell>{todo.name}</TableCell>
                       <TableCell>{getUserName(todo.user ?? '')}</TableCell>
-                      <TableCell><Button key={todo.id} sx={{color:theme.palette.primary.contrastText}}>{todo.isComplete ? <TaskAlt/> : <RadioButtonUnchecked/>}</Button></TableCell>
                       <TableCell><Button onClick={() => handleEdit(todo)} sx={{color:theme.palette.primary.contrastText}}><Edit/></Button></TableCell>
                       <TableCell><Button onClick={() => handleDelete(todo.id)} sx={{color:theme.palette.primary.contrastText}}><DeleteOutline/></Button></TableCell>
                     </TableRow>
