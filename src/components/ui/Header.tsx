@@ -14,7 +14,9 @@ function Header() {
         color:theme.palette.primary.light,
         position:'fixed',
         top:0,
+        left: -1,
         width:'100%',
+        zIndex: 9
       }}>
         <Typography variant='h1'sx={{paddingLeft:2}}>
           ToDo

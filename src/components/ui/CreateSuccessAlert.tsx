@@ -9,13 +9,13 @@ export default function CreateAlert(){
   const {createSuccessAlertOpen, setCreateSuccessAlertOpen} = useContext(TodoContext) as TodoContextType
   setTimeout(()=>{
     setCreateSuccessAlertOpen(false)
-  }, 70000)
+  }, 50000)
     return(
         <Collapse in={createSuccessAlertOpen}><Alert
         icon={<Check sx={{ mx: 0.5 }} />}
         variant="outlined"
         color='success'
-        sx={{marginTop:2, width:'85%'}}
+        sx={{marginTop:2, width:'55%'}}
         onClose={() => setCreateSuccessAlertOpen(false)}>
           Task was successfully created
       </Alert></Collapse>

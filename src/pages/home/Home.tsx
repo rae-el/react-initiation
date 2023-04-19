@@ -8,6 +8,7 @@ import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import ThemeProvider from '@mui/material/styles/ThemeProvider';
 import RadioButtonUnchecked from '@mui/icons-material/RadioButtonUnchecked'
+import Add from '@mui/icons-material/Add'
 import TaskAlt from '@mui/icons-material/TaskAlt'
 import DeleteOutline from '@mui/icons-material/DeleteOutline'
 import Edit from '@mui/icons-material/Edit'
@@ -119,10 +120,8 @@ const Home = () => {
         <Header/>
         <Box
         sx={{
-            width:'90%',
             margin: '5%',
-            position: 'fixed',
-            top: 100,
+            marginTop: 15
           }}>
             
         <FormControl>
@@ -164,17 +163,23 @@ const Home = () => {
                         //checked = {true}
                         onChange={handleCompletedState}
                         sx={{marginLeft:1, marginBottom:1, marginTop:1}}/>}
-                label="Completed"
-                labelPlacement='start' /></Box>
+                        label="Completed"
+                        labelPlacement='start' />
+            </Box>
+            <Button onClick={navigateToAdd} variant='contained' sx={{color:theme.palette.primary.light, marginTop:0.5, marginBottom:0.5}}><Add/></Button>
+
             <TableContainer 
             component={Paper}
             className='todos-table-container'
-            sx={{height:400, width:'100%'}}
-            >
+            sx={{width:'100%'}} >
               <Table aria-label="todos table">
                 <TableHead className='todos-table-header'
-                sx={{backgroundColor:theme.palette.primary.main,
-                fontVariant:'small-caps',width:"150%",position:'sticky',top:0, zIndex:1}}>
+                sx={{borderColor:theme.palette.primary.main,
+                fontVariant:'small-caps',
+                width:"150%",
+                position:'sticky',
+                top:0,
+                zIndex:1}}>
                   <TableRow>
                     <TableCell></TableCell>
                     <TableCell>Task</TableCell>
@@ -183,7 +188,7 @@ const Home = () => {
                     <TableCell>Delete</TableCell>
                   </TableRow>
                 </TableHead>
-                <TableBody overflow-y="scroll" sx={{height:'max-content'}}>
+                <TableBody sx={{height:'max-content'}}>
                   { showList.length > 0 ? showList.map((todo) => (
                     <TableRow
                       key={todo.id}
@@ -198,7 +203,6 @@ const Home = () => {
                 </TableBody>
               </Table>
             </TableContainer>
-            <Button onClick={navigateToAdd} variant='contained' sx={{color:theme.palette.primary.light, marginTop:0.5}}>Add Task</Button>
         </FormControl>
         <DeleteDialog id={deleteId}></DeleteDialog>
         <DeleteAlert></DeleteAlert>
