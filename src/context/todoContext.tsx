@@ -19,13 +19,15 @@ const TodoProvider: FC<Props> = ({children}) => {
     const userService = new UserService()
     //dialogs
     const [deleteDialogOpen, setDeleteDialogOpen] = useState(false)
+    //alerts
+    const [deleteAlertOpen, setDeleteAlertOpen] = useState(false)
+    const [createSuccessAlertOpen, setCreateSuccessAlertOpen] = useState(false)
 
     //run the api query
     useEffect(() => {
         todoService.getTodos().then((value) => setTodoList(value))
         todoService.getTodos().then((value) => setShowList(value))
         userService.getUsers().then((value) => setUserList(value))
-
         }, [])
 
     //todo methods
@@ -36,11 +38,15 @@ const TodoProvider: FC<Props> = ({children}) => {
         todoService.deleteTodo(id).then((value) => console.log(`Delete" ${value}`))
         setDeleteDialogOpen(false)
     }
-    const updateThisTodo = (todo: TodoObject) => {
+    const updateThisTodo = (todo: ThisTodo) => {
         todoService.updateTodo(todo).then((value) => console.log(`Update" ${value}`))
     }
     const createThisTodo = (todo: ThisTodo) => {
         todoService.createTodo(todo).then((value) => console.log(`Create" ${value}`))
+    }
+    const getTodos = () => {
+        todoService.getTodos().then((value) => setTodoList(value))
+        todoService.getTodos().then((value) => setShowList(value))
     }
     //delete dialog methods
     const handleDeleteDialog = () =>{
@@ -48,7 +54,7 @@ const TodoProvider: FC<Props> = ({children}) => {
     }
     
 
-    return <TodoContext.Provider value={{todoList, showList, setShowList, thisTodo, getThisTodo, deleteThisTodo, updateThisTodo, createThisTodo, userList, deleteDialogOpen, handleDeleteDialog}}>
+    return <TodoContext.Provider value={{todoList, showList, setShowList, getTodos, thisTodo, getThisTodo, deleteThisTodo, updateThisTodo, createThisTodo, userList, deleteDialogOpen, handleDeleteDialog, deleteAlertOpen, setDeleteAlertOpen, createSuccessAlertOpen, setCreateSuccessAlertOpen}}>
         {children}
     </TodoContext.Provider>
 }

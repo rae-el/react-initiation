@@ -14,11 +14,15 @@ type Props = {
 }
 
 export default function DeleteDialog({id}:{ id: string}) {
-  const {deleteThisTodo, handleDeleteDialog, deleteDialogOpen} = useContext(TodoContext) as TodoContextType
+  const {deleteThisTodo, handleDeleteDialog, deleteDialogOpen, getTodos, setDeleteAlertOpen} = useContext(TodoContext) as TodoContextType
 
   function handleYes(){
     handleDeleteDialog()
     handleDelete(id)
+    //recall todos
+    getTodos()
+    setDeleteAlertOpen(true)
+
   }
 
     

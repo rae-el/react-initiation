@@ -14,12 +14,13 @@ import Button from "@mui/material/Button"
 import { useNavigate } from "react-router-dom"
 import { faker } from "@faker-js/faker"
 import { UserObject } from "../@types/User"
+import CreateSuccessAlert from "./ui/CreateSuccessAlert"
 
 
 const CreateTodo = () => {
-  const {userList, createThisTodo} = useContext(TodoContext) as TodoContextType
+  const {userList, createThisTodo, getTodos, setCreateSuccessAlertOpen} = useContext(TodoContext) as TodoContextType
     const navigate = useNavigate()
-    const [formData, setFormData] = useState<TodoObject | {}>()
+    const [formData, setFormData] = useState<ThisTodo | {}>()
     const [user, setUser] = useState('')
     const [task, setTask] = useState('')
     const [isCompleted, setIsCompleted] = useState('No')
@@ -61,10 +62,13 @@ const CreateTodo = () => {
       if (userObj){
         const newTodo : ThisTodo = {id:id, isComplete : addIsCompleted, name : addTask, userId : addUser}
         createThisTodo(newTodo);
-        alert('Success')
+        //first check if actually successful
         setTask('')
         setUser('')
         setIsCompleted('No')
+        //recall todos
+        getTodos()
+        setCreateSuccessAlertOpen(true)
       }
     }
        
@@ -129,6 +133,7 @@ const CreateTodo = () => {
                 <Button onClick={navigateToHome}>Cancel</Button>
               </FormControl>
               </form>
+              <CreateSuccessAlert></CreateSuccessAlert>
             </Box>
         </ThemeProvider>
       );

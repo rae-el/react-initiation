@@ -1,5 +1,5 @@
 import ThemeProvider from "@mui/material/styles/ThemeProvider"
-import { FC, SetStateAction, useContext, useEffect, useRef, useState } from "react"
+import { FC, FormEvent, SetStateAction, useContext, useDeferredValue, useEffect, useRef, useState } from "react"
 import theme from "../theme"
 import Box from "@mui/material/Box"
 import FormControl from "@mui/material/FormControl"
@@ -10,7 +10,7 @@ import Select, { SelectChangeEvent } from "@mui/material/Select"
 import MenuItem from "@mui/material/MenuItem"
 import { useNavigate } from "react-router-dom"
 import FormControlLabel from "@mui/material/FormControlLabel"
-import { TodoContextType } from "../@types/Todo"
+import { ThisTodo, TodoContextType } from "../@types/Todo"
 import { UserItem } from "../@types/User"
 import { TodoContext } from "../context/todoContext"
 
@@ -24,6 +24,9 @@ const UpdateTodo: FC<Props> = ({todoId}) => {
   const [selectedUser, setSelectedUser] = useState('')
   const [taskName, setTaskName] = useState('')
   const [selectedCompletion, setSelectedCompletion] = useState('')
+  const [ogUser, setOgUser] = useState('')
+  const [ogName, setOgName] = useState('')
+  const [ogCompletion, setOgCompletion] = useState('')
   const inputComponent = useRef<HTMLInputElement>(null)
   const navigate = useNavigate();
 
@@ -32,16 +35,15 @@ const UpdateTodo: FC<Props> = ({todoId}) => {
   useEffect(() => {
     userList?.map((user) => (userItems?.push({id:user.id, details: `${user.id} - ${user.attributes["first-name"]} ${user.attributes["last-name"]}`})))
     setShowUsers(userItems)
-    
     if (thisTodo != null){
-    setTaskName(thisTodo.name)
-    setSelectedCompletion(thisTodo.isComplete ? 'Yes' : 'No')
-    let potentialSelectedUser = showUsers?.filter(i => i.id == thisTodo.userId)
-    setSelectedUser(potentialSelectedUser[0].details)
+      setOgName(thisTodo.name)
+      setOgCompletion(thisTodo.isComplete ? 'Yes' : 'No')
+      let potentialOgUser = showUsers?.filter(i => i.id == thisTodo.userId)
+      setOgUser(potentialOgUser[0].details)
     }
-    //if brackets here empty when loading but if not doesnt change when new user selected
-    
-})
+    setTaskName(ogName)
+    setSelectedCompletion(ogCompletion)
+    setSelectedUser(ogUser)})
 
   
   const handleSelectUser = (event: SelectChangeEvent<SetStateAction<string>>) => {
@@ -60,7 +62,14 @@ const UpdateTodo: FC<Props> = ({todoId}) => {
     navigate('/');
   }
 
-
+  const handleUpdateTodo = (e:FormEvent<HTMLFormElement>) =>{
+    e.preventDefault();
+    const updatedCompletion = selectedCompletion ? true : false
+    const thisId = todoId as unknown as string
+    if(taskName != ''){
+      const updatedTodo : ThisTodo = {id:thisId, isComplete:updatedCompletion, name: taskName, userId:selectedUser}
+    }
+  }
 
   return (
     <ThemeProvider theme={theme}>
@@ -75,7 +84,7 @@ const UpdateTodo: FC<Props> = ({todoId}) => {
           <Typography variant='h3'>
             Edit Todo {todoId}
           </Typography>
-          
+          <form autoComplete="off" onSubmit={(e) => handleUpdateTodo(e)}>
           <FormControl>
             <Box sx={{width:'100%'}}>
                 <FormControlLabel 
@@ -105,10 +114,10 @@ const UpdateTodo: FC<Props> = ({todoId}) => {
                       <MenuItem value={'No'}>No</MenuItem>
                       <MenuItem value={'Yes'}>Yes</MenuItem>
                     </Select></FormControl>}/></Box>
-            <Button variant='contained' sx={{color:theme.palette.primary.light}}>Save</Button>
+            <Button variant='contained' type='submit' sx={{color:theme.palette.primary.light}}>Save</Button>
             <Button onClick={navigateToHome}>Cancel</Button>
           </FormControl>
-        
+          </form>
         </Box>
     </ThemeProvider>
   )

@@ -46,7 +46,7 @@ export class TodoService{
     }
     }
     //put
-    async updateTodo(todo: TodoObject){
+    async updateTodo(todo: ThisTodo){
         //not working
         try{
             const response = await axios.post(`api/todo/${todo}+/update`)

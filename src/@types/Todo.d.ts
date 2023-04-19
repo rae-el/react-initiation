@@ -22,10 +22,15 @@ export type TodoContextType = {
     thisTodo: ThisTodo | null;
     getThisTodo: (id: string) => void;
     deleteThisTodo: (id: string) => void;
-    updateThisTodo: (todo: TodoObject) => void;
+    updateThisTodo: (todo: ThisTodo) => void;
     createThisTodo: (todo: ThisTodo) => void;
     userList: UserObject[];
     deleteDialogOpen: boolean;
     handleDeleteDialog: () => void;
+    deleteAlertOpen: boolean;
+    setDeleteAlertOpen: (open: boolean) => void;
+    createSuccessAlertOpen: boolean;
+    setCreateSuccessAlertOpen: (open: boolean) => void;
     setShowList: (todos: TodoObject[]) => void;
+    getTodos: () => void;
 };

@@ -19,6 +19,7 @@ import { useNavigate } from 'react-router-dom';
 import DeleteDialog from '../../components/ui/DeleteDialog';
 import { TodoContext } from '../../context/todoContext';
 import { TodoContextType, TodoObject } from '../../@types/Todo';
+import DeleteAlert from '../../components/ui/DeleteAlert';
 
 
 const Home = () => {
@@ -200,6 +201,7 @@ const Home = () => {
             <Button onClick={navigateToAdd} variant='contained' sx={{color:theme.palette.primary.light, marginTop:0.5}}>Add Task</Button>
         </FormControl>
         <DeleteDialog id={deleteId}></DeleteDialog>
+        <DeleteAlert></DeleteAlert>
         </Box>
     </ThemeProvider>
   )
