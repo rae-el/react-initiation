@@ -12,6 +12,7 @@ const TodoProvider: FC<Props> = ({children}) => {
     //todos
     const todoService = new TodoService()
     const [todoList, setTodoList] = useState<TodoObject[]>([])
+    const [showList, setShowList] = useState<TodoObject[]>([])
     const [userList, setUserList] = useState<UserObject[]>([])
     const [thisTodo, setThisTodo] = useState<ThisTodo | null>(null)
      //users
@@ -22,6 +23,7 @@ const TodoProvider: FC<Props> = ({children}) => {
     //run the api query
     useEffect(() => {
         todoService.getTodos().then((value) => setTodoList(value))
+        todoService.getTodos().then((value) => setShowList(value))
         userService.getUsers().then((value) => setUserList(value))
 
         }, [])
@@ -37,7 +39,7 @@ const TodoProvider: FC<Props> = ({children}) => {
     const updateThisTodo = (todo: TodoObject) => {
         todoService.updateTodo(todo).then((value) => console.log(`Update" ${value}`))
     }
-    const createThisTodo = (todo: TodoObject) => {
+    const createThisTodo = (todo: ThisTodo) => {
         todoService.createTodo(todo).then((value) => console.log(`Create" ${value}`))
     }
     //delete dialog methods
@@ -46,7 +48,7 @@ const TodoProvider: FC<Props> = ({children}) => {
     }
     
 
-    return <TodoContext.Provider value={{todoList, thisTodo, getThisTodo, deleteThisTodo, updateThisTodo, createThisTodo, userList, deleteDialogOpen, handleDeleteDialog}}>
+    return <TodoContext.Provider value={{todoList, showList, setShowList, thisTodo, getThisTodo, deleteThisTodo, updateThisTodo, createThisTodo, userList, deleteDialogOpen, handleDeleteDialog}}>
         {children}
     </TodoContext.Provider>
 }

@@ -39,7 +39,7 @@ const CreateTodo = () => {
         const {target:{value}, }= event;setIsCompleted(value)
         //console.log(key)
       };
-    const handleCreateTodo = (e:FormEvent, formData: TodoObject | any) => {
+    const handleCreateTodo = (e:FormEvent, formData: ThisTodo | any) => {
         e.preventDefault();
         setTaskError(false)
     setUserError(false)
@@ -59,7 +59,7 @@ const CreateTodo = () => {
       const addIsCompleted = isCompleted ? true : false
       const id = faker.datatype.number({ min: 15, max: 1000, precision: 1 }) as unknown as string
       if (userObj){
-        const newTodo : TodoObject = {id:id, isComplete : addIsCompleted, name : addTask, user : addUser}
+        const newTodo : ThisTodo = {id:id, isComplete : addIsCompleted, name : addTask, userId : addUser}
         createThisTodo(newTodo);
         alert('Success')
         setTask('')

@@ -1,6 +1,6 @@
 import axios, { AxiosRequestConfig } from "axios";
 import { ModelInstance } from "miragejs";
-import { TodoObject } from "../../../@types/Todo";
+import { ThisTodo, TodoObject } from "../../../@types/Todo";
 
 export class TodoService{
     //gets
@@ -34,7 +34,7 @@ export class TodoService{
         }
         }
     //post
-    async createTodo(todo: TodoObject){
+    async createTodo(todo: ThisTodo){
         //not working
         const json = JSON.stringify(todo)
         

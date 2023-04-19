@@ -22,19 +22,13 @@ import { TodoContextType, TodoObject } from '../../@types/Todo';
 
 
 const Home = () => {
-  const {userList, todoList, handleDeleteDialog, deleteDialogOpen, getThisTodo} = useContext(TodoContext) as TodoContextType
-  const [showList, setShowList] = useState<TodoObject[]>([])
+  const {userList, todoList, handleDeleteDialog, deleteDialogOpen, getThisTodo, showList, setShowList} = useContext(TodoContext) as TodoContextType
   const [selectedUser, setSelectedUser] = useState('')
   const inputComponent = useRef<HTMLInputElement>(null)
   const navigate = useNavigate()
   var [completedTodos, setCompletedTodos] = useState(false)
   const [deleteId, setDeleteId] = useState('')
   
-
-  useEffect(() => {
-  setShowList(todoList)
-  })
-
 
   function getUserName(id: string){
     let username = ''

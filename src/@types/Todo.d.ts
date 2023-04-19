@@ -18,12 +18,14 @@ export interface ThisTodo{
 
 export type TodoContextType = {
     todoList: TodoObject[];
+    showList: TodoObject[];
     thisTodo: ThisTodo | null;
     getThisTodo: (id: string) => void;
     deleteThisTodo: (id: string) => void;
     updateThisTodo: (todo: TodoObject) => void;
-    createThisTodo: (todo: TodoObject) => void;
+    createThisTodo: (todo: ThisTodo) => void;
     userList: UserObject[];
     deleteDialogOpen: boolean;
     handleDeleteDialog: () => void;
+    setShowList: (todos: TodoObject[]) => void;
 };

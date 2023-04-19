@@ -8,10 +8,8 @@ import TextField from "@mui/material/TextField"
 import Button from "@mui/material/Button"
 import Select, { SelectChangeEvent } from "@mui/material/Select"
 import MenuItem from "@mui/material/MenuItem"
-import { UserService } from "../Server/services/Users/UserService"
-import { useNavigate, useParams } from "react-router-dom"
+import { useNavigate } from "react-router-dom"
 import FormControlLabel from "@mui/material/FormControlLabel"
-import { TodoService } from "../Server/services/ToDos/TodoService"
 import { TodoContextType } from "../@types/Todo"
 import { UserItem } from "../@types/User"
 import { TodoContext } from "../context/todoContext"
@@ -19,7 +17,6 @@ import { TodoContext } from "../context/todoContext"
 type Props ={
     todoId: number | null
 }
-
 
 const UpdateTodo: FC<Props> = ({todoId}) => {
   const {userList, thisTodo} = useContext(TodoContext) as TodoContextType
@@ -32,7 +29,6 @@ const UpdateTodo: FC<Props> = ({todoId}) => {
 
   let userItems : UserItem[] = [{id: '0', details: 'No assigned user'}]
 
-  
   useEffect(() => {
     userList?.map((user) => (userItems?.push({id:user.id, details: `${user.id} - ${user.attributes["first-name"]} ${user.attributes["last-name"]}`})))
     setShowUsers(userItems)
@@ -43,6 +39,8 @@ const UpdateTodo: FC<Props> = ({todoId}) => {
     let potentialSelectedUser = showUsers?.filter(i => i.id == thisTodo.userId)
     setSelectedUser(potentialSelectedUser[0].details)
     }
+    //if brackets here empty when loading but if not doesnt change when new user selected
+    
 })
 
   
