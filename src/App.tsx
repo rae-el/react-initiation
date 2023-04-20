@@ -1,16 +1,29 @@
-import { ThemeProvider } from '@mui/material/styles'
-import Header from './components/ui/Header'
-import TodosForm from './pages/home/TodosForm'
-import theme from './theme'
+import { BrowserRouter, Route, Routes } from 'react-router-dom';
+import Home from './pages/home/Home'
+import Add from './pages/Add';
+import NotFound from './pages/NotFound';
+import Edit from './pages/Edit';
+import TodoProvider from './context/todoContext';
+import CreateTodo from './components/CreateTodo';
+import UpdateTodo from './components/UpdateTodo';
 
 function App() {
-
+  
 
   return (
-    <ThemeProvider theme={theme}>
-        <Header/>
-        <TodosForm/>
-    </ThemeProvider>
+  
+    <BrowserRouter>
+      <Routes>
+        <Route index element={<TodoProvider><Home userList={[]} todoList={[]}/></TodoProvider>}></Route>
+        <Route path="create" element={<TodoProvider><CreateTodo userList={[]}/></TodoProvider>}></Route>
+        <Route path="update/:id" element={<TodoProvider><UpdateTodo userList={[]} todo={null}/></TodoProvider>}></Route>
+        <Route path="*" element={<NotFound/>}></Route>
+      </Routes>
+    </BrowserRouter>
+    /*<ThemeProvider theme={theme}>
+        <Home/>
+    </ThemeProvider>*/
+    //<TodoProvider></TodoProvider>
   )
 }
 

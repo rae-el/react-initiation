@@ -8,10 +8,8 @@ import {
     JSONAPISerializer,
     Serializer,
 } from "miragejs"
-import { faker } from '@faker-js/faker'
+import { StringColorFormat, faker } from '@faker-js/faker'
 //import { serialize } from "node:v8";
-
-
 
 
 export function makeServer () {
@@ -68,6 +66,7 @@ export function makeServer () {
             // already implemented
             this.namespace = "api"
             this.get("/users", (schema: any) => {
+                //console.log(schema.users.all())
                 return schema.users.all()
             })
             this.get("/user/:id/todos", (schema:any, request)=> {
@@ -79,7 +78,7 @@ export function makeServer () {
             })
             this.get("/todos", (schema: any, request) => {
                 const active = request.params.active
-                console.log(active)
+                //console.log(active)
                 return schema.todos.all()
             })
             this.get("/todo/:id", (schema:any, request)=>{
@@ -102,7 +101,7 @@ export function makeServer () {
             // to implement
             // get todo by name
             // string
-            this.get("/todo/:name", (schema:any, request)=>{
+            this.get("/todo/name/:name", (schema:any, request)=>{
                 const todoName = request.params.todoName
                 const todo = schema.todos.find(todoName)
                 return {
@@ -111,15 +110,14 @@ export function makeServer () {
             })
             // get todo by completion status
             // bool
-            this.get("/todo/:isComplete", (schema:any, request)=>{
-                const todoCompleted = request.params.todoCompleted
-                const todos = schema.todos.where('isComplete',todoCompleted)
+            this.get("/todos/completed", (schema:any)=>{
+                const todos = schema.todos.where({isComplete:true})
                 return {
                     todos:todos
                 }
             })
             // edit todo
-            this.put("/todo/:id/update", (schema:any, request)=> {
+            this.patch("/todo/:id/update", (schema:any, request)=> {
                 const todoId = request.params.id
                 let attrs = JSON.parse(request.requestBody)
                 schema.todos.find(todoId).update(attrs)
