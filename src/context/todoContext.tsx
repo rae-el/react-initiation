@@ -49,7 +49,7 @@ const TodoProvider: FC<Props> = ({children}) => {
         },  1000)
         return () => clearInterval(interval)
         }, [])
-
+        
     //todo methods
     const getThisTodo = (id: string) => {
         todoService.getTodoById(id).then((value) => setThisTodo(value))

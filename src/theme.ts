@@ -14,6 +14,7 @@ const theme = createTheme({
         dark:'#5AA769'
       }
   },
+  typography:{fontFamily:['Quicksand',].join(','),}
 
 })
 

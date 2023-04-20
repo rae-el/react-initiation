@@ -209,6 +209,7 @@ const Home = () => {
                       key={todo.id}
                       hover={true}
                       onClick={() => handleEdit(todo)}
+                      sx={{cursor:'pointer'}}
                       //sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
                     ><TableCell>{todo.isComplete ? <TaskAlt sx={{color:theme.palette.success.main}}/> : <RadioButtonUnchecked/>}</TableCell>
                       <TableCell>{todo.name}</TableCell>
