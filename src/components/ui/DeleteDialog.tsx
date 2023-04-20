@@ -10,21 +10,25 @@ import { TodoContext } from "../../context/todoContext";
 import { TodoContextType } from "../../@types/Todo";
 import { useNavigate } from "react-router-dom";
 
-type Props = {
 
-}
-
-export default function DeleteDialog({id}:{ id: string}) {
-  const {deleteThisTodo, handleDeleteDialog, deleteDialogOpen, getTodos, setDeleteAlertOpen} = useContext(TodoContext) as TodoContextType
+export default function DeleteDialog() {
+  const {deleteThisTodo, handleDeleteDialog, deleteDialogOpen, getTodos, setDeleteAlertOpen, deleteId} = useContext(TodoContext) as TodoContextType
   const navigate = useNavigate()
 
 
   function handleYes(){
-    handleDeleteDialog()
-    handleDelete(id)
+     //delete item
+    handleDelete(deleteId)
     //recall todos
     getTodos()
+    //close dialog
+    handleDeleteDialog()
+    //alert
     setDeleteAlertOpen(true)
+    setTimeout(()=>{
+      setDeleteAlertOpen(false)
+    }, 50000)
+    //navigate
     navigateToHome()
 
   }
@@ -47,7 +51,7 @@ export default function DeleteDialog({id}:{ id: string}) {
         >
           <DialogContent>
             <DialogContentText>
-              Do you want to delete this task?
+              Are you sure you want to delete task {deleteId}?
             </DialogContentText>
           </DialogContent>
           <DialogActions>

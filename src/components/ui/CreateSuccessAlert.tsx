@@ -9,7 +9,7 @@ export default function CreateAlert(){
   const {createSuccessAlertOpen, setCreateSuccessAlertOpen} = useContext(TodoContext) as TodoContextType
   setTimeout(()=>{
     setCreateSuccessAlertOpen(false)
-  }, 50000)
+  }, 30000)
     return(
         <Collapse in={createSuccessAlertOpen}><Alert
         icon={<Check sx={{ mx: 0.5 }} />}

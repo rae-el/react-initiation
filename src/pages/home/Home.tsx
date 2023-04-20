@@ -27,7 +27,6 @@ const Home = () => {
   const inputComponent = useRef<HTMLInputElement>(null)
   const navigate = useNavigate()
   var [completedTodos, setCompletedTodos] = useState(false)
-  const [deleteId, setDeleteId] = useState('')
 
 
 
@@ -96,10 +95,9 @@ const Home = () => {
   }
 
 
-  const handleEdit = (todo: TodoObject) => {
-    getThisTodo(todo.id)
-    console.log(todo.id)
-    navigate(`/update/${todo.id}`);
+  const handleEdit = (todo: string) => {
+    getThisTodo(todo)
+    navigate(`/update/${todo}`);
   }
 
   const navigateToAdd = () => {
@@ -170,7 +168,7 @@ const Home = () => {
                   <Box sx={{width:'70px', display:'flex', alignItems:'center', flexDirection:'column', justifyItems:'center'}}>
                     <Typography sx={{fontWeight:600}}>{dayString}</Typography>
                     <Typography variant='h4' sx={{color:theme.palette.primary.dark, fontWeight:600}}>{date}</Typography>
-                    <Typography sx={{fontWeight:600}}>{monthString}</Typography>
+                    <Typography sx={{fontWeight:600, fontVariant:'small-caps',}}>{monthString}</Typography>
                     <Box sx={{display:'flex'}}>
                       <Typography >
                         {hours} : {minutes < 10 ? '0'+minutes : minutes}
@@ -185,10 +183,10 @@ const Home = () => {
                 display: 'inline-flex',
                 alignItems: 'center'
               }}>
-              <IconButton onClick={navigateToAdd} sx={{color:theme.palette.primary.main, fontWeight:'bold'}}><AddCircle/></IconButton>
-              <Typography sx={{position: 'relative', fontWeight:600}}>Add New Task</Typography>
+              <IconButton onClick={navigateToAdd} sx={{color:theme.palette.primary.main, fontWeight:'bold', marginLeft:1}}><AddCircle/></IconButton>
+              <Typography sx={{position: 'relative', fontWeight:600}}>add a new task</Typography>
             </Box>
-            
+            <DeleteAlert></DeleteAlert>
             <TableContainer 
             component={Paper}
             className='todos-table-container'
@@ -213,10 +211,10 @@ const Home = () => {
                     <TableRow
                       key={todo.id}
                       hover={true}
-                      onClick={() => handleEdit(todo)}
+                      onClick={() => handleEdit(todo.id)}
                       sx={{cursor:'pointer'}}
                       //sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
-                    ><TableCell>{todo.isComplete ? <TaskAlt sx={{color:theme.palette.success.main}}/> : <RadioButtonUnchecked/>}</TableCell>
+                    ><TableCell>{todo.isComplete ? <TaskAlt sx={{color:theme.palette.success.main}}/> : <RadioButtonUnchecked sx={{color:theme.palette.secondary.contrastText}}/>}</TableCell>
                       <TableCell>{todo.name}</TableCell>
                       <TableCell>{getUserName(todo.user ?? '')}</TableCell>
                     </TableRow>
@@ -226,7 +224,7 @@ const Home = () => {
             </TableContainer>
                   
 
-        <DeleteAlert></DeleteAlert>
+        
         </Box>
     </ThemeProvider>
   )

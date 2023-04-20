@@ -81,12 +81,10 @@ const CreateTodo = () => {
             {/* edit form values to reflect api */}
             <Box
             sx={{
-                width:'90%',
-                margin: '5%',
-                position: 'fixed',
-                top: 100,
+              width:'90%',
+              margin: '5%',
               }}>
-              <Typography variant='h3'>
+              <Typography variant='h4'>
                 Add Task
               </Typography>
               <form autoComplete='off' onSubmit={(e) => handleCreateTodo(e, formData)}>
@@ -100,7 +98,7 @@ const CreateTodo = () => {
                         onChange={e => setTask(e.target.value)} 
                         value={task}
                         error={taskError}
-                        sx={{marginLeft:6.5, marginTop:1, marginBottom:1}}>
+                        sx={{marginLeft:6.7, marginTop:1, marginBottom:1, minWidth:'220px !important'}}>
                       </TextField>
                     </FormControl>}/></Box>
                 <Box sx={{width:'100%'}}>
@@ -113,7 +111,7 @@ const CreateTodo = () => {
                                 onChange={handleSelectUser}
                                 ref={inputComponent}
                                 renderValue={(value) => value ? value : <em>Select User</em>}
-                                sx={{marginLeft:6.5, marginTop:1, marginBottom:1, minWidth:'220px !important'}}>
+                                sx={{marginLeft:6.7, marginTop:1, marginBottom:1, minWidth:'220px !important'}}>
                           {userList.map((user) => (<MenuItem key={user.id} value={user.id+ ' - '+ user.attributes["first-name"] +" "+ user.attributes["last-name"]}>{user.id+ ' - '+ user.attributes["first-name"] +" "+ user.attributes["last-name"]}</MenuItem>))}
                         </Select></FormControl>}/></Box>
                 <Box sx={{width:'100%'}}>
@@ -130,7 +128,7 @@ const CreateTodo = () => {
                           <MenuItem value={'Yes'}>Yes</MenuItem>
                         </Select></FormControl>}/></Box>
                 <Button variant='contained' type='submit' sx={{color:theme.palette.primary.light}}>Add</Button>
-                <Button onClick={navigateToHome}>Cancel</Button>
+                <Button onClick={navigateToHome}>Back</Button>
               </FormControl>
               </form>
               <CreateSuccessAlert></CreateSuccessAlert>

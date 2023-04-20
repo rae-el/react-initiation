@@ -23,46 +23,40 @@ type Props ={
 }
 
 const UpdateTodo: FC<Props> = ({todoId}) => {
-  const {userList, thisTodo, handleDeleteDialog, deleteDialogOpen} = useContext(TodoContext) as TodoContextType
+  const {userList, thisTodo, handleDeleteDialog, deleteDialogOpen, deleteId, setDeleteId, setUpdatedTodo, updatedTodo, updatedName, updatedUserId, updatedCompletion, setUpdatedName, setUpdatedUserId, setUpdatedCompletion} = useContext(TodoContext) as TodoContextType
   const [showUsers, setShowUsers] = useState<UserItem[]>([])
   const [selectedUser, setSelectedUser] = useState('')
   const [taskName, setTaskName] = useState('')
   const [selectedCompletion, setSelectedCompletion] = useState('')
   const [stringId, setStringId] = useState('')
-  const [ogUser, setOgUser] = useState('')
-  const [ogName, setOgName] = useState('')
-  const [ogCompletion, setOgCompletion] = useState('')
   const inputComponent = useRef<HTMLInputElement>(null)
   const navigate = useNavigate();
-  const [deleteId, setDeleteId] = useState('')
 
   let userItems : UserItem[] = [{id: '0', details: 'No assigned user'}]
 
   useEffect(() => {
     userList?.map((user) => (userItems?.push({id:user.id, details: `${user.id} - ${user.attributes["first-name"]} ${user.attributes["last-name"]}`})))
     setShowUsers(userItems)
-    if (thisTodo != null){
-      setOgName(thisTodo.name)
-      setOgCompletion(thisTodo.isComplete ? 'Yes' : 'No')
-      let potentialOgUser = showUsers?.filter(i => i.id == thisTodo.userId)
-      setOgUser(potentialOgUser[0].details)
-      setStringId(thisTodo.id)
-    }
-    setDeleteId(stringId)
-    setTaskName(ogName)
-    setSelectedCompletion(ogCompletion)
-    setSelectedUser(ogUser)})
+    setSelectedCompletion(updatedCompletion ? 'Yes' : 'No')
+      if(updatedName != ''){
+        setTaskName(updatedName)
+      }
+      if(updatedUserId != ''){
+        let potentialUser = showUsers?.filter(i => i.id == updatedUserId)
+        setSelectedUser(potentialUser[0].details)
+      }
+})
 
   
   const handleSelectUser = (event: SelectChangeEvent<SetStateAction<string>>) => {
     console.log('handle select user')
-    const {target:{value}, }= event;setSelectedUser(value)
+    const {target:{value}, }= event;setUpdatedUserId(value.toString().charAt(0))
     //console.log(key)
   }
 
   const handleSelectCompletion = (event: SelectChangeEvent<SetStateAction<string>>) => {
     console.log('handle select completion')
-    const {target:{value}, }= event;setSelectedCompletion(value)
+    const {target:{value}, }= event;setUpdatedCompletion(value ? true : false)
     //console.log(key)
   }
 
@@ -94,10 +88,8 @@ const UpdateTodo: FC<Props> = ({todoId}) => {
         sx={{
             width:'90%',
             margin: '5%',
-            position: 'fixed',
-            top: 100,
           }}>
-          <Typography variant='h3'>
+          <Typography variant='h4'>
             Edit Task {stringId}
           </Typography>
           <form autoComplete="off" onSubmit={(e) => handleUpdateTodo(e)}>
@@ -106,7 +98,7 @@ const UpdateTodo: FC<Props> = ({todoId}) => {
                 <FormControlLabel 
                 label='Task'
                 labelPlacement='start'
-                control={<FormControl><TextField value={taskName} sx={{marginLeft:6.5, marginTop:1, marginBottom:1}}></TextField></FormControl>}/></Box>
+                control={<FormControl><TextField value={taskName} sx={{marginLeft:6.7, marginTop:1, marginBottom:1, minWidth:'220px !important'}}></TextField></FormControl>}/></Box>
             <Box sx={{width:'100%'}}>
                 <FormControlLabel 
                 label='User' 
@@ -115,8 +107,7 @@ const UpdateTodo: FC<Props> = ({todoId}) => {
                             value= {selectedUser}
                             onChange={handleSelectUser}
                             ref={inputComponent}
-                            renderValue={(value) => value ? value : <em>Select User</em>}
-                            sx={{marginLeft:6.5, marginTop:1, marginBottom:1, minWidth:'220px !important'}}>
+                            sx={{marginLeft:6.7, marginTop:1, marginBottom:1, minWidth:'220px !important'}}>
                       {showUsers?.map((user) => (<MenuItem key={user.id} value={user.details}>{user.details}</MenuItem>))}
                     </Select></FormControl>}/></Box>
             <Box sx={{width:'100%'}}>
@@ -135,7 +126,7 @@ const UpdateTodo: FC<Props> = ({todoId}) => {
             <Button onClick={navigateToHome}>Cancel</Button>
           </FormControl>
           </form>
-          <DeleteDialog id={deleteId}></DeleteDialog>
+          <DeleteDialog></DeleteDialog>
         </Box>
     </ThemeProvider>
   )

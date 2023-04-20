@@ -6,20 +6,16 @@ import { TodoContext } from "../../context/todoContext"
 import { TodoContextType } from "../../@types/Todo"
 
 export default function DeleteAlert(){
-  const {deleteAlertOpen, setDeleteAlertOpen} = useContext(TodoContext) as TodoContextType
+  const {deleteAlertOpen, setDeleteAlertOpen, deleteId} = useContext(TodoContext) as TodoContextType
 
-    setTimeout(()=>{
-      setDeleteAlertOpen(false)
-    }, 50000)
-    
     return(
-        <Collapse in={deleteAlertOpen}><Alert
+        <Collapse in={deleteAlertOpen} hidden={deleteAlertOpen}><Alert
         icon={<Warning sx={{ mx: 0.5 }} />}
         variant="outlined"
         color='warning'
         sx={{marginTop:2, width:'85%'}}
         onClose={() => setDeleteAlertOpen(false)}>
-          Task was successfully deleted
+          Task {deleteId} was successfully deleted
       </Alert></Collapse>
     )
 }

@@ -20,6 +20,16 @@ export type TodoContextType = {
     todoList: TodoObject[];
     showList: TodoObject[];
     thisTodo: ThisTodo | null;
+    updatedTodo: ThisTodo | null;
+    setUpdatedTodo: (todo: ThisTodo) => void;
+    updatedName: string;
+    setUpdatedName: (name: string) => void;
+    updatedUserId: string;
+    setUpdatedUserId: (id: string) => void;
+    updatedCompletion: boolean;
+    setUpdatedCompletion: (completion: boolean) => void;
+    deleteId: string;
+    setDeleteId: (id: string) => void;
     getThisTodo: (id: string) => void;
     deleteThisTodo: (id: string) => void;
     updateThisTodo: (todo: ThisTodo) => void;
