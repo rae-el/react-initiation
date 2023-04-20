@@ -41,6 +41,8 @@ export type TodoContextType = {
     setDeleteAlertOpen: (open: boolean) => void;
     createSuccessAlertOpen: boolean;
     setCreateSuccessAlertOpen: (open: boolean) => void;
+    updateSuccessAlertOpen: boolean;
+    setUpdateSuccessAlertOpen: (open: boolean) => void;
     setShowList: (todos: TodoObject[]) => void;
     getTodos: () => void;
     hours : number;

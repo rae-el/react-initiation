@@ -14,16 +14,16 @@ import { ThisTodo, TodoContextType } from "../@types/Todo"
 import { UserItem } from "../@types/User"
 import { TodoContext } from "../context/todoContext"
 import DeleteDialog from "./ui/DeleteDialog"
-import DeleteAlert from "./ui/DeleteAlert"
-import IconButton from "@mui/material/IconButton"
 import DeleteOutline from '@mui/icons-material/DeleteOutline'
+import UpdateAlert from "./ui/UpdateSuccessAlert"
+
 
 type Props ={
     todoId: number | null
 }
 
 const UpdateTodo: FC<Props> = ({todoId}) => {
-  const {userList, thisTodo, handleDeleteDialog, deleteDialogOpen, deleteId, setDeleteId, setUpdatedTodo, updatedTodo, updatedName, updatedUserId, updatedCompletion, setUpdatedName, setUpdatedUserId, setUpdatedCompletion} = useContext(TodoContext) as TodoContextType
+  const {userList, handleDeleteDialog, deleteDialogOpen, deleteId, setDeleteId, updatedName, updatedUserId, updatedCompletion, setUpdatedName, setUpdatedUserId, setUpdatedCompletion, updateThisTodo, setUpdateSuccessAlertOpen} = useContext(TodoContext) as TodoContextType
   const [showUsers, setShowUsers] = useState<UserItem[]>([])
   const [selectedUser, setSelectedUser] = useState('')
   const [taskName, setTaskName] = useState('')
@@ -66,10 +66,14 @@ const UpdateTodo: FC<Props> = ({todoId}) => {
 
   const handleUpdateTodo = (e:FormEvent<HTMLFormElement>) =>{
     e.preventDefault();
-    const updatedCompletion = selectedCompletion ? true : false
-    const thisId = todoId as unknown as string
     if(taskName != ''){
-      const updatedTodo : ThisTodo = {id:thisId, isComplete:updatedCompletion, name: taskName, userId:selectedUser}
+      const updatedTodo : ThisTodo = {id:deleteId, isComplete:updatedCompletion, name: taskName, userId:updatedUserId}
+      updateThisTodo(updatedTodo)
+      //alert
+    setUpdateSuccessAlertOpen(true)
+    setTimeout(()=>{
+      setUpdateSuccessAlertOpen(false)
+    }, 50000)
     }
   }
 
@@ -98,7 +102,7 @@ const UpdateTodo: FC<Props> = ({todoId}) => {
                 <FormControlLabel 
                 label='Task'
                 labelPlacement='start'
-                control={<FormControl><TextField value={taskName} sx={{marginLeft:6.7, marginTop:1, marginBottom:1, minWidth:'220px !important'}}></TextField></FormControl>}/></Box>
+                control={<FormControl><TextField value={taskName} onChange={e => setUpdatedName(e.target.value)} sx={{marginLeft:6.7, marginTop:1, marginBottom:1, minWidth:'220px !important'}}></TextField></FormControl>}/></Box>
             <Box sx={{width:'100%'}}>
                 <FormControlLabel 
                 label='User' 
@@ -127,6 +131,7 @@ const UpdateTodo: FC<Props> = ({todoId}) => {
           </FormControl>
           </form>
           <DeleteDialog></DeleteDialog>
+          <UpdateAlert></UpdateAlert>
         </Box>
     </ThemeProvider>
   )

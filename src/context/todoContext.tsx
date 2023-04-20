@@ -27,6 +27,7 @@ const TodoProvider: FC<Props> = ({children}) => {
     //alerts
     const [deleteAlertOpen, setDeleteAlertOpen] = useState(false)
     const [createSuccessAlertOpen, setCreateSuccessAlertOpen] = useState(false)
+    const [updateSuccessAlertOpen, setUpdateSuccessAlertOpen] = useState(false)
     //times
     const [hours, setHours] = useState<number>(0)
     const [minutes, setMinutes] = useState<number>(0)
@@ -84,7 +85,7 @@ const TodoProvider: FC<Props> = ({children}) => {
     }
     
 
-    return <TodoContext.Provider value={{todoList, showList, setShowList, getTodos, thisTodo, updatedTodo, setUpdatedTodo, updatedName, setUpdatedName, updatedUserId, setUpdatedUserId, updatedCompletion, setUpdatedCompletion, deleteId, setDeleteId, getThisTodo, deleteThisTodo, updateThisTodo, createThisTodo, userList, deleteDialogOpen, handleDeleteDialog, deleteAlertOpen, setDeleteAlertOpen, createSuccessAlertOpen, setCreateSuccessAlertOpen, hours, minutes, date, dayString, monthString}}>
+    return <TodoContext.Provider value={{todoList, showList, setShowList, getTodos, thisTodo, updatedTodo, setUpdatedTodo, updatedName, setUpdatedName, updatedUserId, setUpdatedUserId, updatedCompletion, setUpdatedCompletion, deleteId, setDeleteId, getThisTodo, deleteThisTodo, updateThisTodo, createThisTodo, userList, deleteDialogOpen, handleDeleteDialog, deleteAlertOpen, setDeleteAlertOpen, createSuccessAlertOpen, setCreateSuccessAlertOpen, updateSuccessAlertOpen, setUpdateSuccessAlertOpen, hours, minutes, date, dayString, monthString}}>
         {children}
     </TodoContext.Provider>
 }
