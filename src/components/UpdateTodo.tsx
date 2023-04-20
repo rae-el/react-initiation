@@ -13,22 +13,28 @@ import FormControlLabel from "@mui/material/FormControlLabel"
 import { ThisTodo, TodoContextType } from "../@types/Todo"
 import { UserItem } from "../@types/User"
 import { TodoContext } from "../context/todoContext"
+import DeleteDialog from "./ui/DeleteDialog"
+import DeleteAlert from "./ui/DeleteAlert"
+import IconButton from "@mui/material/IconButton"
+import DeleteOutline from '@mui/icons-material/DeleteOutline'
 
 type Props ={
     todoId: number | null
 }
 
 const UpdateTodo: FC<Props> = ({todoId}) => {
-  const {userList, thisTodo} = useContext(TodoContext) as TodoContextType
+  const {userList, thisTodo, handleDeleteDialog, deleteDialogOpen} = useContext(TodoContext) as TodoContextType
   const [showUsers, setShowUsers] = useState<UserItem[]>([])
   const [selectedUser, setSelectedUser] = useState('')
   const [taskName, setTaskName] = useState('')
   const [selectedCompletion, setSelectedCompletion] = useState('')
+  const [stringId, setStringId] = useState('')
   const [ogUser, setOgUser] = useState('')
   const [ogName, setOgName] = useState('')
   const [ogCompletion, setOgCompletion] = useState('')
   const inputComponent = useRef<HTMLInputElement>(null)
   const navigate = useNavigate();
+  const [deleteId, setDeleteId] = useState('')
 
   let userItems : UserItem[] = [{id: '0', details: 'No assigned user'}]
 
@@ -40,7 +46,9 @@ const UpdateTodo: FC<Props> = ({todoId}) => {
       setOgCompletion(thisTodo.isComplete ? 'Yes' : 'No')
       let potentialOgUser = showUsers?.filter(i => i.id == thisTodo.userId)
       setOgUser(potentialOgUser[0].details)
+      setStringId(thisTodo.id)
     }
+    setDeleteId(stringId)
     setTaskName(ogName)
     setSelectedCompletion(ogCompletion)
     setSelectedUser(ogUser)})
@@ -71,6 +79,14 @@ const UpdateTodo: FC<Props> = ({todoId}) => {
     }
   }
 
+  const handleDelete = (id: string) => {
+    console.log(`handleDelete of ${id}`)
+    console.log('Dialog open '+deleteDialogOpen)
+    setDeleteId(id)
+    handleDeleteDialog()
+    console.log('Dialog open '+deleteDialogOpen)
+  }
+
   return (
     <ThemeProvider theme={theme}>
         {/* edit form values to reflect api */}
@@ -82,7 +98,7 @@ const UpdateTodo: FC<Props> = ({todoId}) => {
             top: 100,
           }}>
           <Typography variant='h3'>
-            Edit Todo {todoId}
+            Edit Todo {stringId}
           </Typography>
           <form autoComplete="off" onSubmit={(e) => handleUpdateTodo(e)}>
           <FormControl>
@@ -114,10 +130,12 @@ const UpdateTodo: FC<Props> = ({todoId}) => {
                       <MenuItem value={'No'}>No</MenuItem>
                       <MenuItem value={'Yes'}>Yes</MenuItem>
                     </Select></FormControl>}/></Box>
+                    <Box sx={{width:'100%', display:'flex', justifyContent:'center'}}><Button onClick={() => handleDelete(deleteId)} variant='outlined' sx={{color:theme.palette.primary.contrastText, marginBottom:3, borderColor:theme.palette.primary.contrastText, width:100}}><DeleteOutline/> Delete </Button></Box>
             <Button variant='contained' type='submit' sx={{color:theme.palette.primary.light}}>Save</Button>
             <Button onClick={navigateToHome}>Cancel</Button>
           </FormControl>
           </form>
+          <DeleteDialog id={deleteId}></DeleteDialog>
         </Box>
     </ThemeProvider>
   )

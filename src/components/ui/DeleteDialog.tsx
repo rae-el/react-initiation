@@ -8,6 +8,7 @@ import DeleteAlert from "./DeleteAlert";
 import { TodoService } from "../../Server/services/ToDos/TodoService";
 import { TodoContext } from "../../context/todoContext";
 import { TodoContextType } from "../../@types/Todo";
+import { useNavigate } from "react-router-dom";
 
 type Props = {
 
@@ -15,6 +16,8 @@ type Props = {
 
 export default function DeleteDialog({id}:{ id: string}) {
   const {deleteThisTodo, handleDeleteDialog, deleteDialogOpen, getTodos, setDeleteAlertOpen} = useContext(TodoContext) as TodoContextType
+  const navigate = useNavigate()
+
 
   function handleYes(){
     handleDeleteDialog()
@@ -22,6 +25,7 @@ export default function DeleteDialog({id}:{ id: string}) {
     //recall todos
     getTodos()
     setDeleteAlertOpen(true)
+    navigateToHome()
 
   }
 
@@ -30,6 +34,9 @@ export default function DeleteDialog({id}:{ id: string}) {
     deleteThisTodo(id)
   }
     
+  const navigateToHome = () => {
+    navigate('/');
+  }
   
     return (
         <Dialog

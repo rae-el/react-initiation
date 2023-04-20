@@ -33,4 +33,9 @@ export type TodoContextType = {
     setCreateSuccessAlertOpen: (open: boolean) => void;
     setShowList: (todos: TodoObject[]) => void;
     getTodos: () => void;
+    hours : number;
+    minutes : number;
+    date : number;
+    dayString: string;
+    monthString: string;
 };

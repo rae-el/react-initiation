@@ -10,40 +10,26 @@ import ThemeProvider from '@mui/material/styles/ThemeProvider';
 import RadioButtonUnchecked from '@mui/icons-material/RadioButtonUnchecked'
 import AddCircle from '@mui/icons-material/AddCircle'
 import TaskAlt from '@mui/icons-material/TaskAlt'
-import DeleteOutline from '@mui/icons-material/DeleteOutline'
-import Edit from '@mui/icons-material/Edit'
+
 import theme from '../../theme';
-import Button from '@mui/material/Button';
 import { FC, SetStateAction, useContext, useEffect, useRef, useState } from 'react';
 import Header from '../../components/ui/Header';
 import { useNavigate } from 'react-router-dom';
-import DeleteDialog from '../../components/ui/DeleteDialog';
 import { TodoContext } from '../../context/todoContext';
 import { TodoContextType, TodoObject } from '../../@types/Todo';
+import DeleteDialog from '../../components/ui/DeleteDialog';
 import DeleteAlert from '../../components/ui/DeleteAlert';
 
 
 const Home = () => {
-  const {userList, todoList, handleDeleteDialog, deleteDialogOpen, getThisTodo, showList, setShowList} = useContext(TodoContext) as TodoContextType
+  const {userList, todoList, getThisTodo, showList, setShowList, hours, minutes, date, dayString, monthString} = useContext(TodoContext) as TodoContextType
   const [selectedUser, setSelectedUser] = useState('')
   const inputComponent = useRef<HTMLInputElement>(null)
   const navigate = useNavigate()
   var [completedTodos, setCompletedTodos] = useState(false)
   const [deleteId, setDeleteId] = useState('')
 
-  //have these updating in context?
-  const fullDate = new Date()
-  const hours = fullDate.getHours()
-  const minutes = fullDate.getMinutes()
-  const date = fullDate.getDate()
-  const day = fullDate.getDay()
-  const month = fullDate.getMonth()
-  const days : {[propKey: number] : string} = {1:'Mon', 2:'Tue', 3:'WED', 4:'Thurs', 5:'Fri', 6:'Sat', 7:'Sun'}
-  const months : {[propKey: number] : string} = {1:'Jan', 2:'Feb', 3:'March', 4:'April', 5:'May', 6:'June', 7:'July', 8:'Aug', 9:'Sept', 10:'Oct', 11:'Nov', 12:'December'}
-  const dayString = days[day]
-  const monthString =  months[month]
 
-  
 
   function getUserName(id: string){
     let username = ''
@@ -83,13 +69,7 @@ const Home = () => {
     }
   }
 
-  const handleDelete = (id: string) => {
-    console.log(`handleDelete of ${id}`)
-    console.log('Dialog open '+deleteDialogOpen)
-    setDeleteId(id)
-    handleDeleteDialog()
-    console.log('Dialog open '+deleteDialogOpen)
-  }
+
 
   const handleCompletedState = () => {
     //set completed state
@@ -221,8 +201,6 @@ const Home = () => {
                     <TableCell></TableCell>
                     <TableCell>Task</TableCell>
                     <TableCell>User</TableCell>
-                    <TableCell>Edit</TableCell>
-                    <TableCell>Delete</TableCell>
                   </TableRow>
                 </TableHead>
                 <TableBody sx={{height:'max-content'}}>
@@ -230,19 +208,18 @@ const Home = () => {
                     <TableRow
                       key={todo.id}
                       hover={true}
+                      onClick={() => handleEdit(todo)}
                       //sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
                     ><TableCell>{todo.isComplete ? <TaskAlt sx={{color:theme.palette.success.main}}/> : <RadioButtonUnchecked/>}</TableCell>
                       <TableCell>{todo.name}</TableCell>
                       <TableCell>{getUserName(todo.user ?? '')}</TableCell>
-                      <TableCell><IconButton onClick={() => handleEdit(todo)} sx={{color:theme.palette.primary.contrastText}}><Edit/></IconButton></TableCell>
-                      <TableCell><IconButton onClick={() => handleDelete(todo.id)} sx={{color:theme.palette.primary.contrastText}}><DeleteOutline/></IconButton></TableCell>
                     </TableRow>
                   )): <TableRow></TableRow>}
                 </TableBody>
               </Table>
             </TableContainer>
-        
-        <DeleteDialog id={deleteId}></DeleteDialog>
+                  
+
         <DeleteAlert></DeleteAlert>
         </Box>
     </ThemeProvider>
