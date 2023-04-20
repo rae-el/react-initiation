@@ -99,25 +99,8 @@ export function makeServer () {
                 return schema.todos.create(attrs)
             })
             // to implement
-            // get todo by name
-            // string
-            this.get("/todo/name/:name", (schema:any, request)=>{
-                const todoName = request.params.todoName
-                const todo = schema.todos.find(todoName)
-                return {
-                    todo:todo
-                }
-            })
-            // get todo by completion status
-            // bool
-            this.get("/todos/completed", (schema:any)=>{
-                const todos = schema.todos.where({isComplete:true})
-                return {
-                    todos:todos
-                }
-            })
             // edit todo
-            this.patch("/todo/:id/update", (schema:any, request)=> {
+            this.put("/todo/:id/update", (schema:any, request)=> {
                 const todoId = request.params.id
                 let attrs = JSON.parse(request.requestBody)
                 schema.todos.find(todoId).update(attrs)
