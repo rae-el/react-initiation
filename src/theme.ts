@@ -8,13 +8,19 @@ const theme = createTheme({
         dark: '#2896ff',
         contrastText: '#383838',
       },
+      secondary:{
+        main: '#c3e1ff',
+        light: '#eaf5ff',
+        dark: '#2896ff',
+        contrastText: '#383838',
+      },
       success:{
         main:'#51D451',
         light:'#E5FFE5',
         dark:'#5AA769'
       }
   },
-  typography:{fontFamily:['Quicksand',].join(','),}
+  typography:{fontFamily:['Quicksand'].join(','),}
 
 })
 

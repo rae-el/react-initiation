@@ -98,7 +98,7 @@ const UpdateTodo: FC<Props> = ({todoId}) => {
             top: 100,
           }}>
           <Typography variant='h3'>
-            Edit Todo {stringId}
+            Edit Task {stringId}
           </Typography>
           <form autoComplete="off" onSubmit={(e) => handleUpdateTodo(e)}>
           <FormControl>

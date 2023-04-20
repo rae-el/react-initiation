@@ -116,74 +116,77 @@ const Home = () => {
         sx={{
             margin: '5%',
           }}>
-            <Box sx={{display:'flex', flexWrap:'wrap'}}>
-            <Box sx={{padding:3}}>
-          <Box sx={{width:'70px', alignSelf:'flex-end', display:'flex', alignItems:'center', flexDirection:'column', justifyItems:'center'}}>
-            <Typography>{dayString}</Typography>
-            <Typography variant='h4' sx={{color:theme.palette.primary.dark}}>{date}</Typography>
-            <Typography>{monthString}</Typography>
-            <Box sx={{display:'flex'}}>
-              <Typography >
-                {hours} : {minutes < 10 ? '0'+minutes : minutes}
-              </Typography>
-            </Box>
-          </Box>
-        </Box>
-        <Box sx={{
-          display:'flex'
-        }}>
-        <FormControl>
-            <Box
-            sx={{
-                width:'100%',
-              }}>
-            <FormControlLabel
-                control={<TextField label='Test Project' inputMode='text' variant='filled' disabled sx={{width:'20', marginLeft:6, marginBottom:'5px', marginTop:''}}/>}
-                label="Project"
-                labelPlacement='start'
-                />
-            </Box>
-            <Box
-            sx={{
-                width:'100%',
-              }}>
-            <FormControlLabel
-                control={
-                    <Select label='User'
-                            value= {selectedUser}
-                            onChange={handleSelectUser}
-                            ref={inputComponent}
-                            renderValue={(value) => value ? value : <em>Select User</em>}
-                            sx={{marginLeft:8, marginBottom:'', marginTop:'', minWidth:'220px !important'}}>
-                              <MenuItem value=''> All users </MenuItem>
-                      {userList.map((user) => (<MenuItem key={user.id} value={user.id+ ' - '+ user.attributes["first-name"] +" "+ user.attributes["last-name"]}>{user.id+ ' - '+ user.attributes["first-name"] +" "+ user.attributes["last-name"]}</MenuItem>))}
-                      {/*userList.map((user) => (<MenuItem key={user.id} value={user.id+ ' - '+ user.attributes.get('first-name') +" "+ user.attributes.get('last-name')}>{user.id+ ' - '+ user.attributes.get('first-name') +" "+ user.attributes.get('last-name')}</MenuItem>))*/}
-                    </Select>
-                }
-                label="User"
-                labelPlacement='start'/></Box>
-            <Box
-            sx={{
-                width:'100%',
-              }}>
-            <FormControlLabel
-                control={
-                    <Switch 
-                        //checked = {true}
-                        onChange={handleCompletedState}
-                        sx={{marginLeft:1, marginBottom:1, marginTop:1}}/>}
-                        label="Completed"
-                        labelPlacement='start' />
-            </Box>
-            </FormControl></Box></Box>
+          <Box sx={{display:'flex', flexWrap:'no-wrap', justifyContent:'space-between'}}>
+            <Box sx={{
+                display:'flex'
+                }}>
+              <FormControl>
+                  <Box
+                  sx={{
+                      width:'100%',
+                    }}>
+                  <FormControlLabel
+                      control={<TextField label='Test Project' inputMode='text' disabled sx={{width:'130px !important', marginLeft:6, marginBottom:'5px', marginTop:''}}/>}
+                      label="Project"
+                      labelPlacement='start'
+                      sx={{color:theme.palette.primary.contrastText}}
+                      />
+                  </Box>
+                  <Box
+                  sx={{
+                      width:'100%',
+                    }}>
+                  <FormControlLabel
+                      control={
+                          <Select label='User'
+                                  value= {selectedUser}
+                                  onChange={handleSelectUser}
+                                  ref={inputComponent}
+                                  renderValue={(value) => value ? value : <em>Select User</em>}
+                                  sx={{marginLeft:8.1, marginBottom:'', marginTop:'', minWidth:'130px !important'}}>
+                                    <MenuItem value=''> All users </MenuItem>
+                            {userList.map((user) => (<MenuItem key={user.id} value={user.id+ ' - '+ user.attributes["first-name"] +" "+ user.attributes["last-name"]}>{user.id+ ' - '+ user.attributes["first-name"] +" "+ user.attributes["last-name"]}</MenuItem>))}
+                            {/*userList.map((user) => (<MenuItem key={user.id} value={user.id+ ' - '+ user.attributes.get('first-name') +" "+ user.attributes.get('last-name')}>{user.id+ ' - '+ user.attributes.get('first-name') +" "+ user.attributes.get('last-name')}</MenuItem>))*/}
+                          </Select>
+                      }
+                      label="User"
+                      labelPlacement='start'/></Box>
+                  <Box
+                  sx={{
+                      width:'100%',
+                    }}>
+                  <FormControlLabel
+                      control={
+                          <Switch 
+                              //checked = {true}
+                              onChange={handleCompletedState}
+                              sx={{marginLeft:1, marginBottom:1, marginTop:1}}/>}
+                              label="Completed"
+                              labelPlacement='start' />
+                  </Box>
+                  </FormControl>
+                </Box>
+                <Box>
+                  <Box sx={{width:'70px', display:'flex', alignItems:'center', flexDirection:'column', justifyItems:'center'}}>
+                    <Typography sx={{fontWeight:600}}>{dayString}</Typography>
+                    <Typography variant='h4' sx={{color:theme.palette.primary.dark, fontWeight:600}}>{date}</Typography>
+                    <Typography sx={{fontWeight:600}}>{monthString}</Typography>
+                    <Box sx={{display:'flex'}}>
+                      <Typography >
+                        {hours} : {minutes < 10 ? '0'+minutes : minutes}
+                      </Typography>
+                    </Box>
+                  </Box>
+                </Box>
+              </Box>
             <Box 
             sx={{
                 width:'100%',
                 display: 'inline-flex',
                 alignItems: 'center'
               }}>
-              <IconButton onClick={navigateToAdd} sx={{color:theme.palette.primary.main}}><AddCircle/></IconButton>
-              <Typography sx={{position: 'relative'}}>Add New Task</Typography>
+              <IconButton onClick={navigateToAdd} sx={{color:theme.palette.primary.main, fontWeight:'bold'}}><AddCircle/></IconButton>
+              <Typography sx={{position: 'relative', fontWeight:600}}>Add New Task</Typography>
             </Box>
             
             <TableContainer 
@@ -192,15 +195,17 @@ const Home = () => {
             sx={{width:'100%'}} >
               <Table aria-label="todos table">
                 <TableHead className='todos-table-header'
-                sx={{borderColor:theme.palette.primary.main,
+                sx={{
                 fontVariant:'small-caps',
+                fontSize: '3rem !important',
+                backgroundColor: theme.palette.secondary.light,
                 position:'sticky',
                 top:0,
                 zIndex:1}}>
-                  <TableRow>
+                  <TableRow >
                     <TableCell></TableCell>
-                    <TableCell>Task</TableCell>
-                    <TableCell>User</TableCell>
+                    <TableCell sx={{fontWeight:'700 !important', fontSize:'1.1rem'}}>Task</TableCell>
+                    <TableCell sx={{fontWeight:'700 !important', fontSize:'1.1rem'}}>User</TableCell>
                   </TableRow>
                 </TableHead>
                 <TableBody sx={{height:'max-content'}}>

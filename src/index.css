@@ -1,4 +1,15 @@
 @font-face {
     font-family: 'Quicksand';
-    src: url('./assets/fonts/Quicksand/Quicksand-VariableFont_wght.ttf') format('truetype');
+    font-weight: normal;
+    src: url('./assets/fonts/Quicksand/static/Quicksand-Regular.ttf') format('truetype');
+}
+@font-face {
+    font-family: 'Quicksand';
+    font-weight: bolder;
+    src: url('./assets/fonts/Quicksand/static/Quicksand-Bold.ttf') format('truetype');
+}
+@font-face {
+    font-family: 'Quicksand';
+    font-weight: lighter;
+    src: url('./assets/fonts/Quicksand/static/Quicksand-Light.ttf') format('truetype');
 }
