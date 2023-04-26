@@ -19,12 +19,7 @@ import UpdateFailedAlert from "../../ui/alerts/UpdateFailedAlert"
 import DeleteFailedAlert from "../../ui/alerts/DeleteFailedAlert"
 import { CircularProgress } from "@mui/material"
 
-
-type Props ={
-    todoId: string | null
-}
-
-const UpdateTodo: FC<Props> = ({todoId}) => {
+const UpdateTodo: FC = () => {
   const {handleDeleteDialog, deleteDialogOpen, deleteId, setDeleteId, updatedName, updatedUserId, updatedCompletion, setUpdatedName, setUpdatedUserId, setUpdatedCompletion, updateThisTodo, userMenuItems} = useContext(TodoContext) as TodoContextType
   const [showUsers, setShowUsers] = useState<UserItem[]>([])
   const [selectedUser, setSelectedUser] = useState('')
@@ -33,19 +28,20 @@ const UpdateTodo: FC<Props> = ({todoId}) => {
   const [stringId, setStringId] = useState('')
   const inputComponent = useRef<HTMLInputElement>(null)
   const navigate = useNavigate();
+  const [valuesExist, setValuesExist] = useState(false)
 
-  useEffect(() => {
-      setShowUsers(userMenuItems)
+  useEffect(() =>{
+    setShowUsers(userMenuItems)
+    try{
       setSelectedCompletion(updatedCompletion ? 'Yes' : 'No')
-      if(updatedName != ''){
-        setTaskName(updatedName)
-      }
-      if(updatedUserId != ''){
-        let potentialUser = showUsers?.filter(i => i.id == updatedUserId)
-        setSelectedUser(potentialUser[0].details)
-      }
-    
-})
+      setTaskName(updatedName)
+      let potentialUser = showUsers?.filter(i => i.id == updatedUserId)
+      setSelectedUser(potentialUser[0].details)
+      setValuesExist(true)
+    }catch{
+      console.log('data not ready')
+    }
+  })
 
   
   const handleSelectUser = (event: SelectChangeEvent<SetStateAction<string>>) => {
@@ -91,8 +87,7 @@ const UpdateTodo: FC<Props> = ({todoId}) => {
           }}><Typography variant='h4'>
             Edit Task {stringId}
           </Typography>
-            {updatedUserId == '' ? <CircularProgress/> : 
-        
+            {valuesExist ?
           <><form autoComplete="off" onSubmit={(e) => handleUpdateTodo(e)}>
             <FormControl>
               <Box sx={{ width: '100%' }}>
@@ -126,7 +121,7 @@ const UpdateTodo: FC<Props> = ({todoId}) => {
               <Button variant='contained' type='submit' sx={{ color: theme.palette.primary.light }}>Save</Button>
               <Button onClick={navigateToHome}>Cancel</Button>
             </FormControl>
-          </form><DeleteDialog></DeleteDialog><UpdateFailedAlert></UpdateFailedAlert><DeleteFailedAlert></DeleteFailedAlert></>}
+          </form><DeleteDialog></DeleteDialog><UpdateFailedAlert></UpdateFailedAlert><DeleteFailedAlert></DeleteFailedAlert></> : <CircularProgress/>}
         </Box>
     </ThemeProvider>
   )
