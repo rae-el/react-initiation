@@ -19,10 +19,11 @@ import { TodoContextType } from '../../../@types/Todo';
 import DeleteSuccessAlert from '../../ui/alerts/DeleteSuccessAlert';
 import UpdateSuccessAlert from '../../ui/alerts/UpdateSuccessAlert';
 import DateTimeBox from '../../ui/DateTimeBox';
+import darkTheme from '../../../darkTheme';
 
 
 const Home = () => {
-  const {userList, todoList, getThisTodo, showList, setShowList,isMobile} = useContext(TodoContext) as TodoContextType
+  const {userList, todoList, getThisTodo, showList, setShowList,isMobile,darkMode} = useContext(TodoContext) as TodoContextType
   const [selectedUser, setSelectedUser] = useState('')
   const inputComponent = useRef<HTMLInputElement>(null)
   const navigate = useNavigate()
@@ -106,7 +107,7 @@ const Home = () => {
 
 
   return (
-    <ThemeProvider theme={theme}>
+    <ThemeProvider theme={darkMode ?  darkTheme : theme}>
         {/* edit form values to reflect api */}
         <Header/>
         {isMobile ? 
@@ -225,7 +226,7 @@ const Home = () => {
                       width:'100%',
                     }}>
                   <FormControlLabel
-                      control={<TextField label='Test Project' inputMode='text' disabled sx={{width:'130px !important', marginLeft:6, marginBottom:'5px', marginTop:''}}/>}
+                      control={<TextField label='Test Project' inputMode='text' disabled sx={{width:'175px !important', marginLeft:6, marginBottom:'5px', marginTop:''}}/>}
                       label="Project"
                       labelPlacement='start'
                       sx={{color:theme.palette.primary.contrastText}}
@@ -242,7 +243,7 @@ const Home = () => {
                                   onChange={handleSelectUser}
                                   ref={inputComponent}
                                   renderValue={(value) => value ? value : <em>Select User</em>}
-                                  sx={{marginLeft:8.1, marginBottom:'', marginTop:'', minWidth:'130px !important'}}>
+                                  sx={{marginLeft:8.1, marginBottom:'', marginTop:'', minWidth:'175px !important'}}>
                                     <MenuItem value=''> All users </MenuItem>
                             {userList.map((user) => (<MenuItem key={user.id} value={user.id+ ' - '+ user.attributes["first-name"] +" "+ user.attributes["last-name"]}>{user.id+ ' - '+ user.attributes["first-name"] +" "+ user.attributes["last-name"]}</MenuItem>))}
                             {/*userList.map((user) => (<MenuItem key={user.id} value={user.id+ ' - '+ user.attributes.get('first-name') +" "+ user.attributes.get('last-name')}>{user.id+ ' - '+ user.attributes.get('first-name') +" "+ user.attributes.get('last-name')}</MenuItem>))*/}
@@ -317,7 +318,7 @@ const Home = () => {
             </TableContainer>
         </Box>
         }
-    </ThemeProvider>
+    </ThemeProvider>  
   )
 }
 

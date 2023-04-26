@@ -1,8 +1,8 @@
 import ThemeProvider from "@mui/material/styles/ThemeProvider"
 import { useEffect } from "react"
-import theme from "../../../theme"
 import Typography from "@mui/material/Typography"
 import Box from "@mui/material/Box"
+import theme from "../../../theme"
 
 
 function Add() {

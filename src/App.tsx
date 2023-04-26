@@ -1,8 +1,6 @@
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import Home from './components/pages/home/Home'
-import Add from './pages/Add';
 import NotFound from './components/pages/notfound/NotFound';
-import Edit from './pages/Edit';
 import TodoProvider from './context/todoContext';
 import CreateTodo from './components/pages/create/CreateTodo';
 import UpdateTodo from './components/pages/update/UpdateTodo';

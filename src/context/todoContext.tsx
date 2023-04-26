@@ -44,6 +44,8 @@ const TodoProvider: FC<Props> = ({children}) => {
     const [monthString, setMonthString] = useState<string>('')
     //device
     const [isMobile, setIsMobile] = useState(false)
+    //theme
+    const [darkMode, setDarkMode] = useState(false)
     
 
     //run the api query
@@ -52,6 +54,8 @@ const TodoProvider: FC<Props> = ({children}) => {
         todoService.getTodos().then((value) => setShowList(value))
         userService.getUsers().then((value) => setUserList(value))
         determineDevice()
+
+        setDarkMode(window.matchMedia('(prefers-color-scheme: dark)').matches)
         
 
         const interval = setInterval(() => {
@@ -184,7 +188,7 @@ const TodoProvider: FC<Props> = ({children}) => {
     }
     
 
-    return <TodoContext.Provider value={{isMobile, todoList, showList, setShowList, getTodos, thisTodo, updatedTodo, setUpdatedTodo, updatedName, setUpdatedName, updatedUserId, setUpdatedUserId, updatedCompletion, setUpdatedCompletion, deleteId, setDeleteId, getThisTodo, deleteThisTodo, updateThisTodo, createThisTodo, userList, userMenuItems, deleteDialogOpen, handleDeleteDialog, deleteSuccessAlertOpen, setDeleteSuccessAlertOpen, deleteFailedAlertOpen, setDeleteFailedAlertOpen, createSuccessAlertOpen, setCreateSuccessAlertOpen, createFailedAlertOpen, setCreateFailedAlertOpen, updateSuccessAlertOpen, setUpdateSuccessAlertOpen, updateFailedAlertOpen, setUpdateFailedAlertOpen, hours, minutes, date, dayString, monthString}}>
+    return <TodoContext.Provider value={{isMobile, darkMode, todoList, showList, setShowList, getTodos, thisTodo, updatedTodo, setUpdatedTodo, updatedName, setUpdatedName, updatedUserId, setUpdatedUserId, updatedCompletion, setUpdatedCompletion, deleteId, setDeleteId, getThisTodo, deleteThisTodo, updateThisTodo, createThisTodo, userList, userMenuItems, deleteDialogOpen, handleDeleteDialog, deleteSuccessAlertOpen, setDeleteSuccessAlertOpen, deleteFailedAlertOpen, setDeleteFailedAlertOpen, createSuccessAlertOpen, setCreateSuccessAlertOpen, createFailedAlertOpen, setCreateFailedAlertOpen, updateSuccessAlertOpen, setUpdateSuccessAlertOpen, updateFailedAlertOpen, setUpdateFailedAlertOpen, hours, minutes, date, dayString, monthString}}>
         {children}
     </TodoContext.Provider>
 }
