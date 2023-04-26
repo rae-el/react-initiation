@@ -17,15 +17,7 @@ export default function DeleteDialog() {
   function handleYes(){
      //delete item
     handleDelete(deleteId)
-    //recall todos
-    getTodos()
-    //close dialog
-    handleDeleteDialog()
-    //alert
-    setDeleteAlertOpen(true)
-    setTimeout(()=>{
-      setDeleteAlertOpen(false)
-    }, 50000)
+  
     //navigate
     navigateToHome()
 

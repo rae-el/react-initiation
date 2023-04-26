@@ -66,9 +66,6 @@ const CreateTodo = () => {
         setTask('')
         setUser('')
         setIsCompleted('No')
-        //recall todos
-        getTodos()
-        setCreateSuccessAlertOpen(true)
       }
     }
        

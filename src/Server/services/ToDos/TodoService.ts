@@ -27,7 +27,7 @@ export class TodoService{
     async deleteTodo(id: string){
         //working
         try{
-            const response = await axios.delete(`api/todo/${id}/delete`)
+            const response = await axios.delete(`/api/todo/${id}/delete`)
             return response
         }catch (e){
             console.error(e)
