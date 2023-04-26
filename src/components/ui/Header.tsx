@@ -8,7 +8,7 @@ import { TodoContext } from '../../context/todoContext'
 
 
 function Header() {
-  const {hours,} = useContext(TodoContext) as TodoContextType
+  const {hours} = useContext(TodoContext) as TodoContextType
 
 
   return (

@@ -42,6 +42,8 @@ const TodoProvider: FC<Props> = ({children}) => {
     const [date, setDate] = useState<number>(0)
     const [dayString, setDayString] = useState<string>('')
     const [monthString, setMonthString] = useState<string>('')
+    //device
+    const [isMobile, setIsMobile] = useState(false)
     
 
     //run the api query
@@ -49,7 +51,7 @@ const TodoProvider: FC<Props> = ({children}) => {
         todoService.getTodos().then((value) => setTodoList(value))
         todoService.getTodos().then((value) => setShowList(value))
         userService.getUsers().then((value) => setUserList(value))
-
+        determineDevice()
         
 
         const interval = setInterval(() => {
@@ -69,6 +71,14 @@ const TodoProvider: FC<Props> = ({children}) => {
         useEffect(() =>{
             getUserItems()
         })
+
+    const determineDevice = () =>{
+        let device = navigator.userAgent
+        console.log(device)
+        let mobileRegex = [/(Android)(.+)(Mobile)/i, /BlackBerry/i, /iPhone|iPod/i, /Opera Mini/i, /IEMobile/i]
+        setIsMobile(mobileRegex.some((b) => device.match(b)))
+        console.log('Is Mobile? ' + isMobile)
+    }
 
     //todo methods
     const getThisTodo = (id: string) => {
@@ -167,7 +177,7 @@ const TodoProvider: FC<Props> = ({children}) => {
     }
     
 
-    return <TodoContext.Provider value={{todoList, showList, setShowList, getTodos, thisTodo, updatedTodo, setUpdatedTodo, updatedName, setUpdatedName, updatedUserId, setUpdatedUserId, updatedCompletion, setUpdatedCompletion, deleteId, setDeleteId, getThisTodo, deleteThisTodo, updateThisTodo, createThisTodo, userList, userMenuItems, deleteDialogOpen, handleDeleteDialog, deleteSuccessAlertOpen, setDeleteSuccessAlertOpen, deleteFailedAlertOpen, setDeleteFailedAlertOpen, createSuccessAlertOpen, setCreateSuccessAlertOpen, createFailedAlertOpen, setCreateFailedAlertOpen, updateSuccessAlertOpen, setUpdateSuccessAlertOpen, updateFailedAlertOpen, setUpdateFailedAlertOpen, hours, minutes, date, dayString, monthString}}>
+    return <TodoContext.Provider value={{isMobile, todoList, showList, setShowList, getTodos, thisTodo, updatedTodo, setUpdatedTodo, updatedName, setUpdatedName, updatedUserId, setUpdatedUserId, updatedCompletion, setUpdatedCompletion, deleteId, setDeleteId, getThisTodo, deleteThisTodo, updateThisTodo, createThisTodo, userList, userMenuItems, deleteDialogOpen, handleDeleteDialog, deleteSuccessAlertOpen, setDeleteSuccessAlertOpen, deleteFailedAlertOpen, setDeleteFailedAlertOpen, createSuccessAlertOpen, setCreateSuccessAlertOpen, createFailedAlertOpen, setCreateFailedAlertOpen, updateSuccessAlertOpen, setUpdateSuccessAlertOpen, updateFailedAlertOpen, setUpdateFailedAlertOpen, hours, minutes, date, dayString, monthString}}>
         {children}
     </TodoContext.Provider>
 }
