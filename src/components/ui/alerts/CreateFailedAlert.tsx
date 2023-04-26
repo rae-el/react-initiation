@@ -5,19 +5,19 @@ import { Collapse } from "@mui/material"
 import { TodoContext } from "../../../context/todoContext"
 import { TodoContextType } from "../../../@types/Todo"
 
-export default function CreateSuccessAlert(){
-  const {createSuccessAlertOpen, setCreateSuccessAlertOpen} = useContext(TodoContext) as TodoContextType
+export default function CreateFailedAlert(){
+  const {createFailedAlertOpen, setCreateFailedAlertOpen} = useContext(TodoContext) as TodoContextType
   setTimeout(()=>{
-    setCreateSuccessAlertOpen(false)
+    setCreateFailedAlertOpen(false)
   }, 30000)
     return(
-        <Collapse in={createSuccessAlertOpen}><Alert
+        <Collapse in={createFailedAlertOpen}><Alert
         icon={<Check sx={{ mx: 0.5 }} />}
         variant="outlined"
-        color='success'
+        color='error'
         sx={{marginTop:2, width:'55%'}}
-        onClose={() => setCreateSuccessAlertOpen(false)}>
-          Task was successfully created
+        onClose={() => setCreateFailedAlertOpen(false)}>
+          Unable to create task
       </Alert></Collapse>
     )
 }

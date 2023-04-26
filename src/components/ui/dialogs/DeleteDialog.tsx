@@ -10,7 +10,7 @@ import { useNavigate } from "react-router-dom";
 
 
 export default function DeleteDialog() {
-  const {deleteThisTodo, handleDeleteDialog, deleteDialogOpen, getTodos, setDeleteAlertOpen, deleteId} = useContext(TodoContext) as TodoContextType
+  const {deleteThisTodo, handleDeleteDialog, deleteDialogOpen, deleteId} = useContext(TodoContext) as TodoContextType
   const navigate = useNavigate()
 
 

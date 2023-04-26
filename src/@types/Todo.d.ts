@@ -37,10 +37,14 @@ export type TodoContextType = {
     userList: UserObject[];
     deleteDialogOpen: boolean;
     handleDeleteDialog: () => void;
-    deleteAlertOpen: boolean;
-    setDeleteAlertOpen: (open: boolean) => void;
+    deleteSuccessAlertOpen: boolean;
+    setDeleteSuccessAlertOpen: (open: boolean) => void;
+    deleteFailedAlertOpen: boolean;
+    setDeleteFailedAlertOpen: (open: boolean) => void;
     createSuccessAlertOpen: boolean;
     setCreateSuccessAlertOpen: (open: boolean) => void;
+    createFailedAlertOpen: boolean;
+    setCreateFailedAlertOpen: (open: boolean) => void;
     updateSuccessAlertOpen: boolean;
     setUpdateSuccessAlertOpen: (open: boolean) => void;
     setShowList: (todos: TodoObject[]) => void;

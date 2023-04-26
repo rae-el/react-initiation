@@ -5,16 +5,19 @@ import { Collapse } from "@mui/material"
 import { TodoContext } from "../../../context/todoContext"
 import { TodoContextType } from "../../../@types/Todo"
 
-export default function DeleteAlert(){
-  const {deleteAlertOpen, setDeleteAlertOpen, deleteId} = useContext(TodoContext) as TodoContextType
+export default function DeleteSuccessAlert(){
+  const {deleteSuccessAlertOpen, setDeleteSuccessAlertOpen, deleteId} = useContext(TodoContext) as TodoContextType
+  setTimeout(()=>{
+    setDeleteSuccessAlertOpen(false)
+  }, 30000)
 
     return(
-        <Collapse in={deleteAlertOpen} hidden={deleteAlertOpen}><Alert
+        <Collapse in={deleteSuccessAlertOpen} hidden={deleteSuccessAlertOpen}><Alert
         icon={<Warning sx={{ mx: 0.5 }} />}
         variant="outlined"
         color='warning'
         sx={{marginTop:2, width:'85%'}}
-        onClose={() => setDeleteAlertOpen(false)}>
+        onClose={() => setDeleteSuccessAlertOpen(false)}>
           Task {deleteId} was successfully deleted
       </Alert></Collapse>
     )

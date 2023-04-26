@@ -28,7 +28,7 @@ export class TodoService{
         //working
         try{
             const response = await axios.delete(`/api/todo/${id}/delete`)
-            return response
+            return response.status
         }catch (e){
             console.error(e)
         }
@@ -39,7 +39,7 @@ export class TodoService{
         
     try{
         const response = await axios.post("api/todo/create", todo)
-        return response.data.todo
+        return response.status
     }catch (e){
         console.error(e)
     }

@@ -18,7 +18,7 @@ import { useNavigate } from 'react-router-dom';
 import { TodoContext } from '../../../context/todoContext';
 import { TodoContextType, TodoObject } from '../../../@types/Todo';
 import DeleteDialog from '../../ui/dialogs/DeleteDialog';
-import DeleteAlert from '../../ui/alerts/DeleteAlert';
+import DeleteSuccessAlert from '../../ui/alerts/DeleteSuccessAlert';
 
 
 const Home = () => {
@@ -186,7 +186,7 @@ const Home = () => {
               <IconButton onClick={navigateToAdd} sx={{color:theme.palette.primary.main, fontWeight:'bold', marginLeft:1}}><AddCircle/></IconButton>
               <Typography sx={{position: 'relative', fontWeight:600}}>add a new task</Typography>
             </Box>
-            <DeleteAlert></DeleteAlert>
+            <DeleteSuccessAlert></DeleteSuccessAlert>
             <TableContainer 
             component={Paper}
             className='todos-table-container'

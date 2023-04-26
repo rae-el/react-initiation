@@ -25,8 +25,10 @@ const TodoProvider: FC<Props> = ({children}) => {
     //dialogs
     const [deleteDialogOpen, setDeleteDialogOpen] = useState(false)
     //alerts
-    const [deleteAlertOpen, setDeleteAlertOpen] = useState(false)
+    const [deleteSuccessAlertOpen, setDeleteSuccessAlertOpen] = useState(false)
+    const [deleteFailedAlertOpen, setDeleteFailedAlertOpen] = useState(false)
     const [createSuccessAlertOpen, setCreateSuccessAlertOpen] = useState(false)
+    const [createFailedAlertOpen, setCreateFailedAlertOpen] = useState(false)
     const [updateSuccessAlertOpen, setUpdateSuccessAlertOpen] = useState(false)
     //times
     const [hours, setHours] = useState<number>(0)
@@ -66,28 +68,24 @@ const TodoProvider: FC<Props> = ({children}) => {
         })
     }
     const deleteThisTodo = (id: string) => {
-        todoService.deleteTodo(id).then((value) => console.log(`Delete" ${value}`))
+        todoService.deleteTodo(id).then((value) => deleteAlert(value))
         setDeleteDialogOpen(false)
-        getTodos()
+        //this is throwing
+        //getTodos()
         //alert
-        setDeleteAlertOpen(true)
-        setTimeout(()=>{
-        setDeleteAlertOpen(false)
-        }, 50000)
+        setDeleteSuccessAlertOpen(true)
     }
     const updateThisTodo = (todo: ThisTodo) => {
-        todoService.updateTodo(todo).then((value) => console.log(`Update" ${value}`))
-        getTodos()
+        todoService.updateTodo(todo).then((value) => console.log(`Update ${value}`))
+        //this is throwing
+        //getTodos()
         //alert
         setUpdateSuccessAlertOpen(true)
-        setTimeout(()=>{
-        setUpdateSuccessAlertOpen(false)
-        }, 50000)
     }
     const createThisTodo = (todo: ThisTodo) => {
-        todoService.createTodo(todo).then((value) => console.log(`Create" ${value}`))
-        getTodos()
-        setCreateSuccessAlertOpen(true)
+        todoService.createTodo(todo).then((value) => createAlert(value))
+        
+       
     }
     const getTodos = () => {
         todoService.getTodos().then((value) => setTodoList(value))
@@ -97,9 +95,31 @@ const TodoProvider: FC<Props> = ({children}) => {
     const handleDeleteDialog = () =>{
         setDeleteDialogOpen(!deleteDialogOpen)
     }
+
+    const deleteAlert = (response: any) => {
+        console.log(response)
+        if (response == 200){
+            getTodos()
+            setDeleteSuccessAlertOpen(true)
+        }else{
+            console.log('delete unsuccessful ' + response)
+            setDeleteFailedAlertOpen(true)
+        }
+    }
+
+    const createAlert = (response: any) => {
+        console.log(response)
+        if (response == 201){
+            getTodos()
+            setCreateSuccessAlertOpen(true)
+        }else{
+            console.log('create unsuccessful ' + response)
+            setCreateFailedAlertOpen(true)
+        }
+    }
     
 
-    return <TodoContext.Provider value={{todoList, showList, setShowList, getTodos, thisTodo, updatedTodo, setUpdatedTodo, updatedName, setUpdatedName, updatedUserId, setUpdatedUserId, updatedCompletion, setUpdatedCompletion, deleteId, setDeleteId, getThisTodo, deleteThisTodo, updateThisTodo, createThisTodo, userList, deleteDialogOpen, handleDeleteDialog, deleteAlertOpen, setDeleteAlertOpen, createSuccessAlertOpen, setCreateSuccessAlertOpen, updateSuccessAlertOpen, setUpdateSuccessAlertOpen, hours, minutes, date, dayString, monthString}}>
+    return <TodoContext.Provider value={{todoList, showList, setShowList, getTodos, thisTodo, updatedTodo, setUpdatedTodo, updatedName, setUpdatedName, updatedUserId, setUpdatedUserId, updatedCompletion, setUpdatedCompletion, deleteId, setDeleteId, getThisTodo, deleteThisTodo, updateThisTodo, createThisTodo, userList, deleteDialogOpen, handleDeleteDialog, deleteSuccessAlertOpen, setDeleteSuccessAlertOpen, deleteFailedAlertOpen, setDeleteFailedAlertOpen, createSuccessAlertOpen, setCreateSuccessAlertOpen, createFailedAlertOpen, setCreateFailedAlertOpen, updateSuccessAlertOpen, setUpdateSuccessAlertOpen, hours, minutes, date, dayString, monthString}}>
         {children}
     </TodoContext.Provider>
 }
