@@ -61,9 +61,16 @@ const TodoProvider: FC<Props> = ({children}) => {
             const day = new Date().getDay()
             const month = new Date().getMonth()
             const days : {[propKey: number] : string} = {1:'Mon', 2:'Tue', 3:'Wed', 4:'Thurs', 5:'Fri', 6:'Sat', 7:'Sun'}
-            const months : {[propKey: number] : string} = {1:'Jan', 2:'Feb', 3:'March', 4:'April', 5:'May', 6:'June', 7:'July', 8:'Aug', 9:'Sept', 10:'Oct', 11:'Nov', 12:'December'}
-            setDayString(days[day])
-            setMonthString(months[month])
+            const fullDays:  {[propKey: number] : string} = {1:'Monday', 2:'Tuesday', 3:'Wednesday', 4:'Thursday', 5:'Friday', 6:'Saturday', 7:'Sunday'}
+            const months : {[propKey: number] : string} = {1:'Jan', 2:'Feb', 3:'Mar', 4:'Apr', 5:'May', 6:'June', 7:'Jul', 8:'Aug', 9:'Sept', 10:'Oct', 11:'Nov', 12:'Dec'}
+            const fullMonths : {[propKey: number] : string} = {1:'January', 2:'February', 3:'March', 4:'April', 5:'May', 6:'June', 7:'July', 8:'August', 9:'September', 10:'October', 11:'November', 12:'December'}
+            if (isMobile){
+                setDayString(fullDays[day])
+                setMonthString(fullMonths[month])
+            }else{
+                setDayString(days[day])
+                setMonthString(months[month]) 
+            }
         },  1000)
         return () => clearInterval(interval)
         }, [])
