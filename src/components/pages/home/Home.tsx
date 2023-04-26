@@ -1,4 +1,4 @@
-import { Box, FormControl, FormControlLabel, IconButton, MenuItem, MenuItemClassKey, Select, SelectChangeEvent, Switch, TextField, Typography } from '@mui/material'
+import { Box, FormControl, FormControlLabel, IconButton, MenuItem, Select, SelectChangeEvent, Switch, TextField, Typography } from '@mui/material'
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
 import TableCell from '@mui/material/TableCell';
@@ -10,16 +10,13 @@ import ThemeProvider from '@mui/material/styles/ThemeProvider';
 import RadioButtonUnchecked from '@mui/icons-material/RadioButtonUnchecked'
 import AddCircle from '@mui/icons-material/AddCircle'
 import TaskAlt from '@mui/icons-material/TaskAlt'
-
 import theme from '../../../theme';
-import { FC, SetStateAction, useContext, useEffect, useRef, useState } from 'react';
+import { SetStateAction, useContext, useRef, useState } from 'react';
 import Header from '../../ui/Header';
 import { useNavigate } from 'react-router-dom';
 import { TodoContext } from '../../../context/todoContext';
-import { TodoContextType, TodoObject } from '../../../@types/Todo';
-import DeleteDialog from '../../ui/dialogs/DeleteDialog';
+import { TodoContextType } from '../../../@types/Todo';
 import DeleteSuccessAlert from '../../ui/alerts/DeleteSuccessAlert';
-import DeleteFailedAlert from '../../ui/alerts/DeleteFailedAlert';
 import UpdateSuccessAlert from '../../ui/alerts/UpdateSuccessAlert';
 
 

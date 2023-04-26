@@ -1,6 +1,6 @@
-import { FC, FormEvent, SetStateAction, useContext, useRef, useState } from "react"
+import { FormEvent, SetStateAction, useContext, useRef, useState } from "react"
 import { TodoContext } from "../../../context/todoContext"
-import { ThisTodo, TodoContextType, TodoObject } from "../../../@types/Todo"
+import { ThisTodo, TodoContextType} from "../../../@types/Todo"
 import theme from "../../../theme"
 import ThemeProvider from "@mui/material/styles/ThemeProvider"
 import Box from "@mui/material/Box"
@@ -16,8 +16,6 @@ import { faker } from "@faker-js/faker"
 import { UserObject } from "../../../@types/User"
 import CreateSuccessAlert from "../../ui/alerts/CreateSuccessAlert"
 import CreateFailedAlert from "../../ui/alerts/CreateFailedAlert"
-import UpdateSuccessAlert from "../../ui/alerts/UpdateSuccessAlert"
-import UpdateFailedAlert from "../../ui/alerts/UpdateFailedAlert"
 
 
 const CreateTodo = () => {

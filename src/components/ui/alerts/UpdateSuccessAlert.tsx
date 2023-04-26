@@ -1,6 +1,6 @@
 import Alert from "@mui/material/Alert"
 import Check from '@mui/icons-material/Check'
-import { useContext, useEffect, useState } from "react"
+import { useContext } from "react"
 import { Collapse } from "@mui/material"
 import { TodoContext } from "../../../context/todoContext"
 import { TodoContextType } from "../../../@types/Todo"
