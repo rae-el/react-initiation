@@ -1,5 +1,5 @@
 import { ThisTodo, TodoContextType, TodoObject } from "../@types/Todo";
-import {UserObject} from "../@types/User";
+import {UserObject, UserItem} from "../@types/User";
 import { FC, ReactNode, useState, createContext, useEffect } from "react";
 import { TodoService } from "../Server/services/ToDos/TodoService";
 import { UserService } from "../Server/services/Users/UserService";
@@ -16,7 +16,7 @@ const TodoProvider: FC<Props> = ({children}) => {
     const todoService = new TodoService()
     const [todoList, setTodoList] = useState<TodoObject[]>([])
     const [showList, setShowList] = useState<TodoObject[]>([])
-    const [userList, setUserList] = useState<UserObject[]>([])
+    
     const [thisTodo, setThisTodo] = useState<ThisTodo | null>(null)
     const [updatedTodo, setUpdatedTodo] = useState<ThisTodo | null>(null)
     const [updatedName, setUpdatedName] = useState<string>('')
@@ -25,6 +25,8 @@ const TodoProvider: FC<Props> = ({children}) => {
     const [deleteId, setDeleteId] = useState<string>('')
      //users
     const userService = new UserService()
+    const [userList, setUserList] = useState<UserObject[]>([])
+    const [userMenuItems, setUserMenuItems] = useState<UserItem[] | []>([])
     //dialogs
     const [deleteDialogOpen, setDeleteDialogOpen] = useState(false)
     //alerts
@@ -48,6 +50,8 @@ const TodoProvider: FC<Props> = ({children}) => {
         todoService.getTodos().then((value) => setShowList(value))
         userService.getUsers().then((value) => setUserList(value))
 
+        
+
         const interval = setInterval(() => {
             setHours(new Date().getHours())
             setMinutes(new Date().getMinutes())
@@ -61,6 +65,10 @@ const TodoProvider: FC<Props> = ({children}) => {
         },  1000)
         return () => clearInterval(interval)
         }, [])
+
+        useEffect(() =>{
+            getUserItems()
+        })
 
     //todo methods
     const getThisTodo = (id: string) => {
@@ -79,19 +87,26 @@ const TodoProvider: FC<Props> = ({children}) => {
         //alert
         setDeleteSuccessAlertOpen(true)
     }
+
     const updateThisTodo = (todo: ThisTodo) => {
         todoService.updateTodo(todo).then((value) => updateAlert(value))
-      
     }
+
     const createThisTodo = (todo: ThisTodo) => {
-        todoService.createTodo(todo).then((value) => createAlert(value))
-        
-       
+        todoService.createTodo(todo).then((value) => createAlert(value))   
     }
+
     const getTodos = () => {
         todoService.getTodos().then((value) => setTodoList(value))
         todoService.getTodos().then((value) => setShowList(value))
     }
+
+    const getUserItems = () => {
+        let userItems : UserItem[] = [{id: '0', details: 'No assigned user'}]
+        userList?.map((user) => (userItems?.push({id:user.id, details: `${user.id} - ${user.attributes["first-name"]} ${user.attributes["last-name"]}`})))
+        setUserMenuItems(userItems)
+    }
+
     //delete dialog methods
     const handleDeleteDialog = () =>{
         setDeleteDialogOpen(!deleteDialogOpen)
@@ -100,14 +115,11 @@ const TodoProvider: FC<Props> = ({children}) => {
     const deleteAlert = (response: any) => {
         console.log(response)
         if (response == 200){
-            //why is this taking ages to appear?
             setDeleteSuccessAlertOpen(true)
             setTimeout(()=>{
                 setDeleteSuccessAlertOpen(false)
               }, 10000)
             getTodos()
-            
-            
         }else{
             console.log('delete unsuccessful ' + response)
             setDeleteFailedAlertOpen(true)
@@ -155,7 +167,7 @@ const TodoProvider: FC<Props> = ({children}) => {
     }
     
 
-    return <TodoContext.Provider value={{todoList, showList, setShowList, getTodos, thisTodo, updatedTodo, setUpdatedTodo, updatedName, setUpdatedName, updatedUserId, setUpdatedUserId, updatedCompletion, setUpdatedCompletion, deleteId, setDeleteId, getThisTodo, deleteThisTodo, updateThisTodo, createThisTodo, userList, deleteDialogOpen, handleDeleteDialog, deleteSuccessAlertOpen, setDeleteSuccessAlertOpen, deleteFailedAlertOpen, setDeleteFailedAlertOpen, createSuccessAlertOpen, setCreateSuccessAlertOpen, createFailedAlertOpen, setCreateFailedAlertOpen, updateSuccessAlertOpen, setUpdateSuccessAlertOpen, updateFailedAlertOpen, setUpdateFailedAlertOpen, hours, minutes, date, dayString, monthString}}>
+    return <TodoContext.Provider value={{todoList, showList, setShowList, getTodos, thisTodo, updatedTodo, setUpdatedTodo, updatedName, setUpdatedName, updatedUserId, setUpdatedUserId, updatedCompletion, setUpdatedCompletion, deleteId, setDeleteId, getThisTodo, deleteThisTodo, updateThisTodo, createThisTodo, userList, userMenuItems, deleteDialogOpen, handleDeleteDialog, deleteSuccessAlertOpen, setDeleteSuccessAlertOpen, deleteFailedAlertOpen, setDeleteFailedAlertOpen, createSuccessAlertOpen, setCreateSuccessAlertOpen, createFailedAlertOpen, setCreateFailedAlertOpen, updateSuccessAlertOpen, setUpdateSuccessAlertOpen, updateFailedAlertOpen, setUpdateFailedAlertOpen, hours, minutes, date, dayString, monthString}}>
         {children}
     </TodoContext.Provider>
 }

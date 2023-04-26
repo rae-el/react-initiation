@@ -25,7 +25,7 @@ type Props ={
 }
 
 const UpdateTodo: FC<Props> = ({todoId}) => {
-  const {userList, handleDeleteDialog, deleteDialogOpen, deleteId, setDeleteId, updatedName, updatedUserId, updatedCompletion, setUpdatedName, setUpdatedUserId, setUpdatedCompletion, updateThisTodo, setUpdateSuccessAlertOpen, getTodos} = useContext(TodoContext) as TodoContextType
+  const {userList, handleDeleteDialog, deleteDialogOpen, deleteId, setDeleteId, updatedName, updatedUserId, updatedCompletion, setUpdatedName, setUpdatedUserId, setUpdatedCompletion, updateThisTodo, userMenuItems} = useContext(TodoContext) as TodoContextType
   const [showUsers, setShowUsers] = useState<UserItem[]>([])
   const [selectedUser, setSelectedUser] = useState('')
   const [taskName, setTaskName] = useState('')
@@ -34,11 +34,8 @@ const UpdateTodo: FC<Props> = ({todoId}) => {
   const inputComponent = useRef<HTMLInputElement>(null)
   const navigate = useNavigate();
 
-  let userItems : UserItem[] = [{id: '0', details: 'No assigned user'}]
-
   useEffect(() => {
-    userList?.map((user) => (userItems?.push({id:user.id, details: `${user.id} - ${user.attributes["first-name"]} ${user.attributes["last-name"]}`})))
-    setShowUsers(userItems)
+    setShowUsers(userMenuItems)
     setSelectedCompletion(updatedCompletion ? 'Yes' : 'No')
       if(updatedName != ''){
         setTaskName(updatedName)

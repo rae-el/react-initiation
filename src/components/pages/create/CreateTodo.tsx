@@ -133,8 +133,6 @@ const CreateTodo = () => {
               </form>
               <CreateSuccessAlert></CreateSuccessAlert>
               <CreateFailedAlert></CreateFailedAlert>
-              <UpdateSuccessAlert></UpdateSuccessAlert>
-              <UpdateFailedAlert></UpdateFailedAlert>
             </Box>
         </ThemeProvider>
       );
