@@ -7,12 +7,9 @@ import { TodoContextType } from "../../../@types/Todo"
 
 export default function DeleteSuccessAlert(){
   const {deleteSuccessAlertOpen, setDeleteSuccessAlertOpen, deleteId} = useContext(TodoContext) as TodoContextType
-  setTimeout(()=>{
-    setDeleteSuccessAlertOpen(false)
-  }, 30000)
 
     return(
-        <Collapse in={deleteSuccessAlertOpen} hidden={deleteSuccessAlertOpen}><Alert
+        <Collapse in={deleteSuccessAlertOpen}><Alert
         icon={<Warning sx={{ mx: 0.5 }} />}
         variant="outlined"
         color='warning'

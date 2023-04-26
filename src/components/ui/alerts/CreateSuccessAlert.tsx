@@ -7,9 +7,7 @@ import { TodoContextType } from "../../../@types/Todo"
 
 export default function CreateSuccessAlert(){
   const {createSuccessAlertOpen, setCreateSuccessAlertOpen} = useContext(TodoContext) as TodoContextType
-  setTimeout(()=>{
-    setCreateSuccessAlertOpen(false)
-  }, 30000)
+  
     return(
         <Collapse in={createSuccessAlertOpen}><Alert
         icon={<Check sx={{ mx: 0.5 }} />}

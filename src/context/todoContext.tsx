@@ -3,12 +3,15 @@ import {UserObject} from "../@types/User";
 import { FC, ReactNode, useState, createContext, useEffect } from "react";
 import { TodoService } from "../Server/services/ToDos/TodoService";
 import { UserService } from "../Server/services/Users/UserService";
+import { useNavigate } from "react-router-dom";
 
 export const TodoContext = createContext<TodoContextType | null>(null);
 
 type Props = {children?: ReactNode}
 
 const TodoProvider: FC<Props> = ({children}) => {
+    //navigation
+    const navigate = useNavigate()
     //todos
     const todoService = new TodoService()
     const [todoList, setTodoList] = useState<TodoObject[]>([])
@@ -97,23 +100,40 @@ const TodoProvider: FC<Props> = ({children}) => {
     const deleteAlert = (response: any) => {
         console.log(response)
         if (response == 200){
-            getTodos()
+            //why is this taking ages to appear?
             setDeleteSuccessAlertOpen(true)
+            setTimeout(()=>{
+                setDeleteSuccessAlertOpen(false)
+              }, 10000)
+            getTodos()
+            
+            
         }else{
             console.log('delete unsuccessful ' + response)
             setDeleteFailedAlertOpen(true)
+            setTimeout(()=>{
+                setDeleteFailedAlertOpen(false)
+              }, 10000)
         }
     }
 
     const updateAlert = (response: any) =>{
         console.log(response)
         if (response == 200){
+            //navigate home
+            navigate('/')
             //the get todos is throwing here?
-            //getTodos()
+            getTodos()
             setUpdateSuccessAlertOpen(true)
+            setTimeout(()=>{
+                setUpdateSuccessAlertOpen(false)
+              }, 10000)
         }else{
             console.log('update unsuccessful ' + response)
             setUpdateFailedAlertOpen(true)
+            setTimeout(()=>{
+                setUpdateFailedAlertOpen(false)
+              }, 10000)
         }
     }
 
@@ -122,9 +142,15 @@ const TodoProvider: FC<Props> = ({children}) => {
         if (response == 201){
             getTodos()
             setCreateSuccessAlertOpen(true)
+            setTimeout(()=>{
+                setCreateSuccessAlertOpen(false)
+              }, 10000)
         }else{
             console.log('create unsuccessful ' + response)
             setCreateFailedAlertOpen(true)
+            setTimeout(()=>{
+                setCreateFailedAlertOpen(false)
+              }, 10000)
         }
     }
     

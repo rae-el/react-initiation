@@ -7,12 +7,9 @@ import { TodoContextType } from "../../../@types/Todo"
 
 export default function DeleteFailedAlert(){
   const {deleteFailedAlertOpen, setDeleteFailedAlertOpen, deleteId} = useContext(TodoContext) as TodoContextType
-  setTimeout(()=>{
-    setDeleteFailedAlertOpen(false)
-  }, 30000)
 
     return(
-        <Collapse in={deleteFailedAlertOpen} hidden={deleteFailedAlertOpen}><Alert
+        <Collapse in={deleteFailedAlertOpen}><Alert
         icon={<Warning sx={{ mx: 0.5 }} />}
         variant="outlined"
         color='error'

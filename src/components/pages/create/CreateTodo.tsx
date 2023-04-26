@@ -15,6 +15,9 @@ import { useNavigate } from "react-router-dom"
 import { faker } from "@faker-js/faker"
 import { UserObject } from "../../../@types/User"
 import CreateSuccessAlert from "../../ui/alerts/CreateSuccessAlert"
+import CreateFailedAlert from "../../ui/alerts/CreateFailedAlert"
+import UpdateSuccessAlert from "../../ui/alerts/UpdateSuccessAlert"
+import UpdateFailedAlert from "../../ui/alerts/UpdateFailedAlert"
 
 
 const CreateTodo = () => {
@@ -129,6 +132,9 @@ const CreateTodo = () => {
               </FormControl>
               </form>
               <CreateSuccessAlert></CreateSuccessAlert>
+              <CreateFailedAlert></CreateFailedAlert>
+              <UpdateSuccessAlert></UpdateSuccessAlert>
+              <UpdateFailedAlert></UpdateFailedAlert>
             </Box>
         </ThemeProvider>
       );
