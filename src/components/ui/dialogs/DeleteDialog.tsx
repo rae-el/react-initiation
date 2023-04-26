@@ -4,10 +4,8 @@ import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";
 import DialogContentText from "@mui/material/DialogContentText";
 import { useContext, useEffect, useState } from "react";
-import DeleteAlert from "./DeleteAlert";
-import { TodoService } from "../../Server/services/ToDos/TodoService";
-import { TodoContext } from "../../context/todoContext";
-import { TodoContextType } from "../../@types/Todo";
+import { TodoContext } from "../../../context/todoContext";
+import { TodoContextType } from "../../../@types/Todo";
 import { useNavigate } from "react-router-dom";
 
 

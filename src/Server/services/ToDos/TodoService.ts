@@ -47,7 +47,6 @@ export class TodoService{
     //put or patch
     async updateTodo(todo: ThisTodo){
         //not working
-        //"Mirage: Your app tried to PUT 'api/todo/1/update', but there was no route defined to handle this request. Define a route for this endpoint in your routes() config. Did you forget to define a namespace? The existing namespace is undefined"
         let id : string = todo.id
         try{
             const response = await axios.put(`/api/todo/${id}`, todo)

@@ -1,6 +1,6 @@
 import ThemeProvider from "@mui/material/styles/ThemeProvider"
 import { FC, FormEvent, SetStateAction, useContext, useDeferredValue, useEffect, useRef, useState } from "react"
-import theme from "../theme"
+import theme from "../../../theme"
 import Box from "@mui/material/Box"
 import FormControl from "@mui/material/FormControl"
 import Typography from "@mui/material/Typography"
@@ -10,12 +10,12 @@ import Select, { SelectChangeEvent } from "@mui/material/Select"
 import MenuItem from "@mui/material/MenuItem"
 import { useNavigate } from "react-router-dom"
 import FormControlLabel from "@mui/material/FormControlLabel"
-import { ThisTodo, TodoContextType } from "../@types/Todo"
-import { UserItem } from "../@types/User"
-import { TodoContext } from "../context/todoContext"
-import DeleteDialog from "./ui/DeleteDialog"
+import { ThisTodo, TodoContextType } from "../../../@types/Todo"
+import { UserItem } from "../../../@types/User"
+import { TodoContext } from "../../../context/todoContext"
+import DeleteDialog from "../../ui/dialogs/DeleteDialog"
 import DeleteOutline from '@mui/icons-material/DeleteOutline'
-import UpdateAlert from "./ui/UpdateSuccessAlert"
+import UpdateAlert from "../../ui/alerts/UpdateSuccessAlert"
 
 
 type Props ={
@@ -69,13 +69,7 @@ const UpdateTodo: FC<Props> = ({todoId}) => {
     if(taskName != ''){
       const updatedTodo : ThisTodo = {id:deleteId, isComplete:updatedCompletion, name: taskName, userId:updatedUserId}
       updateThisTodo(updatedTodo)
-      //alert
-    setUpdateSuccessAlertOpen(true)
-    //recall todos
-    getTodos()
-    setTimeout(()=>{
-      setUpdateSuccessAlertOpen(false)
-    }, 50000)
+      
     }
   }
 

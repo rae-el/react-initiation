@@ -68,12 +68,20 @@ const TodoProvider: FC<Props> = ({children}) => {
     const deleteThisTodo = (id: string) => {
         todoService.deleteTodo(id).then((value) => console.log(`Delete" ${value}`))
         setDeleteDialogOpen(false)
+        getTodos()
     }
     const updateThisTodo = (todo: ThisTodo) => {
         todoService.updateTodo(todo).then((value) => console.log(`Update" ${value}`))
+        getTodos()
+        //alert
+        setUpdateSuccessAlertOpen(true)
+        setTimeout(()=>{
+        setUpdateSuccessAlertOpen(false)
+        }, 50000)
     }
     const createThisTodo = (todo: ThisTodo) => {
         todoService.createTodo(todo).then((value) => console.log(`Create" ${value}`))
+        getTodos()
     }
     const getTodos = () => {
         todoService.getTodos().then((value) => setTodoList(value))

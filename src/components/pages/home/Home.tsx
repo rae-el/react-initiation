@@ -11,14 +11,14 @@ import RadioButtonUnchecked from '@mui/icons-material/RadioButtonUnchecked'
 import AddCircle from '@mui/icons-material/AddCircle'
 import TaskAlt from '@mui/icons-material/TaskAlt'
 
-import theme from '../../theme';
+import theme from '../../../theme';
 import { FC, SetStateAction, useContext, useEffect, useRef, useState } from 'react';
-import Header from '../../components/ui/Header';
+import Header from '../../ui/Header';
 import { useNavigate } from 'react-router-dom';
-import { TodoContext } from '../../context/todoContext';
-import { TodoContextType, TodoObject } from '../../@types/Todo';
-import DeleteDialog from '../../components/ui/DeleteDialog';
-import DeleteAlert from '../../components/ui/DeleteAlert';
+import { TodoContext } from '../../../context/todoContext';
+import { TodoContextType, TodoObject } from '../../../@types/Todo';
+import DeleteDialog from '../../ui/dialogs/DeleteDialog';
+import DeleteAlert from '../../ui/alerts/DeleteAlert';
 
 
 const Home = () => {

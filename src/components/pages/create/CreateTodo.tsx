@@ -1,7 +1,7 @@
 import { FC, FormEvent, SetStateAction, useContext, useRef, useState } from "react"
-import { TodoContext } from "../context/todoContext"
-import { ThisTodo, TodoContextType, TodoObject } from "../@types/Todo"
-import theme from "../theme"
+import { TodoContext } from "../../../context/todoContext"
+import { ThisTodo, TodoContextType, TodoObject } from "../../../@types/Todo"
+import theme from "../../../theme"
 import ThemeProvider from "@mui/material/styles/ThemeProvider"
 import Box from "@mui/material/Box"
 import Typography from "@mui/material/Typography"
@@ -13,8 +13,8 @@ import MenuItem from "@mui/material/MenuItem"
 import Button from "@mui/material/Button"
 import { useNavigate } from "react-router-dom"
 import { faker } from "@faker-js/faker"
-import { UserObject } from "../@types/User"
-import CreateSuccessAlert from "./ui/CreateSuccessAlert"
+import { UserObject } from "../../../@types/User"
+import CreateSuccessAlert from "../../ui/alerts/CreateSuccessAlert"
 
 
 const CreateTodo = () => {
