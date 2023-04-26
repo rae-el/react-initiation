@@ -6,14 +6,16 @@ import { TodoContext } from "../../../context/todoContext"
 import { TodoContextType } from "../../../@types/Todo"
 
 export default function DeleteSuccessAlert(){
-  const {deleteSuccessAlertOpen, setDeleteSuccessAlertOpen, deleteId} = useContext(TodoContext) as TodoContextType
+  const {deleteSuccessAlertOpen, setDeleteSuccessAlertOpen, deleteId, isMobile} = useContext(TodoContext) as TodoContextType
+  let width: string = '299px'
+  if(isMobile){width = '90%'}
 
     return(
         <Collapse in={deleteSuccessAlertOpen}><Alert
         icon={<Warning sx={{ mx: 0.5 }} />}
         variant="outlined"
         color='warning'
-        sx={{marginTop:2, width:'85%'}}
+        sx={{marginTop:2, width:{width}}}
         onClose={() => setDeleteSuccessAlertOpen(false)}>
           Task {deleteId} was successfully deleted
       </Alert></Collapse>

@@ -6,14 +6,16 @@ import { TodoContext } from "../../../context/todoContext"
 import { TodoContextType } from "../../../@types/Todo"
 
 export default function DeleteFailedAlert(){
-  const {deleteFailedAlertOpen, setDeleteFailedAlertOpen, deleteId} = useContext(TodoContext) as TodoContextType
+  const {deleteFailedAlertOpen, setDeleteFailedAlertOpen, deleteId, isMobile} = useContext(TodoContext) as TodoContextType
+  let width: string = '35%'
+  if(isMobile){width = '90%'}
 
     return(
         <Collapse in={deleteFailedAlertOpen}><Alert
         icon={<Warning sx={{ mx: 0.5 }} />}
         variant="outlined"
         color='error'
-        sx={{marginTop:2, width:'85%'}}
+        sx={{marginTop:2, width:{width}}}
         onClose={() => setDeleteFailedAlertOpen(false)}>
           Could not delete task {deleteId}
       </Alert></Collapse>
