@@ -30,6 +30,7 @@ const TodoProvider: FC<Props> = ({children}) => {
     const [createSuccessAlertOpen, setCreateSuccessAlertOpen] = useState(false)
     const [createFailedAlertOpen, setCreateFailedAlertOpen] = useState(false)
     const [updateSuccessAlertOpen, setUpdateSuccessAlertOpen] = useState(false)
+    const [updateFailedAlertOpen, setUpdateFailedAlertOpen] = useState(false)
     //times
     const [hours, setHours] = useState<number>(0)
     const [minutes, setMinutes] = useState<number>(0)
@@ -76,11 +77,8 @@ const TodoProvider: FC<Props> = ({children}) => {
         setDeleteSuccessAlertOpen(true)
     }
     const updateThisTodo = (todo: ThisTodo) => {
-        todoService.updateTodo(todo).then((value) => console.log(`Update ${value}`))
-        //this is throwing
-        //getTodos()
-        //alert
-        setUpdateSuccessAlertOpen(true)
+        todoService.updateTodo(todo).then((value) => updateAlert(value))
+      
     }
     const createThisTodo = (todo: ThisTodo) => {
         todoService.createTodo(todo).then((value) => createAlert(value))
@@ -107,6 +105,18 @@ const TodoProvider: FC<Props> = ({children}) => {
         }
     }
 
+    const updateAlert = (response: any) =>{
+        console.log(response)
+        if (response == 200){
+            //the get todos is throwing here?
+            //getTodos()
+            setUpdateSuccessAlertOpen(true)
+        }else{
+            console.log('update unsuccessful ' + response)
+            setUpdateFailedAlertOpen(true)
+        }
+    }
+
     const createAlert = (response: any) => {
         console.log(response)
         if (response == 201){
@@ -119,7 +129,7 @@ const TodoProvider: FC<Props> = ({children}) => {
     }
     
 
-    return <TodoContext.Provider value={{todoList, showList, setShowList, getTodos, thisTodo, updatedTodo, setUpdatedTodo, updatedName, setUpdatedName, updatedUserId, setUpdatedUserId, updatedCompletion, setUpdatedCompletion, deleteId, setDeleteId, getThisTodo, deleteThisTodo, updateThisTodo, createThisTodo, userList, deleteDialogOpen, handleDeleteDialog, deleteSuccessAlertOpen, setDeleteSuccessAlertOpen, deleteFailedAlertOpen, setDeleteFailedAlertOpen, createSuccessAlertOpen, setCreateSuccessAlertOpen, createFailedAlertOpen, setCreateFailedAlertOpen, updateSuccessAlertOpen, setUpdateSuccessAlertOpen, hours, minutes, date, dayString, monthString}}>
+    return <TodoContext.Provider value={{todoList, showList, setShowList, getTodos, thisTodo, updatedTodo, setUpdatedTodo, updatedName, setUpdatedName, updatedUserId, setUpdatedUserId, updatedCompletion, setUpdatedCompletion, deleteId, setDeleteId, getThisTodo, deleteThisTodo, updateThisTodo, createThisTodo, userList, deleteDialogOpen, handleDeleteDialog, deleteSuccessAlertOpen, setDeleteSuccessAlertOpen, deleteFailedAlertOpen, setDeleteFailedAlertOpen, createSuccessAlertOpen, setCreateSuccessAlertOpen, createFailedAlertOpen, setCreateFailedAlertOpen, updateSuccessAlertOpen, setUpdateSuccessAlertOpen, updateFailedAlertOpen, setUpdateFailedAlertOpen, hours, minutes, date, dayString, monthString}}>
         {children}
     </TodoContext.Provider>
 }

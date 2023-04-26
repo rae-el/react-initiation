@@ -50,7 +50,7 @@ export class TodoService{
         let id : string = todo.id
         try{
             const response = await axios.put(`/api/todo/${id}`, todo)
-            return response
+            return response.status
         }catch (e){
             console.error(e)
         }

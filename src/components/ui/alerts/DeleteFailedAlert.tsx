@@ -18,7 +18,7 @@ export default function DeleteFailedAlert(){
         color='error'
         sx={{marginTop:2, width:'85%'}}
         onClose={() => setDeleteFailedAlertOpen(false)}>
-          Could not delete task
+          Could not delete task {deleteId}
       </Alert></Collapse>
     )
 }

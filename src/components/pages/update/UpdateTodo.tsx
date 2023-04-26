@@ -15,7 +15,7 @@ import { UserItem } from "../../../@types/User"
 import { TodoContext } from "../../../context/todoContext"
 import DeleteDialog from "../../ui/dialogs/DeleteDialog"
 import DeleteOutline from '@mui/icons-material/DeleteOutline'
-import UpdateAlert from "../../ui/alerts/UpdateSuccessAlert"
+import UpdateSuccessAlert from "../../ui/alerts/UpdateSuccessAlert"
 
 
 type Props ={
@@ -127,7 +127,7 @@ const UpdateTodo: FC<Props> = ({todoId}) => {
           </FormControl>
           </form>
           <DeleteDialog></DeleteDialog>
-          <UpdateAlert></UpdateAlert>
+          <UpdateSuccessAlert></UpdateSuccessAlert>
         </Box>
     </ThemeProvider>
   )
