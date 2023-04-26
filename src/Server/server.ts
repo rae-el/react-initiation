@@ -94,20 +94,16 @@ export function makeServer () {
                 return {success:true}
 
             })
-            this.post("/todo/create", (schema:any,request)=>{
+            this.post("/todo/create", (schema:any, request)=>{
                 let attrs = JSON.parse(request.requestBody)
                 return schema.todos.create(attrs)
             })
-            // to implement
-            // edit todo
-            this.put("/todo/:id/update", (schema:any, request)=> {
+            this.put("/todo/:id", (schema:any, request)=>{
                 const todoId = request.params.id
                 let attrs = JSON.parse(request.requestBody)
                 schema.todos.find(todoId).update(attrs)
                 return {success:true}
             })
-
-
         }
     })
     return server

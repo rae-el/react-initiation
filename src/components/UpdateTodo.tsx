@@ -23,7 +23,7 @@ type Props ={
 }
 
 const UpdateTodo: FC<Props> = ({todoId}) => {
-  const {userList, handleDeleteDialog, deleteDialogOpen, deleteId, setDeleteId, updatedName, updatedUserId, updatedCompletion, setUpdatedName, setUpdatedUserId, setUpdatedCompletion, updateThisTodo, setUpdateSuccessAlertOpen} = useContext(TodoContext) as TodoContextType
+  const {userList, handleDeleteDialog, deleteDialogOpen, deleteId, setDeleteId, updatedName, updatedUserId, updatedCompletion, setUpdatedName, setUpdatedUserId, setUpdatedCompletion, updateThisTodo, setUpdateSuccessAlertOpen, getTodos} = useContext(TodoContext) as TodoContextType
   const [showUsers, setShowUsers] = useState<UserItem[]>([])
   const [selectedUser, setSelectedUser] = useState('')
   const [taskName, setTaskName] = useState('')
@@ -71,6 +71,8 @@ const UpdateTodo: FC<Props> = ({todoId}) => {
       updateThisTodo(updatedTodo)
       //alert
     setUpdateSuccessAlertOpen(true)
+    //recall todos
+    getTodos()
     setTimeout(()=>{
       setUpdateSuccessAlertOpen(false)
     }, 50000)
