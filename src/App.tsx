@@ -26,7 +26,7 @@ function App() {
   
 
   return (
-  
+    
     <BrowserRouter>
       <Routes>
         <Route index element={<TodoProvider><ThemeProvider theme={theme}><CssBaseline/><Home/></ThemeProvider></TodoProvider>}></Route>
