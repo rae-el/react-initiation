@@ -1,6 +1,6 @@
 {
-    "short_name": "Task App",
-    "name": "Task app for projects",
+    "short_name": "Task It",
+    "name": "Task It",
     "icons": [{
       "src":"tasks.png",
       "type":"image/png",
@@ -13,6 +13,7 @@
       "purpose":"any maskable"
     }
     ],
+    "scope":"/",
     "start_url": ".",
     "display": "standalone",
     "theme_color": "#000000",

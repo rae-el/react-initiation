@@ -6,7 +6,7 @@
     <link rel="manifest" href="/manifest.json">
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="theme-color" content="90c8ff" />
-    <meta property="og:title" content="Tasks"/>
+    <meta property="og:title" content="Task"/>
     <meta propery="og:description" content="Task app that lists tasks by project and user, tasks can be added, removed, edited and filtered."/>
     <meta name="description" content="Task app that lists tasks by project and user, tasks can be added, removed, edited and filtered."/>
     <title>Task</title>
@@ -14,14 +14,6 @@
   <body>
     <div id="root"></div>
     <script type="module" src="/src/main.tsx"></script>
-    <script>
-      
-      if('serviceWorker' in navigator){
-        window.addEventListener('load', function(){
-          this.navigator.serviceWorker.register('/sw.ts', {scope:'/'})
-        })
-      }
-
-    </script>
+    
   </body>
 </html>

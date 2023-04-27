@@ -20,8 +20,7 @@
     "react-router-dom": "^6.10.0",
     "react-select": "^5.7.2",
     "sass": "^1.60.0",
-    "styled-components": "^5.3.9",
-    "vite-plugin-compression": "^0.5.1"
+    "styled-components": "^5.3.9"
   },
   "devDependencies": {
     "@faker-js/faker": "^7.6.0",
@@ -32,6 +31,9 @@
     "miragejs": "^0.1.47",
     "typescript": "^4.9.3",
     "vite": "^4.2.0",
-    "vite-tsconfig-paths": "^4.0.8"
+    "vite-plugin-compression": "^0.5.1",
+    "vite-plugin-pwa": "^0.14.7",
+    "vite-tsconfig-paths": "^4.0.8",
+    "workbox-window": "^6.5.4"
   }
 }
