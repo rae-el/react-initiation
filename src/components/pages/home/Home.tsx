@@ -1,4 +1,4 @@
-import { Box, FormControl, FormControlLabel, IconButton, MenuItem, Select, SelectChangeEvent, Switch, TextField, Typography, createTheme } from '@mui/material'
+import { Box, CssBaseline, FormControl, FormControlLabel, IconButton, MenuItem, PaletteMode, Select, SelectChangeEvent, Switch, TextField, Typography, createTheme } from '@mui/material'
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
 import TableCell from '@mui/material/TableCell';
@@ -10,7 +10,7 @@ import ThemeProvider from '@mui/material/styles/ThemeProvider';
 import RadioButtonUnchecked from '@mui/icons-material/RadioButtonUnchecked'
 import AddCircle from '@mui/icons-material/AddCircle'
 import TaskAlt from '@mui/icons-material/TaskAlt'
-import { SetStateAction, useContext, useRef, useState, useMemo } from 'react';
+import { SetStateAction, useContext, useRef, useState, useMemo, useEffect } from 'react';
 import Header from '../../ui/Header';
 import { useNavigate } from 'react-router-dom';
 import { TodoContext } from '../../../context/todoContext';
@@ -19,16 +19,15 @@ import DeleteSuccessAlert from '../../ui/alerts/DeleteSuccessAlert';
 import UpdateSuccessAlert from '../../ui/alerts/UpdateSuccessAlert';
 import DateTimeBox from '../../ui/DateTimeBox';
 import customPaletteMode from '../../../customPaletteMode';
+import theme from '../../../theme';
 
 
 const Home = () => {
-  const {userList, todoList, getThisTodo, showList, setShowList,isMobile,darkMode} = useContext(TodoContext) as TodoContextType
+  const {userList, todoList, getThisTodo, showList, setShowList,isMobile} = useContext(TodoContext) as TodoContextType
   const [selectedUser, setSelectedUser] = useState('')
   const inputComponent = useRef<HTMLInputElement>(null)
   const navigate = useNavigate()
   var [completedTodos, setCompletedTodos] = useState(false)
-
-  const theme = useMemo(() => createTheme(customPaletteMode(darkMode ? 'dark' : 'light')), [darkMode ? 'dark' : 'light'])
 
 
   function getUserName(id: string){
@@ -107,7 +106,7 @@ const Home = () => {
 
 
   return (
-   <ThemeProvider theme={theme}>
+    <>
     {/* edit form values to reflect api */}
     <Header/>
     {isMobile ? 
@@ -128,7 +127,6 @@ const Home = () => {
                   control={<TextField label='Test Project' inputMode='text' disabled sx={{width:'200px !important', marginLeft:6, marginBottom:'5px', marginTop:''}}/>}
                   label="Project"
                   labelPlacement='start'
-                  sx={{color:theme.palette.primary.contrastText}}
                   />
               </Box>
               <Box
@@ -170,7 +168,7 @@ const Home = () => {
             display: 'inline-flex',
             alignItems: 'center'
           }}>
-          <IconButton onClick={navigateToAdd} sx={{color:theme.palette.primary.main, fontWeight:'bold', marginLeft:1}}><AddCircle/></IconButton>
+          <IconButton onClick={navigateToAdd} sx={{fontWeight:'bold', marginLeft:1, color:theme.palette.primary.dark}}><AddCircle/></IconButton>
           <Typography sx={{position: 'relative', fontWeight:600}}>add a new task</Typography>
         </Box>
         <DeleteSuccessAlert></DeleteSuccessAlert>
@@ -184,7 +182,6 @@ const Home = () => {
             sx={{
             fontVariant:'small-caps',
             fontSize: '3rem !important',
-            backgroundColor: theme.palette.secondary.light,
             position:'sticky',
             top:0,
             zIndex:1}}>
@@ -202,7 +199,7 @@ const Home = () => {
                   onClick={() => handleEdit(todo.id)}
                   sx={{cursor:'pointer'}}
                   //sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
-                ><TableCell>{todo.isComplete ? <TaskAlt sx={{color:theme.palette.success.main}}/> : <RadioButtonUnchecked sx={{color:theme.palette.secondary.contrastText}}/>}</TableCell>
+                ><TableCell>{todo.isComplete ? <TaskAlt sx={{color:theme.palette.success.light}}/> : <RadioButtonUnchecked sx={{color:theme.palette.primary.contrastText}}/>}</TableCell>
                   <TableCell>{todo.name}</TableCell>
                   <TableCell>{getUserName(todo.user ?? '')}</TableCell>
                 </TableRow>
@@ -229,7 +226,6 @@ const Home = () => {
                   control={<TextField label='Test Project' inputMode='text' disabled sx={{width:'175px !important', marginLeft:6, marginBottom:'5px', marginTop:''}}/>}
                   label="Project"
                   labelPlacement='start'
-                  sx={{color:theme.palette.primary.contrastText}}
                   />
               </Box>
               <Box
@@ -276,7 +272,7 @@ const Home = () => {
             display: 'inline-flex',
             alignItems: 'center'
           }}>
-          <IconButton onClick={navigateToAdd} sx={{color:theme.palette.primary.main, fontWeight:'bold', marginLeft:1}}><AddCircle/></IconButton>
+          <IconButton onClick={navigateToAdd} sx={{fontWeight:'bold', marginLeft:1, color:theme.palette.primary.dark}}><AddCircle/></IconButton>
           <Typography sx={{position: 'relative', fontWeight:600}}>add a new task</Typography>
         </Box>
         <DeleteSuccessAlert></DeleteSuccessAlert>
@@ -290,7 +286,6 @@ const Home = () => {
             sx={{
             fontVariant:'small-caps',
             fontSize: '3rem !important',
-            backgroundColor: theme.palette.secondary.light,
             position:'sticky',
             top:0,
             zIndex:1}}>
@@ -308,7 +303,7 @@ const Home = () => {
                   onClick={() => handleEdit(todo.id)}
                   sx={{cursor:'pointer'}}
                   //sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
-                ><TableCell>{todo.isComplete ? <TaskAlt sx={{color:theme.palette.success.main}}/> : <RadioButtonUnchecked sx={{color:theme.palette.secondary.contrastText}}/>}</TableCell>
+                ><TableCell>{todo.isComplete ? <TaskAlt sx={{color:theme.palette.success.light}}/> : <RadioButtonUnchecked sx={{color:theme.palette.primary.contrastText}}/>}</TableCell>
                   <TableCell>{todo.name}</TableCell>
                   <TableCell>{getUserName(todo.user ?? '')}</TableCell>
                 </TableRow>
@@ -318,7 +313,7 @@ const Home = () => {
         </TableContainer>
     </Box>
     }
-</ThemeProvider>
+</>
   )
 }
 

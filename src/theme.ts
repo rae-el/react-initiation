@@ -8,17 +8,17 @@ const theme = createTheme({
         main: '#76bcff',
         light: '#fff',
         dark: '#2896ff',
-        contrastText: '#383838',
+        contrastText: '#708090',
       },
       secondary:{
         main: '#c3e1ff',
-        light: '#eaf5ff',
+        light: '#9ed1ff',
         dark: '#2896ff',
         contrastText: '#b6bbbf',
       },
       success:{
         main:'#51D451',
-        light:'#E5FFE5',
+        light:'#99FF99',
         dark:'#5AA769'
       },
   },

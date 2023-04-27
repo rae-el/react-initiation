@@ -58,5 +58,4 @@ export type TodoContextType = {
     dayString: string;
     monthString: string;
     isMobile: boolean;
-    darkMode: boolean;
 };

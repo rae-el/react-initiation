@@ -75,7 +75,7 @@ const CreateTodo = () => {
         navigate('/');
       };
     return (
-        <ThemeProvider theme={theme}>
+        <>
             {/* edit form values to reflect api */}
             <Box
             sx={{
@@ -132,7 +132,7 @@ const CreateTodo = () => {
               <CreateSuccessAlert></CreateSuccessAlert>
               <CreateFailedAlert></CreateFailedAlert>
             </Box>
-        </ThemeProvider>
+        </>
       );
 }
 export default CreateTodo;

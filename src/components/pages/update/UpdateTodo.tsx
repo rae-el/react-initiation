@@ -78,7 +78,7 @@ const UpdateTodo: FC = () => {
   }
 
   return (
-    <ThemeProvider theme={theme}>
+    <>
         {/* edit form values to reflect api */}
         <Box
         sx={{
@@ -117,13 +117,13 @@ const UpdateTodo: FC = () => {
                     <MenuItem value={'No'}>No</MenuItem>
                     <MenuItem value={'Yes'}>Yes</MenuItem>
                   </Select></FormControl>} /></Box>
-              <Box sx={{ width: '100%', display: 'flex', justifyContent: 'center' }}><Button onClick={() => handleDelete(deleteId)} variant='outlined' sx={{ color: theme.palette.primary.contrastText, marginBottom: 3, borderColor: theme.palette.primary.contrastText, width: 100 }}><DeleteOutline /> Delete </Button></Box>
+              <Box sx={{ width: '100%', display: 'flex', justifyContent: 'center' }}><Button onClick={() => handleDelete(deleteId)} variant='outlined' sx={{marginBottom: 3, borderColor: theme.palette.primary.contrastText, width: 100 }}><DeleteOutline /> Delete </Button></Box>
               <Button variant='contained' type='submit' sx={{ color: theme.palette.primary.light }}>Save</Button>
               <Button onClick={navigateToHome}>Cancel</Button>
             </FormControl>
           </form><DeleteDialog></DeleteDialog><UpdateFailedAlert></UpdateFailedAlert><DeleteFailedAlert></DeleteFailedAlert></> : <CircularProgress/>}
         </Box>
-    </ThemeProvider>
+    </>
   )
 }
 

@@ -12,7 +12,7 @@ function Add() {
 
 
   return (
-    <ThemeProvider theme={theme}>
+    <>
         {/* edit form values to reflect api */}
         <Box
         sx={{
@@ -25,7 +25,7 @@ function Add() {
           Page Not Found
         </Typography>
        </Box>
-    </ThemeProvider>
+    </>
   )
 }
 
