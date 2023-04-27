@@ -41,7 +41,7 @@ function Header() {
           {hours > 11 ? 'Good Afternoon,' : 'Good Morning,'}
           </Typography>
           <Typography variant='h5' sx={{paddingLeft:3, color:'#90c8ff'}}>
-          plan your day, plan your tasks, plan your success.
+          {hours > 11 ? 'every task completed, is a step towards success.' : 'plan your day, plan your tasks, plan your success.'}
           </Typography>
         </Box>
         
