@@ -56,9 +56,11 @@ const TodoProvider: FC<Props> = ({children}) => {
         determineDevice()
 
         setDarkMode(window.matchMedia('(prefers-color-scheme: dark)').matches)
+        console.log('Is dark? ' + darkMode)
         
-
         const interval = setInterval(() => {
+            
+
             setHours(new Date().getHours())
             setMinutes(new Date().getMinutes())
             setDate(new Date().getDate())

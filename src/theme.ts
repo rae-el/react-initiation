@@ -1,6 +1,8 @@
+import { PaletteMode } from "@mui/material";
 import { createTheme } from "@mui/material/styles";
 
 const theme = createTheme({
+  
     palette:{
       primary:{
         main: '#76bcff',
