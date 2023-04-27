@@ -44,7 +44,7 @@ const isLocalhost = Boolean(
       window.addEventListener('load', () => {
         
         console.log('window event load has occurred')
-        const swUrl = `/serviceWorker.ts`;
+        const swUrl = `src/serviceWorker.ts`;
   
         if (isLocalhost) {
           console.log('running on localhost')
