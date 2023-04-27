@@ -118,7 +118,7 @@ const UpdateTodo: FC = () => {
                     <MenuItem value={'Yes'}>Yes</MenuItem>
                   </Select></FormControl>} /></Box>
               <Box sx={{ width: '100%', display: 'flex', justifyContent: 'center' }}><Button onClick={() => handleDelete(deleteId)} variant='outlined' sx={{marginBottom: 3, borderColor: theme.palette.primary.contrastText, width: 100 }}><DeleteOutline /> Delete </Button></Box>
-              <Button variant='contained' type='submit' sx={{ color: theme.palette.primary.light }}>Save</Button>
+              <Button variant='contained' type='submit' sx={{color:'#fff'}}>Save</Button>
               <Button onClick={navigateToHome}>Cancel</Button>
             </FormControl>
           </form><DeleteDialog></DeleteDialog><UpdateFailedAlert></UpdateFailedAlert><DeleteFailedAlert></DeleteFailedAlert></> : <CircularProgress/>}

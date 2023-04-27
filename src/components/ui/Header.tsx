@@ -40,7 +40,7 @@ function Header() {
           <Typography variant='h3'>
           {hours > 11 ? 'Good Afternoon,' : 'Good Morning,'}
           </Typography>
-          <Typography variant='h5' sx={{paddingLeft:3, color:theme.palette.primary.main}}>
+          <Typography variant='h5' sx={{paddingLeft:3, color:'#90c8ff'}}>
           plan your day, plan your tasks, plan your success.
           </Typography>
         </Box>

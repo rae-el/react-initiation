@@ -125,7 +125,7 @@ const CreateTodo = () => {
                           <MenuItem value={'No'}>No</MenuItem>
                           <MenuItem value={'Yes'}>Yes</MenuItem>
                         </Select></FormControl>}/></Box>
-                <Button variant='contained' type='submit' sx={{color:theme.palette.primary.light}}>Add</Button>
+                <Button variant='contained' type='submit' sx={{color:'#fff'}}>Add</Button>
                 <Button onClick={navigateToHome}>Back</Button>
               </FormControl>
               </form>
