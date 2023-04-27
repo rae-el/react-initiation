@@ -69,8 +69,8 @@ const TodoProvider: FC<Props> = ({children}) => {
                 setDayString(fullDays[day])
                 setMonthString(fullMonths[month])
             }else{
-                setDayString(days[day])
-                setMonthString(months[month]) 
+                setDayString(fullDays[day])
+                setMonthString(fullMonths[month]) 
             }
         },  1000)
         return () => clearInterval(interval)

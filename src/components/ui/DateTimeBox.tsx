@@ -14,9 +14,9 @@ function DateTimeBox () {
        
       <ThemeProvider theme={theme}>
          {isMobile ? 
-            <Box sx={{width:'100%', display:'flex', alignItems:'center', justifyContent:'center'}}>
-                    <Typography sx={{fontWeight:600, marginRight:1}}>{dayString}</Typography>
-                    <Typography variant='h4' sx={{color:theme.palette.primary.dark, fontWeight:600, marginLeft:1, marginRight:1}}>{date}</Typography>
+            <Box sx={{width:'100%', display:'flex', alignItems:'center', justifyContent:'flex-start'}}>
+                    <Typography sx={{fontWeight:600, marginRight:1, marginLeft:2}}>{dayString}</Typography>
+                    <Typography variant='h4' sx={{color:theme.palette.primary.dark, fontWeight:600, marginLeft:1, marginRight:1, marginBottom:1}}>{date}</Typography>
                     <Typography sx={{fontWeight:600, fontVariant:'small-caps',marginLeft:1, marginRight:1}}>{monthString}</Typography>
                     <Box sx={{display:'flex', justifyContent:'center', marginLeft:1}}>
                       <Typography >
