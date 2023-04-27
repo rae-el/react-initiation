@@ -272,7 +272,7 @@ const Home = () => {
             display: 'inline-flex',
             alignItems: 'center'
           }}>
-          <IconButton onClick={navigateToAdd} sx={{fontWeight:'bold', marginLeft:1, color:theme.palette.primary.main}}><AddCircle/></IconButton>
+          <IconButton onClick={navigateToAdd} sx={{fontWeight:'bold', marginLeft:1, color:theme.palette.primary.main}} aria-label='add'><AddCircle/></IconButton>
           <Typography sx={{position: 'relative', fontWeight:600}}>add a new task</Typography>
         </Box>
         <DeleteSuccessAlert></DeleteSuccessAlert>
